@@ -23,7 +23,7 @@ public final class MovieClient {
         this.movieMapper = movieMapper;
     }
 
-    public void getMovieDetails(int movieId, final ResponseListener<Movie> responseListener) {
+    public void getMovieDetails(final int movieId, final ResponseListener<Movie> responseListener) {
         movieService.movieDetailsEntity(movieId, apiConstants.api_key, apiConstants.language_enUS)
                     .enqueue(new Callback<ApiMovie>() {
 
@@ -40,7 +40,7 @@ public final class MovieClient {
                     });
     }
 
-    public void getMovies(final ResponseListener<List<Movie>> responseListener, int page) {
+    public void getMovies(final ResponseListener<List<Movie>> responseListener, final int page) {
         movieService.listMovieEntities(apiConstants.api_key, apiConstants.language_enUS, page)
                     .enqueue(new Callback<ApiMoviesList>() {
 
@@ -59,7 +59,7 @@ public final class MovieClient {
                     });
     }
 
-    public void getMovies(final ResponseListener<List<Movie>> responseListener, String title) {
+    public void getMovies(final ResponseListener<List<Movie>> responseListener, final String title) {
         movieService.searchMovieEntities(apiConstants.api_key, apiConstants.language_enUS, title)
                     .enqueue(new Callback<ApiMoviesList>() {
 

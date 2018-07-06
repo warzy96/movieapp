@@ -17,7 +17,7 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public void getMovieDetails(final int id, RepositoryListener<Movie> repositoryListener) {
+    public void getMovieDetails(final int id, final RepositoryListener<Movie> repositoryListener) {
         movieClient.getMovieDetails(id, new ResponseListener<Movie>() {
 
             @Override
@@ -33,7 +33,7 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public void getMovies(final int page, RepositoryListener<List<Movie>> repositoryListener) {
+    public void getMovies(final int page, final RepositoryListener<List<Movie>> repositoryListener) {
         movieClient.getMovies(new ResponseListener<List<Movie>>() {
 
             @Override

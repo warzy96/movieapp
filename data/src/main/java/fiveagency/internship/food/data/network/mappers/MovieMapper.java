@@ -9,14 +9,14 @@ import fiveagency.internship.food.domain.model.Movie;
 
 public final class MovieMapper {
 
-    public Movie mapMovie(ApiMovie apiMovie) {
-        return new Movie(apiMovie.title, apiMovie.id, apiMovie.isAdult);
+    public Movie mapMovie(final ApiMovie apiMovie) {
+        return new Movie(apiMovie.title, apiMovie.id, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate);
     }
 
-    public List<Movie> mapMovies(ApiMoviesList apiMoviesList) {
+    public List<Movie> mapMovies(final ApiMoviesList apiMoviesList) {
         List<Movie> movies = new LinkedList<>();
         for (ApiMovie apiMovie : apiMoviesList.movieApiEntities) {
-            movies.add(new Movie(apiMovie.title, apiMovie.id, apiMovie.isAdult));
+            movies.add(new Movie(apiMovie.title, apiMovie.id, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate));
         }
         return movies;
     }

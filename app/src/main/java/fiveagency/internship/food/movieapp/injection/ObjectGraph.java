@@ -1,5 +1,9 @@
 package fiveagency.internship.food.movieapp.injection;
 
+import android.content.Context;
+import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
+
 import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.data.network.mappers.MovieMapper;
 import fiveagency.internship.food.data.network.service.MovieService;
@@ -7,7 +11,10 @@ import fiveagency.internship.food.data.repository.MovieRepositoryImpl;
 import fiveagency.internship.food.domain.interactor.GetMovieDetailsUseCase;
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
 import fiveagency.internship.food.domain.repository.MovieRepository;
-import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListFragment;
+import fiveagency.internship.food.movieapp.router.Router;
+import fiveagency.internship.food.movieapp.ui.movieslist.MovieViewModelMapper;
+import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListAdapter;
+import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListContract;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListPresenter;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -16,7 +23,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public final class ObjectGraph {
 
-    private final MoviesListPresenter moviesListPresenter;
+    private final GetMoviesUseCase getMoviesUseCase;
+    private final GetMovieDetailsUseCase getMovieDetailsUseCase;
+    private final MovieViewModelMapper movieViewModelMapper;
 
     public ObjectGraph() {
         final HttpLoggingInterceptor httpLoggingInterceptor = provideHttpLoggingInterceptor();
@@ -27,10 +36,10 @@ public final class ObjectGraph {
         final MovieMapper movieMapper = new MovieMapper();
         final MovieClient movieClient = new MovieClient(movieService, movieMapper);
         final MovieRepository movieRepository = new MovieRepositoryImpl(movieClient);
-        final GetMoviesUseCase getMoviesUseCase = new GetMoviesUseCase(movieRepository);
-        final MoviesListFragment moviesListFragment = new MoviesListFragment();
-        moviesListPresenter = new MoviesListPresenter(moviesListFragment);
-        final GetMovieDetailsUseCase getMovieDetailsUseCase = new GetMovieDetailsUseCase(movieRepository);
+
+        movieViewModelMapper = new MovieViewModelMapper();
+        getMoviesUseCase = new GetMoviesUseCase(movieRepository);
+        getMovieDetailsUseCase = new GetMovieDetailsUseCase(movieRepository);
     }
 
     private Retrofit provideRetrofit(final OkHttpClient okHttpClient) {
@@ -47,5 +56,29 @@ public final class ObjectGraph {
 
     private HttpLoggingInterceptor provideHttpLoggingInterceptor() {
         return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
+    }
+
+    public MoviesListPresenter provideMoviesListPresenter(final MoviesListContract.View view) {
+        return new MoviesListPresenter(view, getMoviesUseCase, movieViewModelMapper);
+    }
+
+    public GetMoviesUseCase provideGetMoviesUseCase() {
+        return getMoviesUseCase;
+    }
+
+    private GetMovieDetailsUseCase provideGetMovieDetailsUseCase() {
+        return getMovieDetailsUseCase;
+    }
+
+    public Router provideRouter(final AppCompatActivity activity) {
+        return new Router(activity, activity.getSupportFragmentManager());
+    }
+
+    public MoviesListAdapter provideMoviesListAdapter(final Context context) {
+        return new MoviesListAdapter(provideLayoutInflater(context));
+    }
+
+    private LayoutInflater provideLayoutInflater(final Context context) {
+        return LayoutInflater.from(context);
     }
 }

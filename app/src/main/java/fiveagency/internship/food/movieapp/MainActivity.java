@@ -6,16 +6,12 @@ import android.util.Log;
 
 import java.util.List;
 
-import fiveagency.internship.food.data.network.ApiConstants;
-import fiveagency.internship.food.data.network.client.MovieClient;
-import fiveagency.internship.food.data.network.client.ResponseListener;
-import fiveagency.internship.food.data.network.mappers.MovieMapper;
-import fiveagency.internship.food.data.network.service.MovieService;
+import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
+import fiveagency.internship.food.domain.interactor.type.QueryUseCase;
 import fiveagency.internship.food.domain.model.Movie;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
+import fiveagency.internship.food.movieapp.app.MovieApplication;
+import fiveagency.internship.food.movieapp.injection.ObjectGraph;
+import fiveagency.internship.food.movieapp.router.Router;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -24,13 +20,21 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
-        /*movieClient.getMovies(new ResponseListener<List<Movie>>() {
+        ObjectGraph objectGraph = MovieApplication.from(this).getObjectGraph();
+        GetMoviesUseCase getMoviesUseCase = objectGraph.provideGetMoviesUseCase();
+        getMoviesUseCase.execute(1, new QueryUseCase.Callback<List<Movie>>() {
 
             @Override
-            public void onResult(final List<Movie> movies) {
-                Log.d("movie", movies.toString());
+            public void onSuccess(final List<Movie> movies) {
+                Log.d("movies", movies.toString());
             }
-        }, 1);*/
+
+            @Override
+            public void onFailure(final Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        });
+        Router router = objectGraph.provideRouter(this);
+        router.showMoviesListScreen();
     }
 }

@@ -5,7 +5,7 @@ import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import fiveagency.internship.food.domain.repository.listeners.RepositoryListener;
 
-public final class GetMovieDetailsUseCase implements QueryUseCase<Integer, Movie>{
+public final class GetMovieDetailsUseCase implements QueryUseCase<Integer, Movie> {
 
     private final MovieRepository movieRepository;
 

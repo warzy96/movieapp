@@ -7,9 +7,4 @@ public abstract class BasePresenter<View> {
     public BasePresenter(View view) {
         this.view = view;
     }
-
-
-    protected void start() {
-        //no operation
-    }
 }
