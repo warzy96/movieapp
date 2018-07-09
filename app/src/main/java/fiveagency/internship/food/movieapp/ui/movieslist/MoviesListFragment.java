@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import fiveagency.internship.food.movieapp.MainActivity;
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.app.MovieApplication;
 import fiveagency.internship.food.movieapp.injection.ObjectGraph;
@@ -29,8 +30,9 @@ public final class MoviesListFragment extends Fragment implements MoviesListCont
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         objectGraph = MovieApplication.from(getContext()).getObjectGraph();
-        presenter = objectGraph.provideMoviesListPresenter(this);
+        presenter = objectGraph.provideMoviesListPresenter(this, objectGraph.provideRouter((MainActivity) getActivity()));
         moviesListAdapter = objectGraph.provideMoviesListAdapter(getContext());
+        moviesListAdapter.setOnMovieClickListener(movieId -> presenter.showMovieDetails(movieId));
     }
 
     @NonNull

@@ -6,7 +6,6 @@ import android.util.Log;
 
 import java.util.List;
 
-import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.type.QueryUseCase;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.movieapp.app.MovieApplication;
@@ -21,7 +20,7 @@ public final class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final ObjectGraph objectGraph = MovieApplication.from(this).getObjectGraph();
-        final GetMoviesUseCase getMoviesUseCase = objectGraph.provideGetMoviesUseCase();
+        final QueryUseCase<Integer, List<Movie>> getMoviesUseCase = objectGraph.provideGetMoviesUseCase();
         getMoviesUseCase.execute(1, new QueryUseCase.Callback<List<Movie>>() {
 
             @Override

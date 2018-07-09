@@ -5,6 +5,8 @@ public interface MoviesListContract {
     interface Presenter {
 
         void start();
+
+        void showMovieDetails(int movieId);
     }
 
     interface View {

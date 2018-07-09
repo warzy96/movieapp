@@ -4,6 +4,8 @@ import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 
+import java.util.List;
+
 import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.data.network.configuration.Urls;
 import fiveagency.internship.food.data.network.mappers.MovieMapper;
@@ -11,8 +13,13 @@ import fiveagency.internship.food.data.network.service.MovieService;
 import fiveagency.internship.food.data.repository.MovieRepositoryImpl;
 import fiveagency.internship.food.domain.interactor.GetMovieDetailsUseCase;
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
+import fiveagency.internship.food.domain.interactor.type.QueryUseCase;
+import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import fiveagency.internship.food.movieapp.router.Router;
+import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsContract;
+import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsPresenter;
+import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsViewModelMapper;
 import fiveagency.internship.food.movieapp.ui.movieslist.MovieViewModelMapper;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListAdapter;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListContract;
@@ -27,6 +34,7 @@ public final class ObjectGraph {
     private final GetMoviesUseCase getMoviesUseCase;
     private final GetMovieDetailsUseCase getMovieDetailsUseCase;
     private final MovieViewModelMapper movieViewModelMapper;
+    private final MovieDetailsViewModelMapper movieDetailsViewModelMapper;
 
     public ObjectGraph() {
         final HttpLoggingInterceptor httpLoggingInterceptor = provideHttpLoggingInterceptor();
@@ -39,8 +47,13 @@ public final class ObjectGraph {
         final MovieRepository movieRepository = new MovieRepositoryImpl(movieClient);
 
         movieViewModelMapper = new MovieViewModelMapper();
+        movieDetailsViewModelMapper = new MovieDetailsViewModelMapper();
         getMoviesUseCase = new GetMoviesUseCase(movieRepository);
         getMovieDetailsUseCase = new GetMovieDetailsUseCase(movieRepository);
+    }
+
+    public MovieDetailsContract.Presenter provideMovieDetailsPresenter(final MovieDetailsContract.View view, final Router router) {
+        return new MovieDetailsPresenter(view, getMovieDetailsUseCase, movieDetailsViewModelMapper, router);
     }
 
     private Retrofit provideRetrofit(final OkHttpClient okHttpClient) {
@@ -59,15 +72,15 @@ public final class ObjectGraph {
         return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     }
 
-    public MoviesListPresenter provideMoviesListPresenter(final MoviesListContract.View view) {
-        return new MoviesListPresenter(view, getMoviesUseCase, movieViewModelMapper);
+    public MoviesListContract.Presenter provideMoviesListPresenter(final MoviesListContract.View view, Router router) {
+        return new MoviesListPresenter(view, getMoviesUseCase, movieViewModelMapper, router);
     }
 
-    public GetMoviesUseCase provideGetMoviesUseCase() {
+    public QueryUseCase<Integer, List<Movie>> provideGetMoviesUseCase() {
         return getMoviesUseCase;
     }
 
-    public GetMovieDetailsUseCase provideGetMovieDetailsUseCase() {
+    public QueryUseCase<Integer, Movie> provideGetMovieDetailsUseCase() {
         return getMovieDetailsUseCase;
     }
 

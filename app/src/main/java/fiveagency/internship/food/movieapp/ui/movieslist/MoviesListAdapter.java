@@ -16,6 +16,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
     private final LayoutInflater layoutInflater;
     private final List<MovieViewModel> movies = new ArrayList<>();
+    private MovieOnClickListener onMovieClickListener;
 
     public MoviesListAdapter(final LayoutInflater layoutInflater) {
         this.layoutInflater = layoutInflater;
@@ -29,7 +30,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
     @Override
     public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
-        holder.render(movies.get(position));
+        holder.render(movies.get(position), onMovieClickListener);
     }
 
     @Override
@@ -43,15 +44,25 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
         notifyDataSetChanged();
     }
 
+    public void setOnMovieClickListener(final MovieOnClickListener movieClickListener) {
+        onMovieClickListener = movieClickListener;
+    }
+
     static class MovieViewHolder extends RecyclerView.ViewHolder {
 
         MovieViewHolder(final View itemView) {
             super(itemView);
         }
 
-        void render(final MovieViewModel movieViewModel) {
+        void render(final MovieViewModel movieViewModel, MovieOnClickListener movieOnClickListener) {
             final TextView textView = itemView.findViewById(R.id.movie_name);
             textView.setText(movieViewModel.title);
+            itemView.setOnClickListener(view -> movieOnClickListener.onClick(movieViewModel.id));
         }
+    }
+
+    public interface MovieOnClickListener {
+
+        void onClick(int movieId);
     }
 }

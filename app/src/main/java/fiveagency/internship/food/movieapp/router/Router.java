@@ -5,6 +5,7 @@ import android.support.annotation.IdRes;
 import android.support.v4.app.FragmentManager;
 
 import fiveagency.internship.food.movieapp.R;
+import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsFragment;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListFragment;
 
 public final class Router {
@@ -22,6 +23,13 @@ public final class Router {
     public void showMoviesListScreen() {
         fragmentManager.beginTransaction()
                        .replace(CONTAINER_ID, MoviesListFragment.newInstance(), MoviesListFragment.TAG)
+                       .addToBackStack(null)
+                       .commit();
+    }
+
+    public void showMovieDetailsScreen(final int movieId) {
+        fragmentManager.beginTransaction()
+                       .replace(CONTAINER_ID, MovieDetailsFragment.newInstance(movieId), MovieDetailsFragment.TAG)
                        .addToBackStack(null)
                        .commit();
     }
