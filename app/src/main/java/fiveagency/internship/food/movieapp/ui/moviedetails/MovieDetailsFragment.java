@@ -4,10 +4,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import fiveagency.internship.food.movieapp.MainActivity;
 import fiveagency.internship.food.movieapp.R;
@@ -52,5 +57,12 @@ public final class MovieDetailsFragment extends Fragment implements MovieDetails
     public void render(final MovieDetailsViewModel movieDetailsViewModel) {
         final TextView textView = getView().findViewById(R.id.movie_details_movie_name);
         textView.setText(movieDetailsViewModel.title);
+        final ImageView imageView = getView().findViewById(R.id.movie_details_image_view);
+        final CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(getContext());
+        circularProgressDrawable.start();
+        Glide.with(getContext())
+             .load(movieDetailsViewModel.imageSource)
+             .apply(new RequestOptions().placeholder(circularProgressDrawable))
+             .into(imageView);
     }
 }

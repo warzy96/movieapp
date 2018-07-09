@@ -23,7 +23,6 @@ public final class Router {
     public void showMoviesListScreen() {
         fragmentManager.beginTransaction()
                        .replace(CONTAINER_ID, MoviesListFragment.newInstance(), MoviesListFragment.TAG)
-                       .addToBackStack(null)
                        .commit();
     }
 
