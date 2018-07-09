@@ -66,7 +66,7 @@ public final class ObjectGraph {
         return getMoviesUseCase;
     }
 
-    private GetMovieDetailsUseCase provideGetMovieDetailsUseCase() {
+    public GetMovieDetailsUseCase provideGetMovieDetailsUseCase() {
         return getMovieDetailsUseCase;
     }
 
