@@ -9,13 +9,13 @@ public final class GetMovieDetailsUseCase implements QueryUseCase<Integer, Movie
 
     private final MovieRepository movieRepository;
 
-    public GetMovieDetailsUseCase(MovieRepository movieRepository) {
+    public GetMovieDetailsUseCase(final MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
 
     @Override
     public void execute(final Integer id, final Callback<Movie> callback) {
-        movieRepository.getMovieDetails(id, new RepositoryListener<Movie>() {
+        movieRepository.fetchMovieDetails(id, new RepositoryListener<Movie>() {
 
             @Override
             public void onResult(final Movie movie) {

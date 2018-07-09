@@ -7,9 +7,9 @@ import fiveagency.internship.food.domain.repository.listeners.RepositoryListener
 
 public interface MovieRepository {
 
-    void getMovieDetails(int id, RepositoryListener<Movie> repositoryListener);
+    void fetchMovieDetails(int id, RepositoryListener<Movie> repositoryListener);
 
-    void getMovies(int page, RepositoryListener<List<Movie>> repositoryListener);
+    void fetchMovies(int page, RepositoryListener<List<Movie>> repositoryListener);
 
-    void getMovies(String title, RepositoryListener<List<Movie>> repositoryListener);
+    void fetchMovies(String title, RepositoryListener<List<Movie>> repositoryListener);
 }

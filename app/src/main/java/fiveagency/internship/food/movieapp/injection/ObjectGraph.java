@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 
 import fiveagency.internship.food.data.network.client.MovieClient;
+import fiveagency.internship.food.data.network.configuration.Urls;
 import fiveagency.internship.food.data.network.mappers.MovieMapper;
 import fiveagency.internship.food.data.network.service.MovieService;
 import fiveagency.internship.food.data.repository.MovieRepositoryImpl;
@@ -44,7 +45,7 @@ public final class ObjectGraph {
 
     private Retrofit provideRetrofit(final OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl("https://api.themoviedb.org")
+                .baseUrl(Urls.retrofitBaseUrl)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();

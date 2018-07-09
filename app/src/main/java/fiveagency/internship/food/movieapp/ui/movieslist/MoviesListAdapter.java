@@ -49,8 +49,8 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
             super(itemView);
         }
 
-        void render(MovieViewModel movieViewModel) {
-            TextView textView = itemView.findViewById(R.id.movie_name);
+        void render(final MovieViewModel movieViewModel) {
+            final TextView textView = itemView.findViewById(R.id.movie_name);
             textView.setText(movieViewModel.title);
         }
     }

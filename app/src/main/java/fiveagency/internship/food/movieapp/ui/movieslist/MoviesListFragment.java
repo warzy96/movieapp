@@ -12,12 +12,14 @@ import android.view.ViewGroup;
 
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.app.MovieApplication;
+import fiveagency.internship.food.movieapp.injection.ObjectGraph;
 
 public final class MoviesListFragment extends Fragment implements MoviesListContract.View {
 
     public static final String TAG = "MoviesListFragment";
     private MoviesListContract.Presenter presenter;
     private MoviesListAdapter moviesListAdapter;
+    private ObjectGraph objectGraph;
 
     public static MoviesListFragment newInstance() {
         return new MoviesListFragment();
@@ -26,28 +28,33 @@ public final class MoviesListFragment extends Fragment implements MoviesListCont
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        presenter = MovieApplication.from(getContext()).getObjectGraph().provideMoviesListPresenter(this);
-        moviesListAdapter = MovieApplication.from(getContext()).getObjectGraph().provideMoviesListAdapter(getContext());
-    }
-
-    @Override
-    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        presenter.start();
+        objectGraph = MovieApplication.from(getContext()).getObjectGraph();
+        presenter = objectGraph.provideMoviesListPresenter(this);
+        moviesListAdapter = objectGraph.provideMoviesListAdapter(getContext());
     }
 
     @NonNull
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_movies_list, container, false);
-        final RecyclerView recyclerView = rootView.findViewById(R.id.movies_list_recycler_view);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(moviesListAdapter);
-        return rootView;
+        return inflater.inflate(R.layout.fragment_movies_list, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initRecyclerView(view);
+        presenter.start();
     }
 
     @Override
     public void render(final MoviesListViewModel moviesListViewModel) {
         moviesListAdapter.setMovies(moviesListViewModel.movieViewModelList);
+    }
+
+    private RecyclerView initRecyclerView(final View rootView) {
+        final RecyclerView recyclerView = rootView.findViewById(R.id.movies_list_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(moviesListAdapter);
+        return recyclerView;
     }
 }

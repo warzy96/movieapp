@@ -9,6 +9,7 @@ import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
 
 public final class MoviesListPresenter extends BasePresenter<MoviesListContract.View> implements MoviesListContract.Presenter {
 
+    private static final int defaultPage = 1;
     private final GetMoviesUseCase getMoviesUseCase;
     private final MovieViewModelMapper movieViewModelMapper;
 
@@ -21,14 +22,15 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
 
     @Override
     public void start() {
-        getMoviesUseCase.execute(1, new QueryUseCase.Callback<List<Movie>>() {
+        getMoviesUseCase.execute(defaultPage, new QueryUseCase.Callback<List<Movie>>() {
 
             @Override
             public void onSuccess(final List<Movie> movieList) {
-                MoviesListViewModel moviesListViewModel = movieViewModelMapper.mapMoviesListViewModel(movieList);
+                final MoviesListViewModel moviesListViewModel = movieViewModelMapper.mapMoviesListViewModel(movieList);
                 view.render(moviesListViewModel);
             }
 
+            //TODO: missing implementation
             @Override
             public void onFailure(final Throwable throwable) {
 

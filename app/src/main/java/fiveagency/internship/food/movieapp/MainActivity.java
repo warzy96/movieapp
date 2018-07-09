@@ -13,15 +13,15 @@ import fiveagency.internship.food.movieapp.app.MovieApplication;
 import fiveagency.internship.food.movieapp.injection.ObjectGraph;
 import fiveagency.internship.food.movieapp.router.Router;
 
-public class MainActivity extends AppCompatActivity {
+public final class MainActivity extends AppCompatActivity {
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ObjectGraph objectGraph = MovieApplication.from(this).getObjectGraph();
-        GetMoviesUseCase getMoviesUseCase = objectGraph.provideGetMoviesUseCase();
+        final ObjectGraph objectGraph = MovieApplication.from(this).getObjectGraph();
+        final GetMoviesUseCase getMoviesUseCase = objectGraph.provideGetMoviesUseCase();
         getMoviesUseCase.execute(1, new QueryUseCase.Callback<List<Movie>>() {
 
             @Override
@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
                 throwable.printStackTrace();
             }
         });
-        Router router = objectGraph.provideRouter(this);
+        final Router router = objectGraph.provideRouter(this);
         router.showMoviesListScreen();
     }
 }

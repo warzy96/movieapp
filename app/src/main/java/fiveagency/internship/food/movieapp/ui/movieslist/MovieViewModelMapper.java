@@ -12,8 +12,8 @@ public final class MovieViewModelMapper {
     }
 
     public MoviesListViewModel mapMoviesListViewModel(final List<Movie> movieList) {
-        LinkedList<MovieViewModel> movieViewModels = new LinkedList<>();
-        for (Movie movie : movieList) {
+        final LinkedList<MovieViewModel> movieViewModels = new LinkedList<>();
+        for (final Movie movie : movieList) {
             movieViewModels.add(new MovieViewModel(movie));
         }
         return new MoviesListViewModel(movieViewModels);

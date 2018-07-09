@@ -16,7 +16,6 @@ public final class MovieClient {
 
     private final MovieService movieService;
     private final MovieMapper movieMapper;
-    private final ApiConstants apiConstants = new ApiConstants();
 
     public MovieClient(final MovieService movieService, final MovieMapper movieMapper) {
         this.movieService = movieService;
@@ -24,13 +23,15 @@ public final class MovieClient {
     }
 
     public void getMovieDetails(final int movieId, final ResponseListener<Movie> responseListener) {
-        movieService.movieDetailsEntity(movieId, apiConstants.api_key, apiConstants.language_enUS)
+        movieService.movieDetailsEntity(movieId, ApiConstants.api_key, ApiConstants.language_enUS)
                     .enqueue(new Callback<ApiMovie>() {
 
                         @Override
                         public void onResponse(final Call<ApiMovie> call, final Response<ApiMovie> response) {
-                            ApiMovie apiMovie = response.body();
-                            responseListener.onResult(movieMapper.mapMovie(apiMovie == null ? new ApiMovie() : apiMovie));
+                            if (response.isSuccessful()) {
+                                final ApiMovie apiMovie = response.body();
+                                responseListener.onResult(movieMapper.mapMovie(apiMovie == null ? new ApiMovie() : apiMovie));
+                            }
                         }
 
                         @Override
@@ -41,12 +42,12 @@ public final class MovieClient {
     }
 
     public void getMovies(final ResponseListener<List<Movie>> responseListener, final int page) {
-        movieService.listMovieEntities(apiConstants.api_key, apiConstants.language_enUS, page)
+        movieService.listMovieEntities(ApiConstants.api_key, ApiConstants.language_enUS, page)
                     .enqueue(new Callback<ApiMoviesList>() {
 
                         @Override
                         public void onResponse(final Call<ApiMoviesList> call, final Response<ApiMoviesList> response) {
-                            ApiMoviesList apiMoviesList = response.body();
+                            final ApiMoviesList apiMoviesList = response.body();
                             if (response.isSuccessful()) {
                                 responseListener.onResult(movieMapper.mapMovies(apiMoviesList == null ? new ApiMoviesList() : apiMoviesList));
                             }
@@ -60,13 +61,15 @@ public final class MovieClient {
     }
 
     public void getMovies(final ResponseListener<List<Movie>> responseListener, final String title) {
-        movieService.searchMovieEntities(apiConstants.api_key, apiConstants.language_enUS, title)
+        movieService.searchMovieEntities(ApiConstants.api_key, ApiConstants.language_enUS, title)
                     .enqueue(new Callback<ApiMoviesList>() {
 
                         @Override
                         public void onResponse(final Call<ApiMoviesList> call, final Response<ApiMoviesList> response) {
-                            ApiMoviesList apiMoviesList = response.body();
-                            responseListener.onResult(movieMapper.mapMovies(apiMoviesList == null ? new ApiMoviesList() : apiMoviesList));
+                            if (response.isSuccessful()) {
+                                final ApiMoviesList apiMoviesList = response.body();
+                                responseListener.onResult(movieMapper.mapMovies(apiMoviesList == null ? new ApiMoviesList() : apiMoviesList));
+                            }
                         }
 
                         @Override

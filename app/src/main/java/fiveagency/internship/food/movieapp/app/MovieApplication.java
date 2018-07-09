@@ -9,6 +9,10 @@ public final class MovieApplication extends Application {
 
     private ObjectGraph objectGraph;
 
+    public static MovieApplication from(final Context context) {
+        return (MovieApplication) context.getApplicationContext();
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -17,9 +21,5 @@ public final class MovieApplication extends Application {
 
     public ObjectGraph getObjectGraph() {
         return objectGraph;
-    }
-
-    public static MovieApplication from(final Context context) {
-        return (MovieApplication) context.getApplicationContext();
     }
 }

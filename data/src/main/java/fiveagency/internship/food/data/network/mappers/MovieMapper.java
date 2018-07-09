@@ -14,8 +14,8 @@ public final class MovieMapper {
     }
 
     public List<Movie> mapMovies(final ApiMoviesList apiMoviesList) {
-        List<Movie> movies = new LinkedList<>();
-        for (ApiMovie apiMovie : apiMoviesList.movieApiEntities) {
+        final List<Movie> movies = new LinkedList<>();
+        for (final ApiMovie apiMovie : apiMoviesList.movieApiEntities) {
             movies.add(new Movie(apiMovie.title, apiMovie.id, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate));
         }
         return movies;
