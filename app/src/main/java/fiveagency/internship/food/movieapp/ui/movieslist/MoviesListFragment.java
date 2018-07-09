@@ -51,10 +51,9 @@ public final class MoviesListFragment extends Fragment implements MoviesListCont
         moviesListAdapter.setMovies(moviesListViewModel.movieViewModelList);
     }
 
-    private RecyclerView initRecyclerView(final View rootView) {
+    private void initRecyclerView(final View rootView) {
         final RecyclerView recyclerView = rootView.findViewById(R.id.movies_list_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(moviesListAdapter);
-        return recyclerView;
     }
 }
