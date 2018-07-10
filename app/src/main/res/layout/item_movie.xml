@@ -1,14 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="@dimen/item_movie_margin_bottom">
+
+    <ImageView
+        android:id="@+id/item_movie_poster_image"
+        android:layout_width="@dimen/item_movie_poster_width"
+        android:layout_height="@dimen/item_movie_poster_height"
+        android:contentDescription="@string/item_movie_poster_image_view"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/movie_name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/item_movie_movie_name_margin_end"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/item_movie_poster_image"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Titanic"/>
-</FrameLayout>
+</android.support.constraint.ConstraintLayout>

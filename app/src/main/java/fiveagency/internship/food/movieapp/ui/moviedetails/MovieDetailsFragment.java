@@ -23,6 +23,10 @@ public final class MovieDetailsFragment extends Fragment implements MovieDetails
 
     public static final String TAG = "MovieDetailsFragment";
     private static final String KEY_MOVIE_ID = "key_movie_id";
+    private static final int CIRCULAR_PROGRESS_DRAWABLE_STROKE_WIDTH = R.dimen.circular_progressbar_stroke_width;
+    private static final int MOVIE_NAME_TEXT_VIEW = R.id.movie_details_movie_name;
+    private static final int MOVIE_OVERVIEW_TEXT_VIEW = R.id.movie_details_overview_text_view;
+    private static final int MOVIE_POSTER_IMAGE_VIEW = R.id.movie_details_image_view;
     private MovieDetailsContract.Presenter presenter;
     private ObjectGraph objectGraph;
 
@@ -55,14 +59,22 @@ public final class MovieDetailsFragment extends Fragment implements MovieDetails
 
     @Override
     public void render(final MovieDetailsViewModel movieDetailsViewModel) {
-        final TextView textView = getView().findViewById(R.id.movie_details_movie_name);
+        final TextView textView = getView().findViewById(MOVIE_NAME_TEXT_VIEW);
         textView.setText(movieDetailsViewModel.title);
-        final ImageView imageView = getView().findViewById(R.id.movie_details_image_view);
-        final CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(getContext());
-        circularProgressDrawable.start();
+        final TextView overviewTextView = getView().findViewById(MOVIE_OVERVIEW_TEXT_VIEW);
+        overviewTextView.setText(movieDetailsViewModel.overview);
+        final ImageView imageView = getView().findViewById(MOVIE_POSTER_IMAGE_VIEW);
+        final CircularProgressDrawable circularProgressDrawable = initCircularProgressDrawable();
         Glide.with(getContext())
              .load(movieDetailsViewModel.imageSource)
              .apply(new RequestOptions().placeholder(circularProgressDrawable))
              .into(imageView);
+    }
+
+    private CircularProgressDrawable initCircularProgressDrawable() {
+        CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(getContext());
+        circularProgressDrawable.setStrokeWidth(getResources().getDimension(CIRCULAR_PROGRESS_DRAWABLE_STROKE_WIDTH));
+        circularProgressDrawable.start();
+        return circularProgressDrawable;
     }
 }

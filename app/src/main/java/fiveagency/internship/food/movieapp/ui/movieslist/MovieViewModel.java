@@ -9,6 +9,7 @@ public final class MovieViewModel {
     public final String overview;
     public final boolean isAdult;
     public final String releaseDate;
+    public final String imageSource;
 
     MovieViewModel(final Movie movie) {
         this.id = movie.id;
@@ -16,14 +17,16 @@ public final class MovieViewModel {
         this.overview = movie.overview;
         this.isAdult = movie.isAdult;
         this.releaseDate = movie.releaseDate;
+        this.imageSource = movie.imageSource;
     }
 
-    MovieViewModel(final int id, final String title, final String overview, final boolean isAdult, final String releaseDate) {
+    MovieViewModel(final int id, final String title, final String overview, final boolean isAdult, final String releaseDate, final String imageSource) {
         this.id = id;
         this.title = title;
         this.overview = overview;
         this.isAdult = isAdult;
         this.releaseDate = releaseDate;
+        this.imageSource = imageSource;
     }
 
     @Override

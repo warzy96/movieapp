@@ -1,11 +1,16 @@
 package fiveagency.internship.food.movieapp.ui.movieslist;
 
 import android.support.annotation.NonNull;
+import android.support.v4.widget.CircularProgressDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +19,8 @@ import fiveagency.internship.food.movieapp.R;
 
 public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder> {
 
+    private static final int MOVIE_NAME_TEXT_VIEW = R.id.movie_name;
+    private static final int MOVIE_POSTER_IMAGE_VIEW = R.id.item_movie_poster_image;
     private final LayoutInflater layoutInflater;
     private final List<MovieViewModel> movies = new ArrayList<>();
     private MovieOnClickListener onMovieClickListener;
@@ -55,9 +62,22 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
         }
 
         void render(final MovieViewModel movieViewModel, MovieOnClickListener movieOnClickListener) {
-            final TextView textView = itemView.findViewById(R.id.movie_name);
-            textView.setText(movieViewModel.title);
+            final TextView movieTitleTextView = itemView.findViewById(MOVIE_NAME_TEXT_VIEW);
+            movieTitleTextView.setText(movieViewModel.title);
+            final ImageView imageView = itemView.findViewById(MOVIE_POSTER_IMAGE_VIEW);
+            final CircularProgressDrawable circularProgressDrawable = initCircularProgressDrawable();
+            Glide.with(itemView.getContext())
+                 .load(movieViewModel.imageSource)
+                 .apply(new RequestOptions().placeholder(circularProgressDrawable))
+                 .into(imageView);
             itemView.setOnClickListener(view -> movieOnClickListener.onClick(movieViewModel.id));
+        }
+
+        private CircularProgressDrawable initCircularProgressDrawable() {
+            final CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(itemView.getContext());
+            circularProgressDrawable.setStrokeWidth(itemView.getResources().getDimension(R.dimen.circular_progressbar_stroke_width));
+            circularProgressDrawable.start();
+            return circularProgressDrawable;
         }
     }
 

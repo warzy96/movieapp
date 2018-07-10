@@ -28,4 +28,13 @@
         app:layout_constraintTop_toBottomOf="@id/movie_details_image_view"
         tools:text="Titanic"/>
 
+    <TextView
+        android:id="@+id/movie_details_overview_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/movie_details_overview_margin"
+        app:layout_constraintTop_toBottomOf="@id/movie_details_movie_name"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
 </android.support.constraint.ConstraintLayout>
