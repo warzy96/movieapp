@@ -19,12 +19,12 @@ import fiveagency.internship.food.movieapp.R;
 
 public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder> {
 
-    private static final int MOVIE_NAME_TEXT_VIEW = R.id.movie_name;
-    private static final int MOVIE_POSTER_IMAGE_VIEW = R.id.item_movie_poster_image;
     private final LayoutInflater layoutInflater;
     private final List<MovieViewModel> movies = new ArrayList<>();
     private static final int ITEM_MOVIE_LAYOUT = R.layout.item_movie;
     private static final int MOVIE_NAME_TEXT_VIEW = R.id.movie_name;
+    private static final int MOVIE_POSTER_IMAGE_VIEW = R.id.item_movie_poster_image;
+    private static final int CIRCULAR_PROGRESS_DRAWABLE_STROKE_WIDTH = R.dimen.circular_progressbar_stroke_width;
     private MovieOnClickListener onMovieClickListener;
 
     public MoviesListAdapter(final LayoutInflater layoutInflater) {
@@ -63,7 +63,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
             super(itemView);
         }
 
-        void render(final MovieViewModel movieViewModel, MovieOnClickListener movieOnClickListener) {
+        void render(final MovieViewModel movieViewModel, final MovieOnClickListener movieOnClickListener) {
             final TextView movieTitleTextView = itemView.findViewById(MOVIE_NAME_TEXT_VIEW);
             movieTitleTextView.setText(movieViewModel.title);
             final ImageView imageView = itemView.findViewById(MOVIE_POSTER_IMAGE_VIEW);
@@ -77,7 +77,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
         private CircularProgressDrawable initCircularProgressDrawable() {
             final CircularProgressDrawable circularProgressDrawable = new CircularProgressDrawable(itemView.getContext());
-            circularProgressDrawable.setStrokeWidth(itemView.getResources().getDimension(R.dimen.circular_progressbar_stroke_width));
+            circularProgressDrawable.setStrokeWidth(itemView.getResources().getDimension(CIRCULAR_PROGRESS_DRAWABLE_STROKE_WIDTH));
             circularProgressDrawable.start();
             return circularProgressDrawable;
         }

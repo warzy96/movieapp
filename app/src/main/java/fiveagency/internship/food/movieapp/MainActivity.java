@@ -20,19 +20,6 @@ public final class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         final ObjectGraph objectGraph = MovieApplication.from(this).getObjectGraph();
-        final QueryUseCase<Integer, List<Movie>> getMoviesUseCase = objectGraph.provideGetMoviesUseCase();
-        getMoviesUseCase.execute(1, new QueryUseCase.Callback<List<Movie>>() {
-
-            @Override
-            public void onSuccess(final List<Movie> movies) {
-                Log.d("movies", movies.toString());
-            }
-
-            @Override
-            public void onFailure(final Throwable throwable) {
-                throwable.printStackTrace();
-            }
-        });
         final Router router = objectGraph.provideRouter(this);
         router.showMoviesListScreen();
     }

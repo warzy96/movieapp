@@ -19,7 +19,7 @@ public final class MovieMapper {
                          apiMovie.isAdult,
                          apiMovie.overview == null ? Movie.EMPTY.overview : apiMovie.overview,
                          apiMovie.releaseDate == null ? Movie.EMPTY.releaseDate : apiMovie.releaseDate,
-                         apiMovie.imageSource == null ? Movie.EMPTY.imageSource : apiMovie.imageSource);
+                         apiMovie.imageSource == null ? Movie.EMPTY.imageSource : ApiConstants.IMAGE_SOURCE_URL + apiMovie.imageSource);
     }
 
     public List<Movie> mapMovies(final ApiMoviesList apiMoviesList) {

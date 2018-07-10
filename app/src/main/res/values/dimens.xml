@@ -8,5 +8,5 @@
     <dimen name="item_movie_margin_bottom">10dp</dimen>
     <dimen name="item_movie_poster_width">120dp</dimen>
     <dimen name="item_movie_poster_height">160dp</dimen>
-    <dimen name="circular_progressbar_stroke_width">20dp</dimen>
+    <dimen name="circular_progressbar_stroke_width">10dp</dimen>
 </resources>

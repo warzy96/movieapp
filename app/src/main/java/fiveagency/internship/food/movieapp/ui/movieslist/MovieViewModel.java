@@ -12,7 +12,7 @@ public final class MovieViewModel {
     public final String imageSource;
 
     MovieViewModel(final Movie movie) {
-        this(movie.title, movie.overview, movie.isAdult, movie.releaseDate, movie.releaseDate, movie.imageSource);
+        this(movie.id, movie.title, movie.overview, movie.isAdult, movie.releaseDate, movie.imageSource);
     }
 
     MovieViewModel(final int id, final String title, final String overview, final boolean isAdult, final String releaseDate, final String imageSource) {
@@ -27,10 +27,12 @@ public final class MovieViewModel {
     @Override
     public String toString() {
         return "MovieViewModel{" +
-                "title='" + title + '\'' +
+                "id=" + id +
+                ", title='" + title + '\'' +
                 ", overview='" + overview + '\'' +
                 ", isAdult=" + isAdult +
                 ", releaseDate='" + releaseDate + '\'' +
+                ", imageSource='" + imageSource + '\'' +
                 '}';
     }
 }
