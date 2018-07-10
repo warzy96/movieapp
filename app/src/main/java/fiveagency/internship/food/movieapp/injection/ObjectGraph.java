@@ -72,7 +72,7 @@ public final class ObjectGraph {
         return new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY);
     }
 
-    public MoviesListContract.Presenter provideMoviesListPresenter(final MoviesListContract.View view, Router router) {
+    public MoviesListContract.Presenter provideMoviesListPresenter(final MoviesListContract.View view, final Router router) {
         return new MoviesListPresenter(view, getMoviesUseCase, movieViewModelMapper, router);
     }
 
