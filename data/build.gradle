@@ -29,8 +29,8 @@ dependencies {
     implementation project(':domain')
     implementation "com.squareup.retrofit2:retrofit:$project.ext.retrofitVersion"
     implementation "com.google.code.gson:gson:$project.ext.gsonVersion"
-    implementation "com.android.support:appcompat-v7:$project.ext.appcompat_v7Version"
+    implementation "com.android.support:appcompat-v7:$project.ext.appcompatVersion"
     testImplementation "junit:junit:$project.ext.junitVersion"
     androidTestImplementation "com.android.support.test:runner:$project.ext.runnerVersion"
-    androidTestImplementation "com.android.support.test.espresso:espresso-core:$project.ext.espresso_coreVersion"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$project.ext.espressoCoreVersion"
 }

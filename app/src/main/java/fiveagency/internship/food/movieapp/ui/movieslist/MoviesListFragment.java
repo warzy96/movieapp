@@ -20,6 +20,8 @@ public final class MoviesListFragment extends Fragment implements MoviesListCont
     private MoviesListContract.Presenter presenter;
     private MoviesListAdapter moviesListAdapter;
     private ObjectGraph objectGraph;
+    private static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
+    private static final int MOVIES_LIST_RECYCLER_VIEW = R.id.movies_list_recycler_view;
 
     public static MoviesListFragment newInstance() {
         return new MoviesListFragment();
@@ -36,7 +38,7 @@ public final class MoviesListFragment extends Fragment implements MoviesListCont
     @NonNull
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_movies_list, container, false);
+        return inflater.inflate(MOVIES_LIST_FRAGMENT, container, false);
     }
 
     @Override
@@ -52,7 +54,7 @@ public final class MoviesListFragment extends Fragment implements MoviesListCont
     }
 
     private void initRecyclerView(final View rootView) {
-        final RecyclerView recyclerView = rootView.findViewById(R.id.movies_list_recycler_view);
+        final RecyclerView recyclerView = rootView.findViewById(MOVIES_LIST_RECYCLER_VIEW);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(moviesListAdapter);
     }

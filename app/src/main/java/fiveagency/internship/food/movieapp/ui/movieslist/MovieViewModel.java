@@ -10,10 +10,7 @@ public final class MovieViewModel {
     public final String releaseDate;
 
     MovieViewModel(final Movie movie) {
-        this.title = movie.title;
-        this.overview = movie.overview;
-        this.isAdult = movie.isAdult;
-        this.releaseDate = movie.releaseDate;
+        this(movie.title, movie.overview, movie.isAdult, movie.releaseDate);
     }
 
     MovieViewModel(final String title, final String overview, final boolean isAdult, final String releaseDate) {

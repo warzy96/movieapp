@@ -4,7 +4,7 @@ public abstract class BasePresenter<View> {
 
     public final View view;
 
-    public BasePresenter(View view) {
+    public BasePresenter(final View view) {
         this.view = view;
     }
 }

@@ -10,7 +10,14 @@ import fiveagency.internship.food.domain.model.Movie;
 public final class MovieMapper {
 
     public Movie mapMovie(final ApiMovie apiMovie) {
-        return new Movie(apiMovie.title, apiMovie.id, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate);
+        if (apiMovie == null) {
+            return Movie.EMPTY;
+        }
+        return new Movie(apiMovie.title == null ? Movie.EMPTY.title : apiMovie.title,
+                         apiMovie.id,
+                         apiMovie.isAdult,
+                         apiMovie.overview == null ? Movie.EMPTY.overview : apiMovie.overview,
+                         apiMovie.releaseDate == null ? Movie.EMPTY.releaseDate : apiMovie.releaseDate);
     }
 
     public List<Movie> mapMovies(final ApiMoviesList apiMoviesList) {

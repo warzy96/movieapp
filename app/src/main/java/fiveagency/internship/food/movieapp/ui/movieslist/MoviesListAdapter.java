@@ -16,6 +16,8 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
     private final LayoutInflater layoutInflater;
     private final List<MovieViewModel> movies = new ArrayList<>();
+    private static final int ITEM_MOVIE_LAYOUT = R.layout.item_movie;
+    private static final int MOVIE_NAME_TEXT_VIEW = R.id.movie_name;
 
     public MoviesListAdapter(final LayoutInflater layoutInflater) {
         this.layoutInflater = layoutInflater;
@@ -24,7 +26,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
     @NonNull
     @Override
     public MovieViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
-        return new MovieViewHolder(layoutInflater.inflate(R.layout.item_movie, parent, false));
+        return new MovieViewHolder(layoutInflater.inflate(ITEM_MOVIE_LAYOUT, parent, false));
     }
 
     @Override
@@ -50,7 +52,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
         }
 
         void render(final MovieViewModel movieViewModel) {
-            final TextView textView = itemView.findViewById(R.id.movie_name);
+            final TextView textView = itemView.findViewById(MOVIE_NAME_TEXT_VIEW);
             textView.setText(movieViewModel.title);
         }
     }

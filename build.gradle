@@ -29,12 +29,12 @@ allprojects {
         minSdkVersion = 21
         versionCode = 1
         versionName = "1.0"
-        appcompat_v7Version = "27.1.1"
+        appcompatVersion = "27.1.1"
         junitVersion = "4.12"
         runnerVersion = "1.0.2"
-        espresso_coreVersion = "3.0.2"
-        recyclerview_v7Version = "27.1.1"
-        constraint_layoutVersion = "1.1.2"
+        espressoCoreVersion = "3.0.2"
+        recyclerviewVersion = "27.1.1"
+        constraintLayoutVersion = "1.1.2"
     }
 }
 

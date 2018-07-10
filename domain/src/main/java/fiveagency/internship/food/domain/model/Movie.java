@@ -4,6 +4,7 @@ import java.util.Objects;
 
 public final class Movie {
 
+    public static final Movie EMPTY = new Movie("", 0, false, "", "");
     public final String title;
     public final int id;
     public final boolean isAdult;
