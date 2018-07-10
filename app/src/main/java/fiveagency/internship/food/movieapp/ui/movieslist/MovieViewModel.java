@@ -12,12 +12,7 @@ public final class MovieViewModel {
     public final String imageSource;
 
     MovieViewModel(final Movie movie) {
-        this.id = movie.id;
-        this.title = movie.title;
-        this.overview = movie.overview;
-        this.isAdult = movie.isAdult;
-        this.releaseDate = movie.releaseDate;
-        this.imageSource = movie.imageSource;
+        this(movie.title, movie.overview, movie.isAdult, movie.releaseDate, movie.releaseDate, movie.imageSource);
     }
 
     MovieViewModel(final int id, final String title, final String overview, final boolean isAdult, final String releaseDate, final String imageSource) {

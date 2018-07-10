@@ -58,7 +58,7 @@ public final class ObjectGraph {
 
     private Retrofit provideRetrofit(final OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
-                .baseUrl(Urls.retrofitBaseUrl)
+                .baseUrl(Urls.RETROFIT_BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(okHttpClient)
                 .build();

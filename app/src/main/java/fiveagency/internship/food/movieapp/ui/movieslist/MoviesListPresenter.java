@@ -10,7 +10,7 @@ import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
 
 public final class MoviesListPresenter extends BasePresenter<MoviesListContract.View> implements MoviesListContract.Presenter {
 
-    private static final int defaultPage = 1;
+    private static final int DEFAULT_PAGE = 1;
     private final GetMoviesUseCase getMoviesUseCase;
     private final MovieViewModelMapper movieViewModelMapper;
     private final Router router;
@@ -25,7 +25,7 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
 
     @Override
     public void start() {
-        getMoviesUseCase.execute(defaultPage, new QueryUseCase.Callback<List<Movie>>() {
+        getMoviesUseCase.execute(DEFAULT_PAGE, new QueryUseCase.Callback<List<Movie>>() {
 
             @Override
             public void onSuccess(final List<Movie> movieList) {

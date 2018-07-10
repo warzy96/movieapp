@@ -11,13 +11,21 @@ import fiveagency.internship.food.domain.model.Movie;
 public final class MovieMapper {
 
     public Movie mapMovie(final ApiMovie apiMovie) {
-        return new Movie(apiMovie.title, apiMovie.id, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate, ApiConstants.image_source_url + apiMovie.imageSource);
+        if (apiMovie == null) {
+            return Movie.EMPTY;
+        }
+        return new Movie(apiMovie.title == null ? Movie.EMPTY.title : apiMovie.title,
+                         apiMovie.id,
+                         apiMovie.isAdult,
+                         apiMovie.overview == null ? Movie.EMPTY.overview : apiMovie.overview,
+                         apiMovie.releaseDate == null ? Movie.EMPTY.releaseDate : apiMovie.releaseDate,
+                         apiMovie.imageSource == null ? Movie.EMPTY.imageSource : apiMovie.imageSource);
     }
 
     public List<Movie> mapMovies(final ApiMoviesList apiMoviesList) {
         final List<Movie> movies = new LinkedList<>();
         for (final ApiMovie apiMovie : apiMoviesList.movieApiEntities) {
-            movies.add(new Movie(apiMovie.title, apiMovie.id, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate, ApiConstants.image_source_url + apiMovie.imageSource));
+            movies.add(new Movie(apiMovie.title, apiMovie.id, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate, ApiConstants.IMAGE_SOURCE_URL + apiMovie.imageSource));
         }
         return movies;
     }
