@@ -3,7 +3,6 @@ package fiveagency.internship.food.movieapp.ui.moviedetails;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.CircularProgressDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +13,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
-import fiveagency.internship.food.movieapp.MainActivity;
-import fiveagency.internship.food.movieapp.R;
-import fiveagency.internship.food.movieapp.app.MovieApplication;
-import fiveagency.internship.food.movieapp.injection.ObjectGraph;
+import javax.inject.Inject;
 
-public final class MovieDetailsFragment extends Fragment implements MovieDetailsContract.View {
+import fiveagency.internship.food.movieapp.R;
+import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
+import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
+
+public final class MovieDetailsFragment extends DaggerFragment implements MovieDetailsContract.View {
 
     public static final String TAG = "MovieDetailsFragment";
     private static final String KEY_MOVIE_ID = "key_movie_id";
@@ -27,8 +27,8 @@ public final class MovieDetailsFragment extends Fragment implements MovieDetails
     private static final int MOVIE_NAME_TEXT_VIEW = R.id.movie_details_movie_name;
     private static final int MOVIE_OVERVIEW_TEXT_VIEW = R.id.movie_details_overview_text_view;
     private static final int MOVIE_POSTER_IMAGE_VIEW = R.id.movie_details_image_view;
-    private MovieDetailsContract.Presenter presenter;
-    private ObjectGraph objectGraph;
+    @Inject
+    MovieDetailsContract.Presenter presenter;
 
     public static MovieDetailsFragment newInstance(final int movieId) {
         final Bundle arguments = new Bundle();
@@ -41,8 +41,7 @@ public final class MovieDetailsFragment extends Fragment implements MovieDetails
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        objectGraph = MovieApplication.from(getContext()).getObjectGraph();
-        presenter = objectGraph.provideMovieDetailsPresenter(this, objectGraph.provideRouter((MainActivity) getActivity()));
+        presenter.setView(this);
     }
 
     @Nullable
@@ -76,5 +75,10 @@ public final class MovieDetailsFragment extends Fragment implements MovieDetails
         circularProgressDrawable.setStrokeWidth(getResources().getDimension(CIRCULAR_PROGRESS_DRAWABLE_STROKE_WIDTH));
         circularProgressDrawable.start();
         return circularProgressDrawable;
+    }
+
+    @Override
+    protected void inject(final FragmentComponent fragmentComponent) {
+        fragmentComponent.inject(this);
     }
 }

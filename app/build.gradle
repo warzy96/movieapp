@@ -47,4 +47,6 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$project.ext.recyclerviewVersion"
     implementation "com.github.bumptech.glide:glide:$project.ext.glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$project.ext.glideCompilerVersion"
+    implementation "com.google.dagger:dagger:$project.ext.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$project.ext.daggerAnnotationProcessorVersion"
 }

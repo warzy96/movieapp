@@ -1,14 +1,19 @@
 package fiveagency.internship.food.domain.interactor;
 
+import javax.inject.Inject;
+import javax.inject.Singleton;
+
 import fiveagency.internship.food.domain.interactor.type.QueryUseCase;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import fiveagency.internship.food.domain.repository.listeners.RepositoryListener;
 
+@Singleton
 public final class GetMovieDetailsUseCase implements QueryUseCase<Integer, Movie> {
 
     private final MovieRepository movieRepository;
 
+    @Inject
     public GetMovieDetailsUseCase(final MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
     }
