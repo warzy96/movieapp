@@ -47,4 +47,6 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$project.ext.recyclerviewVersion"
     implementation "com.github.bumptech.glide:glide:$project.ext.glideVersion"
     annotationProcessor "com.github.bumptech.glide:compiler:$project.ext.glideCompilerVersion"
+    implementation "com.jakewharton:butterknife:$project.ext.butterKnifeVersion"
+    annotationProcessor "com.jakewharton:butterknife-compiler:$project.ext.butterKnifeCompilerVersion"
 }

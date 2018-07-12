@@ -24,6 +24,8 @@ import fiveagency.internship.food.movieapp.ui.movieslist.MovieViewModelMapper;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListAdapter;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListContract;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListPresenter;
+import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
+import fiveagency.internship.food.movieapp.ui.utils.ImageLoaderImpl;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -35,8 +37,9 @@ public final class ObjectGraph {
     private final GetMovieDetailsUseCase getMovieDetailsUseCase;
     private final MovieViewModelMapper movieViewModelMapper;
     private final MovieDetailsViewModelMapper movieDetailsViewModelMapper;
+    private final ImageLoader imageLoader;
 
-    public ObjectGraph() {
+    public ObjectGraph(final Context context) {
         final HttpLoggingInterceptor httpLoggingInterceptor = provideHttpLoggingInterceptor();
         final OkHttpClient okHttpClient = provideOkHttpClient(httpLoggingInterceptor);
         final Retrofit retrofit = provideRetrofit(okHttpClient);
@@ -46,6 +49,7 @@ public final class ObjectGraph {
         final MovieClient movieClient = new MovieClient(movieService, movieMapper);
         final MovieRepository movieRepository = new MovieRepositoryImpl(movieClient);
 
+        imageLoader = new ImageLoaderImpl(context);
         movieViewModelMapper = new MovieViewModelMapper();
         movieDetailsViewModelMapper = new MovieDetailsViewModelMapper();
         getMoviesUseCase = new GetMoviesUseCase(movieRepository);
@@ -89,10 +93,14 @@ public final class ObjectGraph {
     }
 
     public MoviesListAdapter provideMoviesListAdapter(final Context context) {
-        return new MoviesListAdapter(provideLayoutInflater(context));
+        return new MoviesListAdapter(provideLayoutInflater(context), imageLoader);
     }
 
     private LayoutInflater provideLayoutInflater(final Context context) {
         return LayoutInflater.from(context);
+    }
+
+    public ImageLoader provideImageLoader() {
+        return imageLoader;
     }
 }
