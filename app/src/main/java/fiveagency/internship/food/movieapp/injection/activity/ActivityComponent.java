@@ -2,7 +2,6 @@ package fiveagency.internship.food.movieapp.injection.activity;
 
 import dagger.Subcomponent;
 import fiveagency.internship.food.movieapp.injection.activity.module.ActivityModule;
-import fiveagency.internship.food.movieapp.injection.activity.module.ActivityPresenterModule;
 import fiveagency.internship.food.movieapp.injection.application.ApplicationComponent;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 
@@ -10,7 +9,6 @@ import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 @Subcomponent(
         modules = {
                 ActivityModule.class,
-                ActivityPresenterModule.class,
         }
 )
 public interface ActivityComponent extends ActivityComponentInjects {
@@ -22,7 +20,6 @@ public interface ActivityComponent extends ActivityComponentInjects {
 
         ActivityComponent build();
 
-        Builder activityPresenterModule(ActivityPresenterModule activityPresenterModule);
 
     }
 
@@ -31,7 +28,6 @@ public interface ActivityComponent extends ActivityComponentInjects {
         static public ActivityComponent init(final DaggerActivity daggerActivity, final ApplicationComponent applicationComponent) {
             return applicationComponent.activityComponentBuilder()
                                        .activityModule(new ActivityModule(daggerActivity))
-                                       .activityPresenterModule(new ActivityPresenterModule(daggerActivity))
                                        .build();
         }
 
