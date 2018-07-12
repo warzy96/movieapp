@@ -63,7 +63,7 @@ public final class MovieDetailsFragment extends Fragment implements MovieDetails
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Bundle argumentsBundle = getArguments();
+        final Bundle argumentsBundle = getArguments();
         if (argumentsBundle != null) {
             if (argumentsBundle.containsKey(KEY_MOVIE_ID)) {
                 presenter.start(argumentsBundle.getInt(KEY_MOVIE_ID));
