@@ -3,10 +3,9 @@ package fiveagency.internship.food.data.repository;
 import java.util.List;
 
 import fiveagency.internship.food.data.network.client.MovieClient;
-import fiveagency.internship.food.data.network.client.ResponseListener;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.repository.MovieRepository;
-import fiveagency.internship.food.domain.repository.listeners.RepositoryListener;
+import io.reactivex.Single;
 
 public final class MovieRepositoryImpl implements MovieRepository {
 
@@ -17,50 +16,17 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public void fetchMovieDetails(final int id, final RepositoryListener<Movie> repositoryListener) {
-        movieClient.getMovieDetails(id, new ResponseListener<Movie>() {
-
-            @Override
-            public void onResult(final Movie movie) {
-                repositoryListener.onResult(movie);
-            }
-
-            @Override
-            public void onFailure(final Throwable t) {
-                repositoryListener.onFailure(t);
-            }
-        });
+    public Single<Movie> fetchMovieDetails(final int id) {
+        return movieClient.getMovieDetails(id);
     }
 
     @Override
-    public void fetchMovies(final int page, final RepositoryListener<List<Movie>> repositoryListener) {
-        movieClient.getMovies(new ResponseListener<List<Movie>>() {
-
-            @Override
-            public void onResult(final List<Movie> movies) {
-                repositoryListener.onResult(movies);
-            }
-
-            @Override
-            public void onFailure(final Throwable t) {
-                repositoryListener.onFailure(t);
-            }
-        }, page);
+    public Single<List<Movie>> fetchMovies(final int page) {
+        return movieClient.getMovies(page);
     }
 
     @Override
-    public void fetchMovies(final String title, final RepositoryListener<List<Movie>> repositoryListener) {
-        movieClient.getMovies(new ResponseListener<List<Movie>>() {
-
-            @Override
-            public void onResult(final List<Movie> movies) {
-                repositoryListener.onResult(movies);
-            }
-
-            @Override
-            public void onFailure(final Throwable t) {
-                repositoryListener.onFailure(t);
-            }
-        }, title);
+    public Single<List<Movie>> fetchMovies(final String title) {
+        return movieClient.getMovies(title);
     }
 }

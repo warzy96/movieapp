@@ -3,6 +3,8 @@ apply plugin: 'java-library'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "com.google.dagger:dagger:$project.ext.daggerVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$project.ext.rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$project.ext.rxJavaVersion"
 }
 
 sourceCompatibility = "1.8"

@@ -1,13 +1,11 @@
 package fiveagency.internship.food.movieapp.ui.movieslist;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
-import fiveagency.internship.food.domain.interactor.type.QueryUseCase;
-import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public final class MoviesListPresenter extends BasePresenter<MoviesListContract.View> implements MoviesListContract.Presenter {
 
@@ -19,20 +17,11 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
 
     @Override
     public void start() {
-        getMoviesUseCase.execute(DEFAULT_PAGE, new QueryUseCase.Callback<List<Movie>>() {
-
-            @Override
-            public void onSuccess(final List<Movie> movieList) {
-                final MoviesListViewModel moviesListViewModel = movieViewModelMapper.mapMoviesListViewModel(movieList);
-                view.render(moviesListViewModel);
-            }
-
-            //TODO: missing implementation
-            @Override
-            public void onFailure(final Throwable throwable) {
-
-            }
-        });
+        compositeDisposable.add(getMoviesUseCase.execute(DEFAULT_PAGE)
+                                                .map(movieViewModelMapper::mapMoviesListViewModel)
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(movieViewModelMapper -> view.render(movieViewModelMapper), Throwable::printStackTrace));
     }
 
     @Override

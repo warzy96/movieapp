@@ -3,9 +3,9 @@ package fiveagency.internship.food.movieapp.ui.moviedetails;
 import javax.inject.Inject;
 
 import fiveagency.internship.food.domain.interactor.GetMovieDetailsUseCase;
-import fiveagency.internship.food.domain.interactor.type.QueryUseCase;
-import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContract.View> implements MovieDetailsContract.Presenter {
 
@@ -16,20 +16,11 @@ public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContr
 
     @Override
     public void start(final int id) {
-        getMovieDetailsUseCase.execute(id, new QueryUseCase.Callback<Movie>() {
-
-            @Override
-            public void onSuccess(final Movie movie) {
-                final MovieDetailsViewModel movieDetailsViewModel = movieDetailsViewModelMapper.mapMovieDetailsViewModel(movie);
-                view.render(movieDetailsViewModel);
-            }
-
-            //TODO: Missing implementation
-            @Override
-            public void onFailure(final Throwable throwable) {
-
-            }
-        });
+        compositeDisposable.add(getMovieDetailsUseCase.execute(id)
+                                                      .map(movieDetailsViewModelMapper::mapMovieDetailsViewModel)
+                                                      .subscribeOn(Schedulers.io())
+                                                      .observeOn(AndroidSchedulers.mainThread())
+                                                      .subscribe(movieDetailsViewModel -> view.render(movieDetailsViewModel), Throwable::printStackTrace));
     }
 
     @Override

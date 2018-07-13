@@ -49,4 +49,7 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$project.ext.glideCompilerVersion"
     implementation "com.google.dagger:dagger:$project.ext.daggerVersion"
     annotationProcessor "com.google.dagger:dagger-compiler:$project.ext.daggerAnnotationProcessorVersion"
+    implementation "io.reactivex.rxjava2:rxandroid:$project.ext.rxAndroidVersion"
+    implementation "io.reactivex.rxjava2:rxjava:$project.ext.rxJavaVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$project.ext.rxJavaRetrofitAdapterVersion"
 }
