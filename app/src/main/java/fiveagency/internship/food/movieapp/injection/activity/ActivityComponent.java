@@ -19,8 +19,6 @@ public interface ActivityComponent extends ActivityComponentInjects {
         Builder activityModule(ActivityModule activityModule);
 
         ActivityComponent build();
-
-
     }
 
     final class Initializer {
