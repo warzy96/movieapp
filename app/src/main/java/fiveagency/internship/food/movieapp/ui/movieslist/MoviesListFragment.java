@@ -22,6 +22,7 @@ public final class MoviesListFragment extends DaggerFragment implements MoviesLi
 
     @Inject
     MoviesListContract.Presenter presenter;
+
     @Inject
     MoviesListAdapter moviesListAdapter;
 

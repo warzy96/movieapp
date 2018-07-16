@@ -14,6 +14,7 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
     private static final int DEFAULT_PAGE = 1;
     @Inject
     GetMoviesUseCase getMoviesUseCase;
+
     @Inject
     MovieViewModelMapper movieViewModelMapper;
 

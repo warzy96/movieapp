@@ -11,6 +11,7 @@ public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContr
 
     @Inject
     GetMovieDetailsUseCase getMovieDetailsUseCase;
+
     @Inject
     MovieDetailsViewModelMapper movieDetailsViewModelMapper;
 

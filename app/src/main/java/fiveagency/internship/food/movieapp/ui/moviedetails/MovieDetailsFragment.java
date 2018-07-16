@@ -27,6 +27,7 @@ public final class MovieDetailsFragment extends DaggerFragment implements MovieD
     private static final int MOVIE_NAME_TEXT_VIEW = R.id.movie_details_movie_name;
     private static final int MOVIE_OVERVIEW_TEXT_VIEW = R.id.movie_details_overview_text_view;
     private static final int MOVIE_POSTER_IMAGE_VIEW = R.id.movie_details_image_view;
+
     @Inject
     MovieDetailsContract.Presenter presenter;
 
