@@ -26,7 +26,7 @@ public final class FragmentPresenterModule {
     @Provides
     @FragmentScope
     public MoviesListContract.Presenter provideMoviesListPresenter() {
-        MoviesListPresenter moviesListPresenter = new MoviesListPresenter();
+        final MoviesListPresenter moviesListPresenter = new MoviesListPresenter();
         getFragmentComponent().inject(moviesListPresenter);
         return moviesListPresenter;
     }
@@ -34,7 +34,7 @@ public final class FragmentPresenterModule {
     @Provides
     @FragmentScope
     public MovieDetailsContract.Presenter provideMovieDetailsPresenter() {
-        MovieDetailsPresenter movieDetailsPresenter = new MovieDetailsPresenter();
+        final MovieDetailsPresenter movieDetailsPresenter = new MovieDetailsPresenter();
         getFragmentComponent().inject(movieDetailsPresenter);
         return movieDetailsPresenter;
     }
