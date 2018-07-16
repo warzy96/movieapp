@@ -1,21 +1,28 @@
 package fiveagency.internship.food.movieapp;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 
-import fiveagency.internship.food.movieapp.app.MovieApplication;
-import fiveagency.internship.food.movieapp.injection.ObjectGraph;
+import javax.inject.Inject;
+
+import fiveagency.internship.food.movieapp.injection.activity.ActivityComponent;
+import fiveagency.internship.food.movieapp.injection.activity.DaggerActivity;
 import fiveagency.internship.food.movieapp.router.Router;
 
-public final class MainActivity extends AppCompatActivity {
+public final class MainActivity extends DaggerActivity {
+
+    @Inject
+    Router router;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        final ObjectGraph objectGraph = MovieApplication.from(this).getObjectGraph();
-        final Router router = objectGraph.provideRouter(this);
         router.showMoviesListScreen();
+    }
+
+    @Override
+    protected void inject(final ActivityComponent activityComponent) {
+        activityComponent.inject(this);
     }
 }

@@ -2,26 +2,21 @@ package fiveagency.internship.food.movieapp.ui.movieslist;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.type.QueryUseCase;
 import fiveagency.internship.food.domain.model.Movie;
-import fiveagency.internship.food.movieapp.router.Router;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
 
 public final class MoviesListPresenter extends BasePresenter<MoviesListContract.View> implements MoviesListContract.Presenter {
 
     private static final int DEFAULT_PAGE = 1;
-    private final GetMoviesUseCase getMoviesUseCase;
-    private final MovieViewModelMapper movieViewModelMapper;
-    private final Router router;
+    @Inject
+    GetMoviesUseCase getMoviesUseCase;
 
-    public MoviesListPresenter(final MoviesListContract.View view, final GetMoviesUseCase getMoviesUseCase,
-                               final MovieViewModelMapper movieViewModelMapper, final Router router) {
-        super(view);
-        this.getMoviesUseCase = getMoviesUseCase;
-        this.movieViewModelMapper = movieViewModelMapper;
-        this.router = router;
-    }
+    @Inject
+    MovieViewModelMapper movieViewModelMapper;
 
     @Override
     public void start() {
@@ -48,5 +43,10 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
     @Override
     public void showMovieDetails(final int movieId) {
         router.showMovieDetailsScreen(movieId);
+    }
+
+    @Override
+    public void setView(final MoviesListContract.View view) {
+        this.view = view;
     }
 }

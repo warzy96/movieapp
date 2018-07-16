@@ -49,4 +49,6 @@ dependencies {
     annotationProcessor "com.github.bumptech.glide:compiler:$project.ext.glideCompilerVersion"
     implementation "com.jakewharton:butterknife:$project.ext.butterKnifeVersion"
     annotationProcessor "com.jakewharton:butterknife-compiler:$project.ext.butterKnifeCompilerVersion"
+    implementation "com.google.dagger:dagger:$project.ext.daggerVersion"
+    annotationProcessor "com.google.dagger:dagger-compiler:$project.ext.daggerAnnotationProcessorVersion"
 }

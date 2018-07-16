@@ -37,6 +37,8 @@ allprojects {
         espressoCoreVersion = "3.0.2"
         recyclerviewVersion = "27.1.1"
         constraintLayoutVersion = "1.1.2"
+        daggerVersion = "2.16"
+        daggerAnnotationProcessorVersion = "2.16"
         butterKnifeVersion = "8.8.1"
         butterKnifeCompilerVersion = "8.8.1"
     }

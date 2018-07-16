@@ -9,6 +9,8 @@ public interface MoviesListContract {
         void showMovieDetails(int movieId);
 
         void getMoviesUseCase();
+
+        void setView(MoviesListContract.View view);
     }
 
     interface View {

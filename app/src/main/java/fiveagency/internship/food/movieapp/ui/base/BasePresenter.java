@@ -1,10 +1,13 @@
 package fiveagency.internship.food.movieapp.ui.base;
 
+import javax.inject.Inject;
+
+import fiveagency.internship.food.movieapp.router.Router;
+
 public abstract class BasePresenter<View> {
 
-    public final View view;
+    @Inject
+    protected Router router;
 
-    public BasePresenter(final View view) {
-        this.view = view;
-    }
+    public View view;
 }

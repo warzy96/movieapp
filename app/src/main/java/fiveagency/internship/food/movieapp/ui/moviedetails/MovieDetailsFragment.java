@@ -3,32 +3,40 @@ package fiveagency.internship.food.movieapp.ui.moviedetails;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import javax.inject.Inject;
+
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import fiveagency.internship.food.movieapp.MainActivity;
 import fiveagency.internship.food.movieapp.R;
-import fiveagency.internship.food.movieapp.app.MovieApplication;
 import fiveagency.internship.food.movieapp.injection.ObjectGraph;
+import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
+import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
 
-public final class MovieDetailsFragment extends Fragment implements MovieDetailsContract.View {
+public final class MovieDetailsFragment extends DaggerFragment implements MovieDetailsContract.View {
 
     public static final String TAG = "MovieDetailsFragment";
     private static final String KEY_MOVIE_ID = "key_movie_id";
+
+    @Inject
+    MovieDetailsContract.Presenter presenter;
+
     @BindView(R.id.movie_details_movie_name)
     TextView movieDetailsMovieName;
+
     @BindView(R.id.movie_details_overview_text_view)
     TextView movieDetailsMovieOverview;
+
     @BindView(R.id.movie_details_image_view)
     ImageView movieDetailsPoster;
+
     @BindDimen(R.dimen.circular_progressbar_stroke_width)
     float circularProgressbarStrokeWidth;
     //@Inject
@@ -47,9 +55,7 @@ public final class MovieDetailsFragment extends Fragment implements MovieDetails
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        objectGraph = MovieApplication.from(getContext()).getObjectGraph();
-        imageLoader = objectGraph.provideImageLoader();
-        presenter = objectGraph.provideMovieDetailsPresenter(this, objectGraph.provideRouter((MainActivity) getActivity()));
+        presenter.setView(this);
     }
 
     @Nullable
@@ -80,5 +86,10 @@ public final class MovieDetailsFragment extends Fragment implements MovieDetails
         movieDetailsMovieName.setText(movieDetailsViewModel.title);
         movieDetailsMovieOverview.setText(movieDetailsViewModel.overview);
         imageLoader.renderImage(movieDetailsViewModel.imageSource, movieDetailsPoster, circularProgressbarStrokeWidth);
+    }
+
+    @Override
+    protected void inject(final FragmentComponent fragmentComponent) {
+        fragmentComponent.inject(this);
     }
 }

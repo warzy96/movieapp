@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -12,25 +11,34 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import javax.inject.Inject;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import fiveagency.internship.food.movieapp.MainActivity;
 import fiveagency.internship.food.movieapp.R;
-import fiveagency.internship.food.movieapp.app.MovieApplication;
-import fiveagency.internship.food.movieapp.injection.ObjectGraph;
+import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
+import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 
-public final class MoviesListFragment extends Fragment implements MoviesListContract.View, SwipeRefreshLayout.OnRefreshListener {
+public final class MoviesListFragment extends DaggerFragment implements MoviesListContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "MoviesListFragment";
     private MoviesListContract.Presenter presenter;
     private MoviesListAdapter moviesListAdapter;
     private ObjectGraph objectGraph;
     @BindView(R.id.movies_list_swipe_refresh_layout)
+
     SwipeRefreshLayout swipeRefreshLayout;
     @LayoutRes
-    private static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
+    private SwipeRefreshLayout swipeRefreshLayout;
+
     @BindView(R.id.movies_list_recycler_view)
     RecyclerView moviesListRecyclerView;
+
+    @Inject
+    MoviesListContract.Presenter presenter;
+
+    @Inject
+    MoviesListAdapter moviesListAdapter;
 
     public static MoviesListFragment newInstance() {
         return new MoviesListFragment();
@@ -39,9 +47,7 @@ public final class MoviesListFragment extends Fragment implements MoviesListCont
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        objectGraph = MovieApplication.from(getContext()).getObjectGraph();
-        presenter = objectGraph.provideMoviesListPresenter(this, objectGraph.provideRouter((MainActivity) getActivity()));
-        moviesListAdapter = objectGraph.provideMoviesListAdapter(getContext());
+        presenter.setView(this);
         moviesListAdapter.setOnMovieClickListener(movieId -> presenter.showMovieDetails(movieId));
     }
 
@@ -81,5 +87,10 @@ public final class MoviesListFragment extends Fragment implements MoviesListCont
     private void initRecyclerView() {
         moviesListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         moviesListRecyclerView.setAdapter(moviesListAdapter);
+    }
+
+    @Override
+    protected void inject(final FragmentComponent fragmentComponent) {
+        fragmentComponent.inject(this);
     }
 }

@@ -5,6 +5,8 @@ public interface MovieDetailsContract {
     interface Presenter {
 
         void start(int movieId);
+
+        void setView(MovieDetailsContract.View view);
     }
 
     interface View {
