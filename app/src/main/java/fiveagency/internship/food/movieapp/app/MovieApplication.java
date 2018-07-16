@@ -16,7 +16,7 @@ public final class MovieApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        objectGraph = new ObjectGraph();
+        objectGraph = new ObjectGraph(getApplicationContext());
     }
 
     public ObjectGraph getObjectGraph() {

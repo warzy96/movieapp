@@ -32,9 +32,13 @@ allprojects {
         appcompatVersion = "27.1.1"
         junitVersion = "4.12"
         runnerVersion = "1.0.2"
+        glideVersion = "4.7.1"
+        glideCompilerVersion = "4.7.1"
         espressoCoreVersion = "3.0.2"
         recyclerviewVersion = "27.1.1"
         constraintLayoutVersion = "1.1.2"
+        butterKnifeVersion = "8.8.1"
+        butterKnifeCompilerVersion = "8.8.1"
     }
 }
 

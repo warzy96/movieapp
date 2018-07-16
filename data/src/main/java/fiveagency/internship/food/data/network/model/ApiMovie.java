@@ -18,4 +18,7 @@ public final class ApiMovie {
 
     @SerializedName("release_date")
     public String releaseDate;
+
+    @SerializedName("poster_path")
+    public String imageSource;
 }

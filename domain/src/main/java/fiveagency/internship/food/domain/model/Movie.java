@@ -4,19 +4,21 @@ import java.util.Objects;
 
 public final class Movie {
 
-    public static final Movie EMPTY = new Movie("", 0, false, "", "");
+    public static final Movie EMPTY = new Movie("", 0, false, "", "", "");
     public final String title;
     public final int id;
     public final boolean isAdult;
     public final String overview;
     public final String releaseDate;
+    public final String imageSource;
 
-    public Movie(final String title, final int id, final boolean isAdult, final String overview, final String releaseDate) {
+    public Movie(final String title, final int id, final boolean isAdult, final String overview, final String releaseDate, final String imageSource) {
         this.title = title;
         this.id = id;
         this.isAdult = isAdult;
         this.overview = overview;
         this.releaseDate = releaseDate;
+        this.imageSource = imageSource;
     }
 
     @Override
@@ -32,13 +34,14 @@ public final class Movie {
                 isAdult == movie.isAdult &&
                 Objects.equals(title, movie.title) &&
                 Objects.equals(overview, movie.overview) &&
-                Objects.equals(releaseDate, movie.releaseDate);
+                Objects.equals(releaseDate, movie.releaseDate) &&
+                Objects.equals(imageSource, movie.imageSource);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(title, id, isAdult, overview, releaseDate);
+        return Objects.hash(title, id, isAdult, overview, releaseDate, imageSource);
     }
 
     @Override
@@ -49,6 +52,7 @@ public final class Movie {
                 ", isAdult=" + isAdult +
                 ", overview='" + overview + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
+                ", imageSource='" + imageSource + '\'' +
                 '}';
     }
 }
