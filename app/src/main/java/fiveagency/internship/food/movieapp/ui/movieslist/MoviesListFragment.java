@@ -75,7 +75,7 @@ public final class MoviesListFragment extends Fragment implements MoviesListCont
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        presenter.fetchMoviesList();
+        presenter.getMoviesUseCase();
     }
 
     private void initRecyclerView() {

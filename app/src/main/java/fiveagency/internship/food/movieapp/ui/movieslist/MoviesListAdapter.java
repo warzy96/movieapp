@@ -76,7 +76,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
         void render(final MovieViewModel movieViewModel, final MovieOnClickListener movieOnClickListener) {
             movieItemTitleView.setText(movieViewModel.title);
-            imageLoader.renderImage(itemView, movieViewModel.imageSource, movieItemPosterView, circularProgressbarStrokeWidth);
+            imageLoader.renderImage(movieViewModel.imageSource, movieItemPosterView, circularProgressbarStrokeWidth);
             itemView.setOnClickListener(view -> movieOnClickListener.onClick(movieViewModel.id));
         }
     }

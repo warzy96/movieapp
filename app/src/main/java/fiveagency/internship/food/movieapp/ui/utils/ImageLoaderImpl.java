@@ -11,7 +11,7 @@ public final class ImageLoaderImpl implements ImageLoader {
 
     private final Context context;
 
-    public ImageLoaderImpl(Context context) {
+    public ImageLoaderImpl(final Context context) {
         this.context = context;
     }
 

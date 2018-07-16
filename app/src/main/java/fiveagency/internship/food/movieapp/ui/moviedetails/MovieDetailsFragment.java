@@ -79,6 +79,6 @@ public final class MovieDetailsFragment extends Fragment implements MovieDetails
     public void render(final MovieDetailsViewModel movieDetailsViewModel) {
         movieDetailsMovieName.setText(movieDetailsViewModel.title);
         movieDetailsMovieOverview.setText(movieDetailsViewModel.overview);
-        imageLoader.renderImage(getView(), movieDetailsViewModel.imageSource, movieDetailsPoster, circularProgressbarStrokeWidth);
+        imageLoader.renderImage(movieDetailsViewModel.imageSource, movieDetailsPoster, circularProgressbarStrokeWidth);
     }
 }
