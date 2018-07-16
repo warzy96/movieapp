@@ -1,15 +1,24 @@
 package fiveagency.internship.food.movieapp.injection.application.module;
 
+import android.arch.persistence.room.Room;
+import android.content.Context;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import fiveagency.internship.food.data.database.MovieDatabase;
+import fiveagency.internship.food.data.database.crudder.MovieCrudder;
+import fiveagency.internship.food.data.database.dao.MovieDao;
+import fiveagency.internship.food.data.database.dao.MovieDao_Impl;
+import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
 import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.data.network.configuration.Urls;
 import fiveagency.internship.food.data.network.mappers.MovieMapper;
 import fiveagency.internship.food.data.network.service.MovieService;
 import fiveagency.internship.food.data.repository.MovieRepositoryImpl;
 import fiveagency.internship.food.domain.repository.MovieRepository;
+import fiveagency.internship.food.movieapp.injection.application.ForApplication;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -64,7 +73,31 @@ public final class DataModule {
 
     @Provides
     @Singleton
-    MovieRepository provideMovieRepository(final MovieClient movieClient) {
-        return new MovieRepositoryImpl(movieClient);
+    MovieCrudder provideMovieCrudder(final MovieModelMapper movieModelMapper, final MovieDao movieDao) {
+        return new MovieCrudder(movieDao, movieModelMapper);
+    }
+
+    @Provides
+    @Singleton
+    MovieModelMapper provideMovieModelMapper() {
+        return new MovieModelMapper();
+    }
+
+    @Provides
+    @Singleton
+    MovieDao provideMovieDao(final MovieDatabase movieDatabase) {
+        return new MovieDao_Impl(movieDatabase);
+    }
+
+    @Provides
+    @Singleton
+    MovieDatabase provideMovieDatabase(@ForApplication final Context context) {
+        return Room.databaseBuilder(context, MovieDatabase.class, "movie-database").build();
+    }
+
+    @Provides
+    @Singleton
+    MovieRepository provideMovieRepository(final MovieClient movieClient, final MovieCrudder movieCrudder) {
+        return new MovieRepositoryImpl(movieClient, movieCrudder);
     }
 }

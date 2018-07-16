@@ -12,4 +12,6 @@ public interface MovieRepository {
     Single<List<Movie>> fetchMovies(int page);
 
     Single<List<Movie>> fetchMovies(String title);
+
+    void insertMovies(List<Movie> movies);
 }

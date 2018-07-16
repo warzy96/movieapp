@@ -3,6 +3,8 @@ package fiveagency.internship.food.movieapp.app;
 import android.app.Application;
 import android.content.Context;
 
+import com.facebook.stetho.Stetho;
+
 import fiveagency.internship.food.movieapp.injection.ComponentFactory;
 import fiveagency.internship.food.movieapp.injection.application.ApplicationComponent;
 
@@ -19,6 +21,7 @@ public final class MovieApplication extends Application {
         super.onCreate();
         initApplicationComponent();
         injectMe();
+        Stetho.initializeWithDefaults(this);
     }
 
     private void injectMe() {
@@ -32,5 +35,4 @@ public final class MovieApplication extends Application {
     public ApplicationComponent getApplicationComponent() {
         return applicationComponent;
     }
-
 }
