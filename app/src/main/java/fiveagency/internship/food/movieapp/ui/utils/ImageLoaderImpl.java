@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 
+import javax.inject.Inject;
+
 public final class ImageLoaderImpl implements ImageLoader {
 
     private final Context context;

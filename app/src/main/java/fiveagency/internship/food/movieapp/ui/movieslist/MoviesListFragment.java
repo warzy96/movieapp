@@ -22,14 +22,12 @@ import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 public final class MoviesListFragment extends DaggerFragment implements MoviesListContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "MoviesListFragment";
-    private MoviesListContract.Presenter presenter;
-    private MoviesListAdapter moviesListAdapter;
-    private ObjectGraph objectGraph;
-    @BindView(R.id.movies_list_swipe_refresh_layout)
 
+    @BindView(R.id.movies_list_swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
+
     @LayoutRes
-    private SwipeRefreshLayout swipeRefreshLayout;
+    private static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
 
     @BindView(R.id.movies_list_recycler_view)
     RecyclerView moviesListRecyclerView;

@@ -15,7 +15,6 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fiveagency.internship.food.movieapp.R;
-import fiveagency.internship.food.movieapp.injection.ObjectGraph;
 import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
@@ -24,9 +23,6 @@ public final class MovieDetailsFragment extends DaggerFragment implements MovieD
 
     public static final String TAG = "MovieDetailsFragment";
     private static final String KEY_MOVIE_ID = "key_movie_id";
-
-    @Inject
-    MovieDetailsContract.Presenter presenter;
 
     @BindView(R.id.movie_details_movie_name)
     TextView movieDetailsMovieName;
@@ -39,10 +35,12 @@ public final class MovieDetailsFragment extends DaggerFragment implements MovieD
 
     @BindDimen(R.dimen.circular_progressbar_stroke_width)
     float circularProgressbarStrokeWidth;
-    //@Inject
-    private ImageLoader imageLoader;
-    private MovieDetailsContract.Presenter presenter;
-    private ObjectGraph objectGraph;
+
+    @Inject
+    ImageLoader imageLoader;
+
+    @Inject
+    MovieDetailsContract.Presenter presenter;
 
     public static MovieDetailsFragment newInstance(final int movieId) {
         final Bundle arguments = new Bundle();

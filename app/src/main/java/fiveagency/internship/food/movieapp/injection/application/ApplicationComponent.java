@@ -8,13 +8,15 @@ import fiveagency.internship.food.movieapp.injection.activity.ActivityComponent;
 import fiveagency.internship.food.movieapp.injection.application.module.ApplicationModule;
 import fiveagency.internship.food.movieapp.injection.application.module.DataModule;
 import fiveagency.internship.food.movieapp.injection.application.module.UseCaseModule;
+import fiveagency.internship.food.movieapp.injection.application.module.UtilsModule;
 
 @Singleton
 @Component(
         modules = {
                 ApplicationModule.class,
                 DataModule.class,
-                UseCaseModule.class
+                UseCaseModule.class,
+                UtilsModule.class
         }
 )
 public interface ApplicationComponent extends ApplicationComponentInjects {
@@ -26,6 +28,7 @@ public interface ApplicationComponent extends ApplicationComponentInjects {
                                              .applicationModule(new ApplicationModule(movieApplication))
                                              .useCaseModule(new UseCaseModule())
                                              .dataModule(new DataModule())
+                                             .utilsModule(new UtilsModule())
                                              .build();
         }
 
