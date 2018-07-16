@@ -2,7 +2,6 @@ package fiveagency.internship.food.movieapp.ui.utils;
 
 import android.content.Context;
 import android.support.v4.widget.CircularProgressDrawable;
-import android.view.View;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -17,7 +16,7 @@ public final class ImageLoaderImpl implements ImageLoader {
     }
 
     @Override
-    public void renderImage(final View parentView, final String imageSource, final ImageView imageView, final float circularProgressbarStrokeWidth) {
+    public void renderImage(final String imageSource, final ImageView imageView, final float circularProgressbarStrokeWidth) {
         Glide.with(context)
              .load(imageSource)
              .apply(new RequestOptions().placeholder(initCircularProgressDrawable(circularProgressbarStrokeWidth)))
