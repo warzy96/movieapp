@@ -7,6 +7,8 @@ public interface MoviesListContract {
         void start();
 
         void showMovieDetails(int movieId);
+
+        void getMoviesUseCase();
     }
 
     interface View {

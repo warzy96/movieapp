@@ -25,6 +25,10 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
 
     @Override
     public void start() {
+        getMoviesUseCase();
+    }
+
+    public void getMoviesUseCase() {
         getMoviesUseCase.execute(DEFAULT_PAGE, new QueryUseCase.Callback<List<Movie>>() {
 
             @Override

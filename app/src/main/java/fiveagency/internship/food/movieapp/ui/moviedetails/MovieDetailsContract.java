@@ -4,11 +4,11 @@ public interface MovieDetailsContract {
 
     interface Presenter {
 
-        void start(int id);
+        void start(int movieId);
     }
 
     interface View {
 
-        void render(final MovieDetailsViewModel movieDetailsViewModel);
+        void render(MovieDetailsViewModel movieDetailsViewModel);
     }
 }
