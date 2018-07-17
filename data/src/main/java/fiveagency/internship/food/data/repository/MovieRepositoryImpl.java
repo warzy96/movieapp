@@ -25,7 +25,11 @@ public final class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Single<List<Movie>> fetchMovies(final int page) {
-        return movieClient.getMovies(page);
+        return movieClient.getMovies(page)
+                          .map(movies -> {
+                              movieCrudder.insertMovies(movies);
+                              return movies;
+                          });
     }
 
     @Override

@@ -5,7 +5,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
-import fiveagency.internship.food.domain.interactor.InsertMoviesUseCase;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
 import io.reactivex.Single;
@@ -22,9 +21,6 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
     @Inject
     MovieViewModelMapper movieViewModelMapper;
 
-    @Inject
-    InsertMoviesUseCase insertMoviesUseCase;
-
     @Override
     public void start() {
         final Single<List<Movie>> result = getMoviesUseCase.execute(DEFAULT_PAGE);
@@ -32,9 +28,6 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
                                       .subscribeOn(Schedulers.io())
                                       .observeOn(AndroidSchedulers.mainThread())
                                       .subscribe(movieViewModelMapper -> view.render(movieViewModelMapper), Throwable::printStackTrace));
-        compositeDisposable.add(result.subscribeOn(Schedulers.io())
-                                      .observeOn(Schedulers.io())
-                                      .subscribe(movies -> insertMoviesUseCase.execute(movies), Throwable::printStackTrace));
     }
 
     @Override
