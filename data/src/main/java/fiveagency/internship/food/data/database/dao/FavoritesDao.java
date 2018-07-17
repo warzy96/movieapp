@@ -9,7 +9,6 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import fiveagency.internship.food.data.database.model.FavoriteMovies;
-import fiveagency.internship.food.data.database.model.MovieModel;
 import io.reactivex.Single;
 
 @Dao
@@ -24,8 +23,8 @@ public interface FavoritesDao {
     @Query("SELECT * FROM favorites")
     Single<List<Integer>> getAllFavorites();
 
-    @Query("SELECT movie.* FROM favorites NATURAL JOIN movie")
-    Single<List<MovieModel>> getAllMovieFavorites();
+    @Query("SELECT movie.id FROM favorites NATURAL JOIN movie")
+    List<Integer> getAllMovieFavoritesId();
 
     @Query("SELECT * FROM favorites WHERE id = :movieId")
     boolean isFavorite(int movieId);

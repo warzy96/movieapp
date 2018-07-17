@@ -6,6 +6,7 @@ import fiveagency.internship.food.data.database.dao.FavoritesDao;
 import fiveagency.internship.food.data.database.dao.MovieDao;
 import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
 import fiveagency.internship.food.data.database.model.FavoriteMovies;
+import fiveagency.internship.food.data.database.model.MovieModel;
 import fiveagency.internship.food.domain.model.Movie;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -30,8 +31,8 @@ public final class MovieCrudder {
         return movieDao.getAllMovies().map(movieModelMapper::mapMovies);
     }
 
-    public Single<List<Movie>> getAllFavoriteMovies() {
-        return favoritesDao.getAllMovieFavorites().map(movieModelMapper::mapMovies);
+    public List<Integer> getAllFavoriteMovies() {
+        return favoritesDao.getAllMovieFavoritesId();
     }
 
     public boolean isMovieFavorite(final int movieId) {

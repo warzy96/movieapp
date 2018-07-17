@@ -26,14 +26,12 @@ public final class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Single<List<Movie>> fetchMovies(final int page) {
-        return movieClient.getMovies(page)
-                          .map(movies -> {
-                              movieCrudder.insertMovies(movies);
-                              return movies;
-                          })
-                          .map(movies -> {
-                              for (Movie movie : movies) {
-                                  movie.isFavorite = movieCrudder.isMovieFavorite(movie.id);
+        return Single.zip(movieClient.getMovies(page), Single.fromCallable(movieCrudder::getAllFavoriteMovies),
+                          (movies, favorites) -> {
+                              for (final Movie movie : movies) {
+                                  if (favorites.contains(movie.id)) {
+                                      movie.isFavorite = true;
+                                  }
                               }
                               return movies;
                           });
