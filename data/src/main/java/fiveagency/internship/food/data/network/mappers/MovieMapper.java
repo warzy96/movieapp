@@ -19,13 +19,15 @@ public final class MovieMapper {
                          apiMovie.isAdult,
                          apiMovie.overview == null ? Movie.EMPTY.overview : apiMovie.overview,
                          apiMovie.releaseDate == null ? Movie.EMPTY.releaseDate : apiMovie.releaseDate,
-                         apiMovie.imageSource == null ? Movie.EMPTY.imageSource : ApiConstants.IMAGE_SOURCE_URL + apiMovie.imageSource);
+                         apiMovie.imageSource == null ? Movie.EMPTY.imageSource : ApiConstants.IMAGE_SOURCE_URL + apiMovie.imageSource, false);
     }
 
     public List<Movie> mapMovies(final ApiMoviesList apiMoviesList) {
         final List<Movie> movies = new LinkedList<>();
         for (final ApiMovie apiMovie : apiMoviesList.movieApiEntities) {
-            movies.add(new Movie(apiMovie.title, apiMovie.id, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate, ApiConstants.IMAGE_SOURCE_URL + apiMovie.imageSource));
+            movies.add(new Movie(apiMovie.title, apiMovie.id, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate,
+                                 ApiConstants.IMAGE_SOURCE_URL + apiMovie.imageSource,
+                                 false));
         }
         return movies;
     }

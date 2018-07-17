@@ -5,7 +5,8 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
-import fiveagency.internship.food.domain.interactor.InsertMoviesUseCase;
+import fiveagency.internship.food.domain.interactor.InsertFavoriteUseCase;
+import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 
 @Module
@@ -19,7 +20,13 @@ public final class UseCaseModule {
 
     @Provides
     @Singleton
-    InsertMoviesUseCase provideInsertMoviesUseCase(final MovieRepository movieRepository) {
-        return new InsertMoviesUseCase(movieRepository);
+    InsertFavoriteUseCase provideInsertFavoriteUseCase(final MovieRepository movieRepository) {
+        return new InsertFavoriteUseCase(movieRepository);
+    }
+
+    @Provides
+    @Singleton
+    RemoveFavoriteUseCase provideRemoveFavoriteUseCase(final MovieRepository movieRepository) {
+        return new RemoveFavoriteUseCase(movieRepository);
     }
 }

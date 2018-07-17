@@ -22,29 +22,12 @@ public final class MovieModelMapper {
                               apiMovie.imageSource == null ? MovieModel.EMPTY.getImageSource() : apiMovie.imageSource);
     }
 
-    public List<MovieModel> mapMovieModels(final ApiMoviesList apiMoviesList) {
-        final List<MovieModel> movieModels = new LinkedList<>();
-        for (final ApiMovie apiMovie : apiMoviesList.movieApiEntities) {
-            movieModels.add(new MovieModel(apiMovie));
-        }
-        return movieModels;
-    }
-
     public List<MovieModel> mapMovieModels(final List<Movie> movies) {
         final List<MovieModel> movieModels = new LinkedList<>();
         for (final Movie movie : movies) {
             movieModels.add(new MovieModel(movie));
         }
         return movieModels;
-    }
-
-    public Movie mapMovieModel(final MovieModel movieModel) {
-        return new Movie(movieModel.getTitle(),
-                         movieModel.getId(),
-                         movieModel.isAdult(),
-                         movieModel.getOverview(),
-                         movieModel.getReleaseDate(),
-                         movieModel.getImageSource());
     }
 
     public List<Movie> mapMovies(final List<MovieModel> movieModels) {
@@ -55,7 +38,8 @@ public final class MovieModelMapper {
                                  movieModel.isAdult(),
                                  movieModel.getOverview(),
                                  movieModel.getReleaseDate(),
-                                 movieModel.getImageSource()));
+                                 movieModel.getImageSource(),
+                                 false));
         }
         return movies;
     }

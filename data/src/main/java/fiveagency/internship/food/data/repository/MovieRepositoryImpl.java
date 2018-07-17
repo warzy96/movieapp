@@ -6,6 +6,7 @@ import fiveagency.internship.food.data.database.crudder.MovieCrudder;
 import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.repository.MovieRepository;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 public final class MovieRepositoryImpl implements MovieRepository {
@@ -29,6 +30,12 @@ public final class MovieRepositoryImpl implements MovieRepository {
                           .map(movies -> {
                               movieCrudder.insertMovies(movies);
                               return movies;
+                          })
+                          .map(movies -> {
+                              for (Movie movie : movies) {
+                                  movie.isFavorite = movieCrudder.isMovieFavorite(movie.id);
+                              }
+                              return movies;
                           });
     }
 
@@ -40,5 +47,15 @@ public final class MovieRepositoryImpl implements MovieRepository {
     @Override
     public void insertMovies(final List<Movie> movies) {
         movieCrudder.insertMovies(movies);
+    }
+
+    @Override
+    public Completable setFavorite(final int movieId) {
+        return movieCrudder.setFavorite(movieId);
+    }
+
+    @Override
+    public Completable removeFavorite(final Integer movieId) {
+        return movieCrudder.removeFavorite(movieId);
     }
 }

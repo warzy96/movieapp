@@ -8,7 +8,7 @@ import fiveagency.internship.food.domain.model.Movie;
 public final class MovieViewModelMapper {
 
     public MovieViewModel mapMovieViewModel(final Movie movie) {
-        return new MovieViewModel(movie.id, movie.title, movie.overview, movie.isAdult, movie.releaseDate, movie.imageSource);
+        return new MovieViewModel(movie.id, movie.title, movie.overview, movie.isAdult, movie.releaseDate, movie.imageSource, movie.isFavorite);
     }
 
     public MoviesListViewModel mapMoviesListViewModel(final List<Movie> movieList) {

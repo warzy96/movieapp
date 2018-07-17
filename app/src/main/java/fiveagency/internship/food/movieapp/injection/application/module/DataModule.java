@@ -9,6 +9,8 @@ import dagger.Module;
 import dagger.Provides;
 import fiveagency.internship.food.data.database.MovieDatabase;
 import fiveagency.internship.food.data.database.crudder.MovieCrudder;
+import fiveagency.internship.food.data.database.dao.FavoritesDao;
+import fiveagency.internship.food.data.database.dao.FavoritesDao_Impl;
 import fiveagency.internship.food.data.database.dao.MovieDao;
 import fiveagency.internship.food.data.database.dao.MovieDao_Impl;
 import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
@@ -73,8 +75,8 @@ public final class DataModule {
 
     @Provides
     @Singleton
-    MovieCrudder provideMovieCrudder(final MovieModelMapper movieModelMapper, final MovieDao movieDao) {
-        return new MovieCrudder(movieDao, movieModelMapper);
+    MovieCrudder provideMovieCrudder(final MovieModelMapper movieModelMapper, final MovieDao movieDao, final FavoritesDao favoritesDao) {
+        return new MovieCrudder(movieDao, favoritesDao, movieModelMapper);
     }
 
     @Provides
@@ -91,8 +93,16 @@ public final class DataModule {
 
     @Provides
     @Singleton
+    FavoritesDao provideFavoritesDao(final MovieDatabase movieDatabase) {
+        return new FavoritesDao_Impl(movieDatabase);
+    }
+
+    @Provides
+    @Singleton
     MovieDatabase provideMovieDatabase(@ForApplication final Context context) {
-        return Room.databaseBuilder(context, MovieDatabase.class, "movie-database").build();
+        return Room.databaseBuilder(context, MovieDatabase.class, "movie-database")
+                   .fallbackToDestructiveMigration()
+                   .build();
     }
 
     @Provides

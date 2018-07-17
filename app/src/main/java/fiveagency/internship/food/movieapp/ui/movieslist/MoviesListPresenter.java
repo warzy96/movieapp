@@ -1,13 +1,11 @@
 package fiveagency.internship.food.movieapp.ui.movieslist;
 
-import java.util.List;
-
 import javax.inject.Inject;
 
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
-import fiveagency.internship.food.domain.model.Movie;
+import fiveagency.internship.food.domain.interactor.InsertFavoriteUseCase;
+import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
-import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
@@ -19,15 +17,21 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
     GetMoviesUseCase getMoviesUseCase;
 
     @Inject
+    InsertFavoriteUseCase insertFavoriteUseCase;
+
+    @Inject
     MovieViewModelMapper movieViewModelMapper;
+
+    @Inject
+    RemoveFavoriteUseCase removeFavoriteUseCase;
 
     @Override
     public void start() {
-        final Single<List<Movie>> result = getMoviesUseCase.execute(DEFAULT_PAGE);
-        compositeDisposable.add(result.map(movieViewModelMapper::mapMoviesListViewModel)
-                                      .subscribeOn(Schedulers.io())
-                                      .observeOn(AndroidSchedulers.mainThread())
-                                      .subscribe(movieViewModelMapper -> view.render(movieViewModelMapper), Throwable::printStackTrace));
+        compositeDisposable.add(getMoviesUseCase.execute(DEFAULT_PAGE)
+                                                .map(movieViewModelMapper::mapMoviesListViewModel)
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(movieViewModelMapper -> view.render(movieViewModelMapper), Throwable::printStackTrace));
     }
 
     @Override
@@ -38,5 +42,21 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
     @Override
     public void setView(final MoviesListContract.View view) {
         this.view = view;
+    }
+
+    @Override
+    public void insertFavorite(final int movieId) {
+        compositeDisposable.add(insertFavoriteUseCase.execute(movieId)
+                                                     .subscribeOn(Schedulers.io())
+                                                     .observeOn(Schedulers.io())
+                                                     .subscribe());
+    }
+
+    @Override
+    public void removeFavorite(final int movieId) {
+        compositeDisposable.add(removeFavoriteUseCase.execute(movieId)
+                                                     .subscribeOn(Schedulers.io())
+                                                     .observeOn(Schedulers.io())
+                                                     .subscribe());
     }
 }

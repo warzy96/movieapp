@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +27,8 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
     private static final int MOVIE_POSTER_IMAGE_VIEW = R.id.item_movie_poster_image;
     private static final int CIRCULAR_PROGRESS_DRAWABLE_STROKE_WIDTH = R.dimen.circular_progressbar_stroke_width;
     private MovieOnClickListener onMovieClickListener;
+    private FavoriteOnCheckedListener favoriteOnCheckedListener;
+    private FavoriteOnUncheckedListener favoriteOnUncheckedListener;
 
     public MoviesListAdapter(final LayoutInflater layoutInflater) {
         this.layoutInflater = layoutInflater;
@@ -39,7 +42,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
     @Override
     public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
-        holder.render(movies.get(position), onMovieClickListener);
+        holder.render(movies.get(position), onMovieClickListener, favoriteOnCheckedListener, favoriteOnUncheckedListener);
     }
 
     @Override
@@ -57,13 +60,22 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
         onMovieClickListener = movieClickListener;
     }
 
+    public void setFavoriteOnCheckedListener(final FavoriteOnCheckedListener favoriteOnCheckedListener) {
+        this.favoriteOnCheckedListener = favoriteOnCheckedListener;
+    }
+
+    public void setFavoriteOnUncheckedListener(final FavoriteOnUncheckedListener favoriteOnUncheckedListener) {
+        this.favoriteOnUncheckedListener = favoriteOnUncheckedListener;
+    }
+
     static class MovieViewHolder extends RecyclerView.ViewHolder {
 
         MovieViewHolder(final View itemView) {
             super(itemView);
         }
 
-        void render(final MovieViewModel movieViewModel, final MovieOnClickListener movieOnClickListener) {
+        void render(final MovieViewModel movieViewModel, final MovieOnClickListener movieOnClickListener, final FavoriteOnCheckedListener favoriteOnCheckedListener,
+                    final FavoriteOnUncheckedListener favoriteOnUncheckedListener) {
             final TextView movieTitleTextView = itemView.findViewById(MOVIE_NAME_TEXT_VIEW);
             movieTitleTextView.setText(movieViewModel.title);
             final ImageView imageView = itemView.findViewById(MOVIE_POSTER_IMAGE_VIEW);
@@ -73,6 +85,21 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
                  .apply(new RequestOptions().placeholder(circularProgressDrawable))
                  .into(imageView);
             itemView.setOnClickListener(view -> movieOnClickListener.onClick(movieViewModel.id));
+
+            //TODO: put at the beginning of the class + use butterknife!
+            final CheckBox starCheckBox = itemView.findViewById(R.id.item_movie_favorite_checkbox);
+            if (movieViewModel.isFavorite) {
+                starCheckBox.setChecked(true);
+            } else {
+                starCheckBox.setChecked(false);
+            }
+            starCheckBox.setOnCheckedChangeListener((compoundButton, b) -> {
+                if (!starCheckBox.isChecked()) {
+                    favoriteOnUncheckedListener.onClick(movieViewModel.id);
+                } else {
+                    favoriteOnCheckedListener.onClick(movieViewModel.id);
+                }
+            });
         }
 
         private CircularProgressDrawable initCircularProgressDrawable() {
@@ -84,6 +111,16 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
     }
 
     public interface MovieOnClickListener {
+
+        void onClick(int movieId);
+    }
+
+    public interface FavoriteOnCheckedListener {
+
+        void onClick(int movieId);
+    }
+
+    public interface FavoriteOnUncheckedListener {
 
         void onClick(int movieId);
     }
