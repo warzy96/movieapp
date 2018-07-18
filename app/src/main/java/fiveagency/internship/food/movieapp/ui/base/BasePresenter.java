@@ -14,4 +14,8 @@ public abstract class BasePresenter<View> {
     protected CompositeDisposable compositeDisposable;
 
     public View view;
+
+    public void onStop() {
+        compositeDisposable.clear();
+    }
 }

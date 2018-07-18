@@ -15,7 +15,6 @@ import javax.inject.Inject;
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
-import io.reactivex.disposables.CompositeDisposable;
 
 public final class MoviesListFragment extends DaggerFragment implements MoviesListContract.View, SwipeRefreshLayout.OnRefreshListener {
 
@@ -23,10 +22,9 @@ public final class MoviesListFragment extends DaggerFragment implements MoviesLi
 
     @Inject
     MoviesListContract.Presenter presenter;
+
     @Inject
     MoviesListAdapter moviesListAdapter;
-    @Inject
-    CompositeDisposable compositeDisposable;
 
     private SwipeRefreshLayout swipeRefreshLayout;
 
@@ -56,12 +54,6 @@ public final class MoviesListFragment extends DaggerFragment implements MoviesLi
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView(view);
         initSwipeRefreshLayout();
-    }
-
-    @Override
-    public void onStop() {
-        compositeDisposable.clear();
-        super.onStop();
     }
 
     private void initSwipeRefreshLayout() {
