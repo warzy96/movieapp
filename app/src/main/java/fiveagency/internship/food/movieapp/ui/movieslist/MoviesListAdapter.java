@@ -80,6 +80,8 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
                  .into(imageView);
             itemView.setOnClickListener(view -> movieOnClickListener.onClick(movieViewModel.id));
 
+            //I don't have butterknife included on this branch.
+            //This is only a reminder to fix this when merging!
             //TODO: put at the beginning of the class + use butterknife!
             final CheckBox starCheckBox = itemView.findViewById(R.id.item_movie_favorite_checkbox);
             if (movieViewModel.isFavorite) {
@@ -87,9 +89,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
             } else {
                 starCheckBox.setChecked(false);
             }
-            starCheckBox.setOnCheckedChangeListener((compoundButton, b) -> {
-                favoriteOnCheckedListener.onClick(movieViewModel.id, starCheckBox.isChecked());
-            });
+            starCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> favoriteOnCheckedListener.onClick(movieViewModel.id, isChecked));
         }
 
         private CircularProgressDrawable initCircularProgressDrawable() {

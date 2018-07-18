@@ -48,15 +48,13 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
     public void insertFavorite(final int movieId) {
         compositeDisposable.add(insertFavoriteUseCase.execute(movieId)
                                                      .subscribeOn(Schedulers.io())
-                                                     .observeOn(Schedulers.io())
-                                                     .subscribe());
+                                                     .subscribe(() -> {}, Throwable::printStackTrace));
     }
 
     @Override
     public void removeFavorite(final int movieId) {
         compositeDisposable.add(removeFavoriteUseCase.execute(movieId)
                                                      .subscribeOn(Schedulers.io())
-                                                     .observeOn(Schedulers.io())
-                                                     .subscribe());
+                                                     .subscribe(() -> {}, Throwable::printStackTrace));
     }
 }

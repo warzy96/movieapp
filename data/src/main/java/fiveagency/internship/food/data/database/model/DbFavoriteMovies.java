@@ -5,17 +5,17 @@ import android.arch.persistence.room.ForeignKey;
 import android.arch.persistence.room.PrimaryKey;
 
 @Entity(tableName = "favorites")
-@ForeignKey(entity = MovieModel.class,
+@ForeignKey(entity = DbMovie.class,
         parentColumns = "id",
         childColumns = "movieId",
         onDelete = ForeignKey.CASCADE,
         onUpdate = ForeignKey.CASCADE)
-public final class FavoriteMovies {
+public final class DbFavoriteMovies {
 
     @PrimaryKey
     private int id;
 
-    public FavoriteMovies(final int id) {
+    public DbFavoriteMovies(final int id) {
         this.id = id;
     }
 

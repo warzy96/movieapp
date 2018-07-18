@@ -1,5 +1,6 @@
 package fiveagency.internship.food.data.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fiveagency.internship.food.data.database.crudder.MovieCrudder;
@@ -26,14 +27,17 @@ public final class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Single<List<Movie>> fetchMovies(final int page) {
+        final List<Movie> moviesWithFavorites = new ArrayList<>();
         return Single.zip(movieClient.getMovies(page), Single.fromCallable(movieCrudder::getAllFavoriteMovies),
                           (movies, favorites) -> {
-                              for (final Movie movie : movies) {
+                              movies.forEach(movie -> {
                                   if (favorites.contains(movie.id)) {
-                                      movie.isFavorite = true;
+                                      moviesWithFavorites.add(movie.withIsFavorite(true));
+                                  } else {
+                                      moviesWithFavorites.add(movie);
                                   }
-                              }
-                              return movies;
+                              });
+                              return moviesWithFavorites;
                           });
     }
 
@@ -43,17 +47,17 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public void insertMovies(final List<Movie> movies) {
-        movieCrudder.insertMovies(movies);
+    public Completable insertMovies(final List<Movie> movies) {
+        return Completable.fromAction(() -> movieCrudder.insertMovies(movies));
     }
 
     @Override
     public Completable setFavorite(final int movieId) {
-        return movieCrudder.setFavorite(movieId);
+        return Completable.fromAction(() -> movieCrudder.setFavorite(movieId));
     }
 
     @Override
     public Completable removeFavorite(final Integer movieId) {
-        return movieCrudder.removeFavorite(movieId);
+        return Completable.fromAction(() -> movieCrudder.removeFavorite(movieId));
     }
 }

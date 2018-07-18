@@ -8,17 +8,17 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import fiveagency.internship.food.data.database.model.FavoriteMovies;
+import fiveagency.internship.food.data.database.model.DbFavoriteMovies;
 import io.reactivex.Single;
 
 @Dao
 public interface FavoritesDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertFavorites(FavoriteMovies... favoriteMovies);
+    void insertFavorites(DbFavoriteMovies... dbFavoriteMovies);
 
     @Delete
-    void deleteFavorite(FavoriteMovies favoriteMovies);
+    void deleteFavorite(DbFavoriteMovies dbFavoriteMovies);
 
     @Query("SELECT * FROM favorites")
     Single<List<Integer>> getAllFavorites();

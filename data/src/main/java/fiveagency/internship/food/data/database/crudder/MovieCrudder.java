@@ -5,8 +5,7 @@ import java.util.List;
 import fiveagency.internship.food.data.database.dao.FavoritesDao;
 import fiveagency.internship.food.data.database.dao.MovieDao;
 import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
-import fiveagency.internship.food.data.database.model.FavoriteMovies;
-import fiveagency.internship.food.data.database.model.MovieModel;
+import fiveagency.internship.food.data.database.model.DbFavoriteMovies;
 import fiveagency.internship.food.domain.model.Movie;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -40,10 +39,10 @@ public final class MovieCrudder {
     }
 
     public Completable setFavorite(final int movieId) {
-        return Completable.fromAction(() -> favoritesDao.insertFavorites(new FavoriteMovies(movieId)));
+        return Completable.fromAction(() -> favoritesDao.insertFavorites(new DbFavoriteMovies(movieId)));
     }
 
     public Completable removeFavorite(final Integer movieId) {
-        return Completable.fromAction(() -> favoritesDao.deleteFavorite(new FavoriteMovies(movieId)));
+        return Completable.fromAction(() -> favoritesDao.deleteFavorite(new DbFavoriteMovies(movieId)));
     }
 }

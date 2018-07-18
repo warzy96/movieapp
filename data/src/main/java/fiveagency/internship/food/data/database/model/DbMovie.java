@@ -7,9 +7,9 @@ import fiveagency.internship.food.data.network.model.ApiMovie;
 import fiveagency.internship.food.domain.model.Movie;
 
 @Entity(tableName = "movie")
-public final class MovieModel {
+public final class DbMovie {
 
-    public static final MovieModel EMPTY = new MovieModel(0, "", false, "", "", "");
+    public static final DbMovie EMPTY = new DbMovie(0, "", false, "", "", "");
 
     @PrimaryKey
     private int id;
@@ -19,7 +19,7 @@ public final class MovieModel {
     private String releaseDate;
     private String imageSource;
 
-    public MovieModel(final int id, final String title, final boolean isAdult, final String overview, final String releaseDate, final String imageSource) {
+    public DbMovie(final int id, final String title, final boolean isAdult, final String overview, final String releaseDate, final String imageSource) {
         this.id = id;
         this.title = title;
         this.isAdult = isAdult;
@@ -28,11 +28,11 @@ public final class MovieModel {
         this.imageSource = imageSource;
     }
 
-    public MovieModel(final ApiMovie apiMovie) {
+    public DbMovie(final ApiMovie apiMovie) {
         this(apiMovie.id, apiMovie.title, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate, apiMovie.imageSource);
     }
 
-    public MovieModel(final Movie movie) {
+    public DbMovie(final Movie movie) {
         this(movie.id, movie.title, movie.isAdult, movie.overview, movie.releaseDate, movie.imageSource);
     }
 
