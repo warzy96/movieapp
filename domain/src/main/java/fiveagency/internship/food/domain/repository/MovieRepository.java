@@ -3,13 +3,13 @@ package fiveagency.internship.food.domain.repository;
 import java.util.List;
 
 import fiveagency.internship.food.domain.model.Movie;
-import fiveagency.internship.food.domain.repository.listeners.RepositoryListener;
+import io.reactivex.Single;
 
 public interface MovieRepository {
 
-    void fetchMovieDetails(int id, RepositoryListener<Movie> repositoryListener);
+    Single<Movie> fetchMovieDetails(int id);
 
-    void fetchMovies(int page, RepositoryListener<List<Movie>> repositoryListener);
+    Single<List<Movie>> fetchMovies(int page);
 
-    void fetchMovies(String title, RepositoryListener<List<Movie>> repositoryListener);
+    Single<List<Movie>> fetchMovies(String title);
 }

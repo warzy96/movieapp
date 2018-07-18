@@ -9,6 +9,7 @@ import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsContract;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsPresenter;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListContract;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListPresenter;
+import io.reactivex.disposables.CompositeDisposable;
 
 @Module
 public final class FragmentPresenterModule {
@@ -37,5 +38,11 @@ public final class FragmentPresenterModule {
         final MovieDetailsPresenter movieDetailsPresenter = new MovieDetailsPresenter();
         getFragmentComponent().inject(movieDetailsPresenter);
         return movieDetailsPresenter;
+    }
+
+    @Provides
+    @FragmentScope
+    CompositeDisposable provideCompositeDisposable() {
+        return new CompositeDisposable();
     }
 }
