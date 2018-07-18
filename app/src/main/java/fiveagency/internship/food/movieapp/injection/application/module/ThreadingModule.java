@@ -12,17 +12,20 @@ import io.reactivex.schedulers.Schedulers;
 @Module
 public final class ThreadingModule {
 
+    public static final String BACKGROUND_SCHEDULER = "background_scheduler";
+    public static final String MAIN_SCHEDULER = "main_scheduler";
+
     @Provides
     @Singleton
-    @Named("IOThread")
-    Scheduler provideIOThread() {
+    @Named(BACKGROUND_SCHEDULER)
+    Scheduler provideBackgroundScheduler() {
         return Schedulers.io();
     }
 
     @Provides
     @Singleton
-    @Named("MainThread")
-    Scheduler provideMainThread() {
+    @Named(MAIN_SCHEDULER)
+    Scheduler provideMainThreadScheduler() {
         return AndroidSchedulers.mainThread();
     }
 }

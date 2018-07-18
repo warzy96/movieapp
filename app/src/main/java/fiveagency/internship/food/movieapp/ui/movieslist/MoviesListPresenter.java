@@ -1,11 +1,9 @@
 package fiveagency.internship.food.movieapp.ui.movieslist;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
-import io.reactivex.Scheduler;
 
 public final class MoviesListPresenter extends BasePresenter<MoviesListContract.View> implements MoviesListContract.Presenter {
 
@@ -17,19 +15,11 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
     @Inject
     MovieViewModelMapper movieViewModelMapper;
 
-    @Inject
-    @Named("IOThread")
-    Scheduler ioScheduler;
-
-    @Inject
-    @Named("MainThread")
-    Scheduler mainThreadScheduler;
-
     @Override
     public void start() {
         compositeDisposable.add(getMoviesUseCase.execute(DEFAULT_PAGE)
                                                 .map(movieViewModelMapper::mapMoviesListViewModel)
-                                                .subscribeOn(ioScheduler)
+                                                .subscribeOn(backgroundScheduler)
                                                 .observeOn(mainThreadScheduler)
                                                 .subscribe(movieViewModelMapper -> view.render(movieViewModelMapper),
                                                            Throwable::printStackTrace));
