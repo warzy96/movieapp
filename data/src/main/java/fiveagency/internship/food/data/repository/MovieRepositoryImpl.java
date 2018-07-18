@@ -58,4 +58,9 @@ public final class MovieRepositoryImpl implements MovieRepository {
     public Completable removeFavorite(final Integer movieId) {
         return movieCrudder.removeFavorite(movieId);
     }
+
+    @Override
+    public Single<List<Movie>> fetchFavorites() {
+        return movieCrudder.getAllFavoriteMovies();
+    }
 }

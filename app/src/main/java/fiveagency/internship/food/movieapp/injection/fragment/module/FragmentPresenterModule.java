@@ -5,6 +5,8 @@ import dagger.Provides;
 import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentScope;
+import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesContract;
+import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesPresenter;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsContract;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsPresenter;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListContract;
@@ -38,6 +40,14 @@ public final class FragmentPresenterModule {
         MovieDetailsPresenter movieDetailsPresenter = new MovieDetailsPresenter();
         getFragmentComponent().inject(movieDetailsPresenter);
         return movieDetailsPresenter;
+    }
+
+    @Provides
+    @FragmentScope
+    public MovieFavoritesContract.Presenter provideMovieFavoritesContract() {
+        final MovieFavoritesPresenter movieFavoritesPresenter = new MovieFavoritesPresenter();
+        getFragmentComponent().inject(movieFavoritesPresenter);
+        return movieFavoritesPresenter;
     }
 
     @Provides

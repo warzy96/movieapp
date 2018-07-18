@@ -2,7 +2,6 @@ package fiveagency.internship.food.domain.repository;
 
 import java.util.List;
 
-import fiveagency.internship.food.domain.interactor.type.CompletableUseCase;
 import fiveagency.internship.food.domain.model.Movie;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -20,4 +19,6 @@ public interface MovieRepository {
     Completable setFavorite(final int movieId);
 
     Completable removeFavorite(Integer movieId);
+
+    Single<List<Movie>> fetchFavorites();
 }

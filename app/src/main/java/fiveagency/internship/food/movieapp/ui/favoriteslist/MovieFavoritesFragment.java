@@ -1,4 +1,4 @@
-package fiveagency.internship.food.movieapp.ui.movieslist;
+package fiveagency.internship.food.movieapp.ui.favoriteslist;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,14 +15,16 @@ import javax.inject.Inject;
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 import fiveagency.internship.food.movieapp.ui.base.BaseFragment;
+import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListViewModel;
 import io.reactivex.disposables.CompositeDisposable;
 
-public final class MoviesListFragment extends BaseFragment<MoviesListContract.Presenter> implements MoviesListContract.View, SwipeRefreshLayout.OnRefreshListener {
+public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesContract.Presenter> implements MovieFavoritesContract.View, SwipeRefreshLayout.OnRefreshListener {
 
-    public static final String TAG = "MoviesListFragment";
+    public static final String TAG = "MovieFavoritesFragment";
 
     @Inject
-    MoviesListAdapter moviesListAdapter;
+    MovieFavoritesAdapter movieFavoritesAdapter;
+
     @Inject
     CompositeDisposable compositeDisposable;
 
@@ -30,17 +32,14 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
     private static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
     private static final int MOVIES_LIST_RECYCLER_VIEW = R.id.movies_list_recycler_view;
 
-    public static MoviesListFragment newInstance() {
-        return new MoviesListFragment();
+    public static MovieFavoritesFragment newInstance() {
+        return new MovieFavoritesFragment();
     }
 
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter.setView(this);
-        moviesListAdapter.setOnMovieClickListener(movieId -> presenter.showMovieDetails(movieId));
-        moviesListAdapter.setFavoriteOnCheckedListener(movieId -> presenter.insertFavorite(movieId));
-        moviesListAdapter.setFavoriteOnUncheckedListener(movieId -> presenter.removeFavorite(movieId));
     }
 
     @NonNull
@@ -62,6 +61,23 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
         super.onStop();
     }
 
+    @Override
+    public void render(final MoviesListViewModel moviesListViewModel) {
+        swipeRefreshLayout.setRefreshing(true);
+        movieFavoritesAdapter.setMovies(moviesListViewModel.movieViewModelList);
+    }
+
+    @Override
+    public void onRefresh() {
+
+    }
+
+    private void initRecyclerView(final View rootView) {
+        final RecyclerView recyclerView = rootView.findViewById(MOVIES_LIST_RECYCLER_VIEW);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(movieFavoritesAdapter);
+    }
+
     private void initSwipeRefreshLayout() {
         swipeRefreshLayout = getView().findViewById(MOVIES_LIST_SWIPE_REFRESH_LAYOUT);
         swipeRefreshLayout.setOnRefreshListener(this);
@@ -69,24 +85,6 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
             swipeRefreshLayout.setRefreshing(true);
             presenter.start();
         });
-    }
-
-    @Override
-    public void render(final MoviesListViewModel moviesListViewModel) {
-        swipeRefreshLayout.setRefreshing(false);
-        moviesListAdapter.setMovies(moviesListViewModel.movieViewModelList);
-    }
-
-    @Override
-    public void onRefresh() {
-        swipeRefreshLayout.setRefreshing(true);
-        presenter.start();
-    }
-
-    private void initRecyclerView(final View rootView) {
-        final RecyclerView recyclerView = rootView.findViewById(MOVIES_LIST_RECYCLER_VIEW);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        recyclerView.setAdapter(moviesListAdapter);
     }
 
     @Override

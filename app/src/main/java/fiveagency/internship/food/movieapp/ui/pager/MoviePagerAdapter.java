@@ -3,14 +3,12 @@ package fiveagency.internship.food.movieapp.ui.pager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.app.FragmentPagerAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
+import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesFragment;
+import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListFragment;
 
-public final class MoviePagerAdapter extends FragmentStatePagerAdapter {
-
-    private final List<Fragment> pages = new ArrayList<>();
+public final class MoviePagerAdapter extends FragmentPagerAdapter {
 
     public MoviePagerAdapter(final FragmentManager fragmentManager) {
         super(fragmentManager);
@@ -18,23 +16,26 @@ public final class MoviePagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(final int position) {
-        return pages.get(position);
+        switch (position) {
+            case 0:
+                return MoviesListFragment.newInstance();
+            case 1:
+                return MovieFavoritesFragment.newInstance();
+            case 2:
+                return DummyFragment1.newInstance();
+            default:
+                return null;
+        }
     }
 
     @Override
     public int getCount() {
-        return pages.size();
+        return 3;
     }
 
     @Nullable
     @Override
     public CharSequence getPageTitle(final int position) {
-        return pages.get(position).getTag();
-    }
-
-    public void setPages(final List<Fragment> fragments) {
-        this.pages.clear();
-        this.pages.addAll(fragments);
-        notifyDataSetChanged();
+        return "Page " + position;
     }
 }
