@@ -2,12 +2,12 @@ package fiveagency.internship.food.domain.interactor;
 
 import java.util.List;
 
-import fiveagency.internship.food.domain.interactor.type.QueryUseCase;
+import fiveagency.internship.food.domain.interactor.type.SingleQueryUseCase;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import io.reactivex.Single;
 
-public final class GetMoviesUseCase implements QueryUseCase<Integer, Single<List<Movie>>> {
+public final class GetMoviesUseCase implements SingleQueryUseCase<Integer, List<Movie>> {
 
     private final MovieRepository movieRepository;
 

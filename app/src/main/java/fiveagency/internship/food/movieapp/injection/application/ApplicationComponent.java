@@ -7,6 +7,7 @@ import fiveagency.internship.food.movieapp.app.MovieApplication;
 import fiveagency.internship.food.movieapp.injection.activity.ActivityComponent;
 import fiveagency.internship.food.movieapp.injection.application.module.ApplicationModule;
 import fiveagency.internship.food.movieapp.injection.application.module.DataModule;
+import fiveagency.internship.food.movieapp.injection.application.module.ThreadingModule;
 import fiveagency.internship.food.movieapp.injection.application.module.UseCaseModule;
 
 @Singleton
@@ -14,7 +15,8 @@ import fiveagency.internship.food.movieapp.injection.application.module.UseCaseM
         modules = {
                 ApplicationModule.class,
                 DataModule.class,
-                UseCaseModule.class
+                UseCaseModule.class,
+                ThreadingModule.class
         }
 )
 public interface ApplicationComponent extends ApplicationComponentInjects {
@@ -26,6 +28,7 @@ public interface ApplicationComponent extends ApplicationComponentInjects {
                                              .applicationModule(new ApplicationModule(movieApplication))
                                              .useCaseModule(new UseCaseModule())
                                              .dataModule(new DataModule())
+                                             .threadingModule(new ThreadingModule())
                                              .build();
         }
 

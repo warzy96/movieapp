@@ -18,7 +18,6 @@ import javax.inject.Inject;
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
-import io.reactivex.disposables.CompositeDisposable;
 
 public final class MovieDetailsFragment extends DaggerFragment implements MovieDetailsContract.View {
 
@@ -30,8 +29,6 @@ public final class MovieDetailsFragment extends DaggerFragment implements MovieD
     private static final int MOVIE_POSTER_IMAGE_VIEW = R.id.movie_details_image_view;
     @Inject
     MovieDetailsContract.Presenter presenter;
-    @Inject
-    CompositeDisposable compositeDisposable;
 
     public static MovieDetailsFragment newInstance(final int movieId) {
         final Bundle arguments = new Bundle();
@@ -57,12 +54,6 @@ public final class MovieDetailsFragment extends DaggerFragment implements MovieD
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         presenter.start(getArguments().getInt(KEY_MOVIE_ID));
-    }
-
-    @Override
-    public void onStop() {
-        compositeDisposable.clear();
-        super.onStop();
     }
 
     @Override
