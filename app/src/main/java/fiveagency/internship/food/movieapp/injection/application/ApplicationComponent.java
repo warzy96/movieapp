@@ -17,7 +17,7 @@ import fiveagency.internship.food.movieapp.injection.application.module.UtilsMod
                 ApplicationModule.class,
                 DataModule.class,
                 UseCaseModule.class,
-                UtilsModule.class
+                UtilsModule.class,
                 UseCaseModule.class,
                 ThreadingModule.class
         }
