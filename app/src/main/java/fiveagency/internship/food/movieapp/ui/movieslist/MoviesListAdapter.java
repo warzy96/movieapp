@@ -27,8 +27,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
     private static final int MOVIE_POSTER_IMAGE_VIEW = R.id.item_movie_poster_image;
     private static final int CIRCULAR_PROGRESS_DRAWABLE_STROKE_WIDTH = R.dimen.circular_progressbar_stroke_width;
     private MovieOnClickListener onMovieClickListener;
-    private FavoriteOnCheckedListener favoriteOnCheckedListener;
-    private FavoriteOnUncheckedListener favoriteOnUncheckedListener;
+    private FavoriteOnChangeListener favoriteOnChangeListener;
 
     public MoviesListAdapter(final LayoutInflater layoutInflater) {
         this.layoutInflater = layoutInflater;
@@ -42,7 +41,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
     @Override
     public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
-        holder.render(movies.get(position), onMovieClickListener, favoriteOnCheckedListener, favoriteOnUncheckedListener);
+        holder.render(movies.get(position), onMovieClickListener, favoriteOnChangeListener);
     }
 
     @Override
@@ -60,12 +59,8 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
         onMovieClickListener = movieClickListener;
     }
 
-    public void setFavoriteOnCheckedListener(final FavoriteOnCheckedListener favoriteOnCheckedListener) {
-        this.favoriteOnCheckedListener = favoriteOnCheckedListener;
-    }
-
-    public void setFavoriteOnUncheckedListener(final FavoriteOnUncheckedListener favoriteOnUncheckedListener) {
-        this.favoriteOnUncheckedListener = favoriteOnUncheckedListener;
+    public void setFavoriteOnCheckedListener(final FavoriteOnChangeListener favoriteOnChangeListener) {
+        this.favoriteOnChangeListener = favoriteOnChangeListener;
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {
@@ -74,8 +69,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
             super(itemView);
         }
 
-        void render(final MovieViewModel movieViewModel, final MovieOnClickListener movieOnClickListener, final FavoriteOnCheckedListener favoriteOnCheckedListener,
-                    final FavoriteOnUncheckedListener favoriteOnUncheckedListener) {
+        void render(final MovieViewModel movieViewModel, final MovieOnClickListener movieOnClickListener, final FavoriteOnChangeListener favoriteOnCheckedListener) {
             final TextView movieTitleTextView = itemView.findViewById(MOVIE_NAME_TEXT_VIEW);
             movieTitleTextView.setText(movieViewModel.title);
             final ImageView imageView = itemView.findViewById(MOVIE_POSTER_IMAGE_VIEW);
@@ -94,11 +88,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
                 starCheckBox.setChecked(false);
             }
             starCheckBox.setOnCheckedChangeListener((compoundButton, b) -> {
-                if (!starCheckBox.isChecked()) {
-                    favoriteOnUncheckedListener.onClick(movieViewModel.id);
-                } else {
-                    favoriteOnCheckedListener.onClick(movieViewModel.id);
-                }
+                favoriteOnCheckedListener.onClick(movieViewModel.id, starCheckBox.isChecked());
             });
         }
 
@@ -115,13 +105,8 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
         void onClick(int movieId);
     }
 
-    public interface FavoriteOnCheckedListener {
+    public interface FavoriteOnChangeListener {
 
-        void onClick(int movieId);
-    }
-
-    public interface FavoriteOnUncheckedListener {
-
-        void onClick(int movieId);
+        void onClick(int movieId, boolean isChecked);
     }
 }

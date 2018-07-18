@@ -10,9 +10,7 @@ import dagger.Provides;
 import fiveagency.internship.food.data.database.MovieDatabase;
 import fiveagency.internship.food.data.database.crudder.MovieCrudder;
 import fiveagency.internship.food.data.database.dao.FavoritesDao;
-import fiveagency.internship.food.data.database.dao.FavoritesDao_Impl;
 import fiveagency.internship.food.data.database.dao.MovieDao;
-import fiveagency.internship.food.data.database.dao.MovieDao_Impl;
 import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
 import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.data.network.configuration.Urls;
@@ -26,6 +24,8 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static fiveagency.internship.food.data.database.MovieDatabase.DB_NAME;
 
 @Module
 public final class DataModule {
@@ -88,19 +88,19 @@ public final class DataModule {
     @Provides
     @Singleton
     MovieDao provideMovieDao(final MovieDatabase movieDatabase) {
-        return new MovieDao_Impl(movieDatabase);
+        return movieDatabase.movieDao();
     }
 
     @Provides
     @Singleton
     FavoritesDao provideFavoritesDao(final MovieDatabase movieDatabase) {
-        return new FavoritesDao_Impl(movieDatabase);
+        return movieDatabase.favoritesDao();
     }
 
     @Provides
     @Singleton
     MovieDatabase provideMovieDatabase(@ForApplication final Context context) {
-        return Room.databaseBuilder(context, MovieDatabase.class, "movie-database")
+        return Room.databaseBuilder(context, MovieDatabase.class, DB_NAME)
                    .fallbackToDestructiveMigration()
                    .build();
     }

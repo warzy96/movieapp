@@ -11,6 +11,8 @@ import fiveagency.internship.food.data.database.model.MovieModel;
 @Database(entities = {MovieModel.class, FavoriteMovies.class}, version = 2)
 public abstract class MovieDatabase extends RoomDatabase {
 
+    public static final String DB_NAME = "movie-database";
+
     public abstract MovieDao movieDao();
 
     public abstract FavoritesDao favoritesDao();
