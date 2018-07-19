@@ -22,19 +22,19 @@ public final class MovieCrudder {
         this.movieModelMapper = movieModelMapper;
     }
 
-    public void insertMovies(final List<Movie> movies) {
-        movieDao.insertAllMovies(movieModelMapper.mapMovieModels(movies));
+    public Completable insertMovies(final List<Movie> movies) {
+        return Completable.fromAction(() -> movieDao.insertAllMovies(movieModelMapper.mapMovieModels(movies)));
     }
 
     public Single<List<Movie>> getAllMovies() {
         return movieDao.getAllMovies().map(movieModelMapper::mapMovies);
     }
 
-    public List<Integer> getAllFavoriteMovies() {
+    public Single<List<Integer>> getAllFavoriteMovies() {
         return favoritesDao.getAllMovieFavoritesId();
     }
 
-    public boolean isMovieFavorite(final int movieId) {
+    public Single<Boolean> isMovieFavorite(final int movieId) {
         return favoritesDao.isFavorite(movieId);
     }
 

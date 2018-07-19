@@ -24,8 +24,8 @@ public interface FavoritesDao {
     Single<List<Integer>> getAllFavorites();
 
     @Query("SELECT movie.id FROM favorites NATURAL JOIN movie")
-    List<Integer> getAllMovieFavoritesId();
+    Single<List<Integer>> getAllMovieFavoritesId();
 
     @Query("SELECT * FROM favorites WHERE id = :movieId")
-    boolean isFavorite(int movieId);
+    Single<Boolean> isFavorite(int movieId);
 }

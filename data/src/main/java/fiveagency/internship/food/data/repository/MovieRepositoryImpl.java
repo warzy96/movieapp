@@ -28,7 +28,7 @@ public final class MovieRepositoryImpl implements MovieRepository {
     @Override
     public Single<List<Movie>> fetchMovies(final int page) {
         final List<Movie> moviesWithFavorites = new ArrayList<>();
-        return Single.zip(movieClient.getMovies(page), Single.fromCallable(movieCrudder::getAllFavoriteMovies),
+        return Single.zip(movieClient.getMovies(page), movieCrudder.getAllFavoriteMovies(),
                           (movies, favorites) -> {
                               for (final Movie movie : movies) {
                                   if (favorites.contains(movie.id)) {
@@ -48,16 +48,16 @@ public final class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Completable insertMovies(final List<Movie> movies) {
-        return Completable.fromAction(() -> movieCrudder.insertMovies(movies));
+        return movieCrudder.insertMovies(movies);
     }
 
     @Override
     public Completable setFavorite(final int movieId) {
-        return Completable.fromAction(() -> movieCrudder.setFavorite(movieId));
+        return movieCrudder.setFavorite(movieId);
     }
 
     @Override
     public Completable removeFavorite(final Integer movieId) {
-        return Completable.fromAction(() -> movieCrudder.removeFavorite(movieId));
+        return movieCrudder.removeFavorite(movieId);
     }
 }
