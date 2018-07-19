@@ -1,20 +1,31 @@
 package fiveagency.internship.food.movieapp.injection.application.module;
 
+import android.arch.persistence.room.Room;
+import android.content.Context;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import fiveagency.internship.food.data.database.MovieDatabase;
+import fiveagency.internship.food.data.database.crudder.MovieCrudder;
+import fiveagency.internship.food.data.database.dao.FavoritesDao;
+import fiveagency.internship.food.data.database.dao.MovieDao;
+import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
 import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.data.network.configuration.Urls;
 import fiveagency.internship.food.data.network.mappers.MovieMapper;
 import fiveagency.internship.food.data.network.service.MovieService;
 import fiveagency.internship.food.data.repository.MovieRepositoryImpl;
 import fiveagency.internship.food.domain.repository.MovieRepository;
+import fiveagency.internship.food.movieapp.injection.application.ForApplication;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static fiveagency.internship.food.data.database.MovieDatabase.DB_NAME;
 
 @Module
 public final class DataModule {
@@ -64,7 +75,39 @@ public final class DataModule {
 
     @Provides
     @Singleton
-    MovieRepository provideMovieRepository(final MovieClient movieClient) {
-        return new MovieRepositoryImpl(movieClient);
+    MovieCrudder provideMovieCrudder(final MovieModelMapper movieModelMapper, final MovieDao movieDao, final FavoritesDao favoritesDao) {
+        return new MovieCrudder(movieDao, favoritesDao, movieModelMapper);
+    }
+
+    @Provides
+    @Singleton
+    MovieModelMapper provideMovieModelMapper() {
+        return new MovieModelMapper();
+    }
+
+    @Provides
+    @Singleton
+    MovieDao provideMovieDao(final MovieDatabase movieDatabase) {
+        return movieDatabase.movieDao();
+    }
+
+    @Provides
+    @Singleton
+    FavoritesDao provideFavoritesDao(final MovieDatabase movieDatabase) {
+        return movieDatabase.favoritesDao();
+    }
+
+    @Provides
+    @Singleton
+    MovieDatabase provideMovieDatabase(@ForApplication final Context context) {
+        return Room.databaseBuilder(context, MovieDatabase.class, DB_NAME)
+                   .fallbackToDestructiveMigration()
+                   .build();
+    }
+
+    @Provides
+    @Singleton
+    MovieRepository provideMovieRepository(final MovieClient movieClient, final MovieCrudder movieCrudder) {
+        return new MovieRepositoryImpl(movieClient, movieCrudder);
     }
 }

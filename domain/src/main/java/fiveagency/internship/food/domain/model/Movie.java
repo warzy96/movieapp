@@ -4,21 +4,23 @@ import java.util.Objects;
 
 public final class Movie {
 
-    public static final Movie EMPTY = new Movie("", 0, false, "", "", "");
+    public static final Movie EMPTY = new Movie("", 0, false, "", "", "", false);
     public final String title;
     public final int id;
     public final boolean isAdult;
     public final String overview;
     public final String releaseDate;
     public final String imageSource;
+    public final boolean isFavorite;
 
-    public Movie(final String title, final int id, final boolean isAdult, final String overview, final String releaseDate, final String imageSource) {
+    public Movie(final String title, final int id, final boolean isAdult, final String overview, final String releaseDate, final String imageSource, final boolean isFavorite) {
         this.title = title;
         this.id = id;
         this.isAdult = isAdult;
         this.overview = overview;
         this.releaseDate = releaseDate;
         this.imageSource = imageSource;
+        this.isFavorite = isFavorite;
     }
 
     @Override
@@ -32,6 +34,7 @@ public final class Movie {
         final Movie movie = (Movie) o;
         return id == movie.id &&
                 isAdult == movie.isAdult &&
+                isFavorite == movie.isFavorite &&
                 Objects.equals(title, movie.title) &&
                 Objects.equals(overview, movie.overview) &&
                 Objects.equals(releaseDate, movie.releaseDate) &&
@@ -41,7 +44,7 @@ public final class Movie {
     @Override
     public int hashCode() {
 
-        return Objects.hash(title, id, isAdult, overview, releaseDate, imageSource);
+        return Objects.hash(title, id, isAdult, overview, releaseDate, imageSource, isFavorite);
     }
 
     @Override
@@ -53,6 +56,11 @@ public final class Movie {
                 ", overview='" + overview + '\'' +
                 ", releaseDate='" + releaseDate + '\'' +
                 ", imageSource='" + imageSource + '\'' +
+                ", isFavorite=" + isFavorite +
                 '}';
+    }
+
+    public Movie withIsFavorite(final boolean isFavorite) {
+        return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, isFavorite);
     }
 }

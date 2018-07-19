@@ -11,6 +11,10 @@ public interface MoviesListContract {
         void getMoviesUseCase();
 
         void setView(MoviesListContract.View view);
+
+        void insertFavorite(int movieId);
+
+        void removeFavorite(int movieId);
     }
 
     interface View {

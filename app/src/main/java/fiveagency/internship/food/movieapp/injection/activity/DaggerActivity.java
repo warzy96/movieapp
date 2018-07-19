@@ -18,7 +18,7 @@ public abstract class DaggerActivity extends AppCompatActivity {
     }
 
     public ActivityComponent getActivityComponent() {
-        if(activityComponent == null) {
+        if (activityComponent == null) {
             activityComponent = ComponentFactory.createActivityComponent(this, getMovieApplication().getApplicationComponent());
         }
         return activityComponent;

@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +27,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
     @LayoutRes
     private static final int ITEM_MOVIE_LAYOUT = R.layout.item_movie;
     private MovieOnClickListener onMovieClickListener = id -> {};
+    private FavoriteOnChangeListener favoriteOnChangeListener;
 
     public MoviesListAdapter(final LayoutInflater layoutInflater, final ImageLoader imageLoader) {
         this.layoutInflater = layoutInflater;
@@ -40,7 +42,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
     @Override
     public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
-        holder.render(movies.get(position), onMovieClickListener);
+        holder.render(movies.get(position), onMovieClickListener, favoriteOnChangeListener);
     }
 
     @Override
@@ -58,6 +60,10 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
         onMovieClickListener = movieClickListener;
     }
 
+    public void setFavoriteOnCheckedListener(final FavoriteOnChangeListener favoriteOnChangeListener) {
+        this.favoriteOnChangeListener = favoriteOnChangeListener;
+    }
+
     static class MovieViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.movie_name)
@@ -67,6 +73,8 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
         private ImageLoader imageLoader;
         @BindDimen(R.dimen.circular_progressbar_stroke_width)
         float circularProgressbarStrokeWidth;
+        @BindView(R.id.item_movie_favorite_checkbox)
+        CheckBox starCheckBox;
 
         MovieViewHolder(final View itemView, final ImageLoader imageLoader) {
             super(itemView);
@@ -74,15 +82,26 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
             this.imageLoader = imageLoader;
         }
 
-        void render(final MovieViewModel movieViewModel, final MovieOnClickListener movieOnClickListener) {
+        void render(final MovieViewModel movieViewModel, final MovieOnClickListener movieOnClickListener, final FavoriteOnChangeListener favoriteOnCheckedListener) {
             movieItemTitleView.setText(movieViewModel.title);
             imageLoader.renderImage(movieViewModel.imageSource, movieItemPosterView, circularProgressbarStrokeWidth);
             itemView.setOnClickListener(view -> movieOnClickListener.onClick(movieViewModel.id));
+            if (movieViewModel.isFavorite) {
+                starCheckBox.setChecked(true);
+            } else {
+                starCheckBox.setChecked(false);
+            }
+            starCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> favoriteOnCheckedListener.onClick(movieViewModel.id, isChecked));
         }
     }
 
     public interface MovieOnClickListener {
 
         void onClick(int movieId);
+    }
+
+    public interface FavoriteOnChangeListener {
+
+        void onClick(int movieId, boolean isChecked);
     }
 }

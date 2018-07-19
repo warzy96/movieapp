@@ -35,4 +35,8 @@ dependencies {
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$project.ext.espressoCoreVersion"
     implementation "io.reactivex.rxjava2:rxandroid:$project.ext.rxAndroidVersion"
     implementation "io.reactivex.rxjava2:rxjava:$project.ext.rxJavaVersion"
+    implementation "android.arch.persistence.room:runtime:$project.ext.roomVersion"
+    annotationProcessor "android.arch.persistence.room:compiler:$project.ext.roomVersion"
+    implementation "android.arch.persistence.room:rxjava2:$project.ext.roomVersion"
+    implementation "com.facebook.stetho:stetho:$project.ext.stethoVersion"
 }

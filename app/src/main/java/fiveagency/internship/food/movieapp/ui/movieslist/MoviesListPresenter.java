@@ -3,6 +3,7 @@ package fiveagency.internship.food.movieapp.ui.movieslist;
 import javax.inject.Inject;
 
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
+import fiveagency.internship.food.domain.interactor.InsertFavoriteUseCase;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
 
 public final class MoviesListPresenter extends BasePresenter<MoviesListContract.View> implements MoviesListContract.Presenter {
@@ -13,7 +14,13 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
     GetMoviesUseCase getMoviesUseCase;
 
     @Inject
+    InsertFavoriteUseCase insertFavoriteUseCase;
+
+    @Inject
     MovieViewModelMapper movieViewModelMapper;
+
+    @Inject
+    RemoveFavoriteUseCase removeFavoriteUseCase;
 
     @Override
     public void start() {
@@ -37,5 +44,21 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
     @Override
     public void setView(final MoviesListContract.View view) {
         this.view = view;
+    }
+
+    @Override
+    public void insertFavorite(final int movieId) {
+        compositeDisposable.add(insertFavoriteUseCase.execute(movieId)
+                                                     .subscribeOn(backgroundScheduler)
+                                                     .subscribe(() -> {},
+                                                                Throwable::printStackTrace));
+    }
+
+    @Override
+    public void removeFavorite(final int movieId) {
+        compositeDisposable.add(removeFavoriteUseCase.execute(movieId)
+                                                     .subscribeOn(backgroundScheduler)
+                                                     .subscribe(() -> {},
+                                                                Throwable::printStackTrace));
     }
 }
