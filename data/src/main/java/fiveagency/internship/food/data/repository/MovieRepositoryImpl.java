@@ -1,5 +1,6 @@
 package fiveagency.internship.food.data.repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import fiveagency.internship.food.data.database.crudder.MovieCrudder;
@@ -26,16 +27,17 @@ public final class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Single<List<Movie>> fetchMovies(final int page) {
-        return movieClient.getMovies(page)
-                          .map(movies -> {
-                              movieCrudder.insertMovies(movies);
-                              return movies;
-                          })
-                          .map(movies -> {
-                              for (Movie movie : movies) {
-                                  movie.isFavorite = movieCrudder.isMovieFavorite(movie.id);
+        final List<Movie> moviesWithFavorites = new ArrayList<>();
+        return Single.zip(movieClient.getMovies(page), movieCrudder.getAllFavoriteMovies(),
+                          (movies, favorites) -> {
+                              for (final Movie movie : movies) {
+                                  if (favorites.contains(movie.id)) {
+                                      moviesWithFavorites.add(movie.withIsFavorite(true));
+                                  } else {
+                                      moviesWithFavorites.add(movie);
+                                  }
                               }
-                              return movies;
+                              return moviesWithFavorites;
                           });
     }
 
@@ -45,8 +47,8 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public void insertMovies(final List<Movie> movies) {
-        movieCrudder.insertMovies(movies);
+    public Completable insertMovies(final List<Movie> movies) {
+        return movieCrudder.insertMovies(movies);
     }
 
     @Override

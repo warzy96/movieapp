@@ -4,6 +4,7 @@ import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesFragme
 import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesPresenter;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsFragment;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsPresenter;
+import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListAdapter;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListFragment;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListPresenter;
 
@@ -20,4 +21,6 @@ public interface FragmentComponentInjects {
     void inject(MovieFavoritesFragment movieFavoritesFragment);
 
     void inject(MovieFavoritesPresenter movieFavoritesPresenter);
+
+    void inject(MoviesListAdapter moviesListAdapter);
 }

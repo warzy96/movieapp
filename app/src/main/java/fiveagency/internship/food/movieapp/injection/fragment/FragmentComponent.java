@@ -17,11 +17,11 @@ public interface FragmentComponent extends FragmentComponentInjects {
     @Subcomponent.Builder
     interface Builder {
 
-        Builder fragmentModule(FragmentModule fragmentModule);
+        Builder fragmentModule(final FragmentModule fragmentModule);
 
         FragmentComponent build();
 
-        Builder fragmentPresenterModule(FragmentPresenterModule fragmentPresenterModule);
+        Builder fragmentPresenterModule(final FragmentPresenterModule fragmentPresenterModule);
     }
 
     final class Initializer {

@@ -11,7 +11,7 @@ public final class Movie {
     public final String overview;
     public final String releaseDate;
     public final String imageSource;
-    public boolean isFavorite;
+    public final boolean isFavorite;
 
     public Movie(final String title, final int id, final boolean isAdult, final String overview, final String releaseDate, final String imageSource, final boolean isFavorite) {
         this.title = title;
@@ -58,5 +58,9 @@ public final class Movie {
                 ", imageSource='" + imageSource + '\'' +
                 ", isFavorite=" + isFavorite +
                 '}';
+    }
+
+    public Movie withIsFavorite(final boolean isFavorite) {
+        return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, isFavorite);
     }
 }

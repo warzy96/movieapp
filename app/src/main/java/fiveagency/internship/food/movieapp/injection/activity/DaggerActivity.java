@@ -28,5 +28,5 @@ public abstract class DaggerActivity extends AppCompatActivity {
         return MovieApplication.from(this);
     }
 
-    protected abstract void inject(final ActivityComponent activityComponent);
+    protected abstract void inject(ActivityComponent activityComponent);
 }

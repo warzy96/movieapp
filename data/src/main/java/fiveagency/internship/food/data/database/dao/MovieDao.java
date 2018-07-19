@@ -8,21 +8,22 @@ import android.arch.persistence.room.Query;
 
 import java.util.List;
 
-import fiveagency.internship.food.data.database.model.MovieModel;
+import fiveagency.internship.food.data.database.model.DbMovie;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 
 @Dao
 public interface MovieDao {
 
     @Query("SELECT * FROM movie")
-    Single<List<MovieModel>> getAllMovies();
+    Single<List<DbMovie>> getAllMovies();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAllMovies(MovieModel... movieModel);
+    void insertAllMovies(DbMovie... dbMovie);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAllMovies(List<MovieModel> movieModels);
+    void insertAllMovies(List<DbMovie> dbMovies);
 
     @Delete
-    void deleteMovie(MovieModel movieModel);
+    void deleteMovie(DbMovie dbMovie);
 }

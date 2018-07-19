@@ -4,13 +4,13 @@ public interface MovieDetailsContract {
 
     interface Presenter {
 
-        void start(int id);
+        void start(int movieId);
 
         void setView(MovieDetailsContract.View view);
     }
 
     interface View {
 
-        void render(final MovieDetailsViewModel movieDetailsViewModel);
+        void render(MovieDetailsViewModel movieDetailsViewModel);
     }
 }

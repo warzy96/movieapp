@@ -16,7 +16,7 @@ public interface ActivityComponent extends ActivityComponentInjects {
     @Subcomponent.Builder
     interface Builder {
 
-        Builder activityModule(ActivityModule activityModule);
+        Builder activityModule(final ActivityModule activityModule);
 
         ActivityComponent build();
     }

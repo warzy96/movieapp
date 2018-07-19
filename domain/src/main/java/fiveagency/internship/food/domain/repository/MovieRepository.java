@@ -14,7 +14,7 @@ public interface MovieRepository {
 
     Single<List<Movie>> fetchMovies(String title);
 
-    void insertMovies(List<Movie> movies);
+    Completable insertMovies(List<Movie> movies);
 
     Completable setFavorite(final int movieId);
 

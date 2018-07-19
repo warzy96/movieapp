@@ -39,6 +39,8 @@ allprojects {
         constraintLayoutVersion = "1.1.2"
         daggerVersion = "2.16"
         daggerAnnotationProcessorVersion = "2.16"
+        butterKnifeVersion = "8.8.1"
+        butterKnifeCompilerVersion = "8.8.1"
         rxJavaVersion = "2.0.2"
         rxAndroidVersion = "2.0.2"
         rxJavaRetrofitAdapterVersion = "2.4.0"
