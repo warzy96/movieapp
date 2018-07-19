@@ -30,13 +30,13 @@ public final class MovieRepositoryImpl implements MovieRepository {
         final List<Movie> moviesWithFavorites = new ArrayList<>();
         return Single.zip(movieClient.getMovies(page), Single.fromCallable(movieCrudder::getAllFavoriteMovies),
                           (movies, favorites) -> {
-                              movies.forEach(movie -> {
+                              for (final Movie movie : movies) {
                                   if (favorites.contains(movie.id)) {
                                       moviesWithFavorites.add(movie.withIsFavorite(true));
                                   } else {
                                       moviesWithFavorites.add(movie);
                                   }
-                              });
+                              }
                               return moviesWithFavorites;
                           });
     }
