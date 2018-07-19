@@ -44,7 +44,7 @@ public final class MoviesListFragment extends DaggerFragment implements MoviesLi
         presenter.setView(this);
         moviesListAdapter.setOnMovieClickListener(movieId -> presenter.showMovieDetails(movieId));
         moviesListAdapter.setFavoriteOnCheckedListener((movieId, isChecked) -> {
-            if (!isChecked) {
+            if (isChecked) {
                 presenter.insertFavorite(movieId);
             } else {
                 presenter.removeFavorite(movieId);
