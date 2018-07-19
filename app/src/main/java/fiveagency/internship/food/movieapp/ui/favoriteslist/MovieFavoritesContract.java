@@ -13,6 +13,10 @@ public interface MovieFavoritesContract {
         void insertFavorite(int movieId);
 
         void removeFavorite(int movieId);
+
+        void showMovieDetails(int movieId);
+
+        void getFavoritesUseCase();
     }
 
     interface View {

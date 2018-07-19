@@ -40,6 +40,14 @@ public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesCon
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         presenter.setView(this);
+        movieFavoritesAdapter.setOnMovieClickListener(movieId -> presenter.showMovieDetails(movieId));
+        movieFavoritesAdapter.setFavoriteOnCheckedListener((movieId, isChecked) -> {
+            if (isChecked) {
+                presenter.insertFavorite(movieId);
+            } else {
+                presenter.removeFavorite(movieId);
+            }
+        });
     }
 
     @NonNull
@@ -70,7 +78,7 @@ public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesCon
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        presenter.start();
+        presenter.getFavoritesUseCase();
     }
 
     private void initRecyclerView(final View rootView) {

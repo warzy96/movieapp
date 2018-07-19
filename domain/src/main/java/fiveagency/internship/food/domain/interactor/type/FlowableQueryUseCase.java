@@ -1,4 +1,8 @@
 package fiveagency.internship.food.domain.interactor.type;
 
-public interface FlowableQueryUseCase {
+import io.reactivex.Flowable;
+
+public interface FlowableQueryUseCase<Param, Result> {
+
+    Flowable<Result> execute(Param param);
 }

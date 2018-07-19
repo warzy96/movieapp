@@ -23,7 +23,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
     private final LayoutInflater layoutInflater;
     private final ImageLoader imageLoader;
-    private final List<MovieViewModel> movies = new ArrayList<>();
+    private List<MovieViewModel> movies = new ArrayList<>();
     @LayoutRes
     private static final int ITEM_MOVIE_LAYOUT = R.layout.item_movie;
     private MovieOnClickListener onMovieClickListener = id -> {};
@@ -83,6 +83,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
         }
 
         void render(final MovieViewModel movieViewModel, final MovieOnClickListener movieOnClickListener, final FavoriteOnChangeListener favoriteOnCheckedListener) {
+            starCheckBox.setOnCheckedChangeListener(null);
             movieItemTitleView.setText(movieViewModel.title);
             imageLoader.renderImage(movieViewModel.imageSource, movieItemPosterView, circularProgressbarStrokeWidth);
             itemView.setOnClickListener(view -> movieOnClickListener.onClick(movieViewModel.id));

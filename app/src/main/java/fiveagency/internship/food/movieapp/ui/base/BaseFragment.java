@@ -12,4 +12,9 @@ public abstract class BaseFragment<Presenter> extends DaggerFragment {
     public Presenter presenter;
 
     public SwipeRefreshLayout swipeRefreshLayout;
+
+    @Override
+    public void onStop() {
+        super.onStop();
+    }
 }

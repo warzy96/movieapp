@@ -43,6 +43,24 @@ public final class MovieModelMapper {
         return movies;
     }
 
+    public List<Movie> mapFavoriteMovies(final List<DbMovie> dbMovies) {
+        final List<Movie> movies = new LinkedList<>();
+        for (final DbMovie dbMovie : dbMovies) {
+            movies.add(new Movie(dbMovie.getTitle(),
+                                 dbMovie.getId(),
+                                 dbMovie.isAdult(),
+                                 dbMovie.getOverview(),
+                                 dbMovie.getReleaseDate(),
+                                 dbMovie.getImageSource(),
+                                 true));
+        }
+        return movies;
+    }
+
+    public Movie mapMovie(final DbMovie dbMovie) {
+        return new Movie(dbMovie.getTitle(), dbMovie.getId(), dbMovie.isAdult(), dbMovie.getOverview(), dbMovie.getReleaseDate(), dbMovie.getImageSource(), false);
+    }
+
     public DbMovie mapMovieToMovieModel(final Movie movie) {
         return new DbMovie(movie);
     }

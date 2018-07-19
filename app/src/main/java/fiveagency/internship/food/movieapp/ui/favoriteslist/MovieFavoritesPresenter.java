@@ -7,8 +7,6 @@ import fiveagency.internship.food.domain.interactor.InsertFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
 import fiveagency.internship.food.movieapp.ui.movieslist.MovieViewModelMapper;
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.schedulers.Schedulers;
 
 public final class MovieFavoritesPresenter extends BasePresenter<MovieFavoritesContract.View> implements MovieFavoritesContract.Presenter {
 
@@ -26,30 +24,37 @@ public final class MovieFavoritesPresenter extends BasePresenter<MovieFavoritesC
 
     @Override
     public void start() {
+        getFavoritesUseCase();
+    }
+
+    public void getFavoritesUseCase() {
         compositeDisposable.add(getFavoritesUseCase.execute()
                                                    .map(movieViewModelMapper::mapMoviesListViewModel)
-                                                   .subscribeOn(Schedulers.io())
-                                                   .observeOn(AndroidSchedulers.mainThread())
-                                                   .subscribe(movieViewModel -> view.render(movieViewModel),
-                                                              Throwable::printStackTrace));
+                                                   .subscribeOn(backgroundScheduler)
+                                                   .observeOn(mainThreadScheduler)
+                                                   .subscribe(moviesListViewModel -> view.render(moviesListViewModel),
+                                                              throwable -> loggerImpl.log(throwable)));
     }
 
     @Override
     public void insertFavorite(final int movieId) {
         compositeDisposable.add(insertFavoriteUseCase.execute(movieId)
-                                                     .subscribeOn(Schedulers.io())
-                                                     .observeOn(Schedulers.io())
+                                                     .subscribeOn(backgroundScheduler)
                                                      .subscribe(() -> {},
-                                                                Throwable::printStackTrace));
+                                                                throwable -> loggerImpl.log(throwable)));
     }
 
     @Override
     public void removeFavorite(final int movieId) {
         compositeDisposable.add(removeFavoriteUseCase.execute(movieId)
-                                                     .subscribeOn(Schedulers.io())
-                                                     .observeOn(Schedulers.io())
+                                                     .subscribeOn(backgroundScheduler)
                                                      .subscribe(() -> {},
-                                                                Throwable::printStackTrace));
+                                                                throwable -> loggerImpl.log(throwable)));
+    }
+
+    @Override
+    public void showMovieDetails(final int movieId) {
+        router.showMovieDetailsScreen(movieId);
     }
 
     @Override

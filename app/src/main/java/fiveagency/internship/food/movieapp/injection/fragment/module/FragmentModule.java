@@ -34,7 +34,7 @@ public final class FragmentModule {
 
     @Provides
     @FragmentScope
-    public MovieFavoritesAdapter provideMovieFavoritesAdapter(final LayoutInflater layoutInflater) {
-        return new MovieFavoritesAdapter(layoutInflater);
+    public MovieFavoritesAdapter provideMovieFavoritesAdapter(final LayoutInflater layoutInflater, final ImageLoader imageLoader) {
+        return new MovieFavoritesAdapter(layoutInflater, imageLoader);
     }
 }

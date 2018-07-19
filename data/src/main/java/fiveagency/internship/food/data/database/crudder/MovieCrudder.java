@@ -8,6 +8,7 @@ import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
 import fiveagency.internship.food.data.database.model.DbFavoriteMovies;
 import fiveagency.internship.food.domain.model.Movie;
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public final class MovieCrudder {
@@ -30,8 +31,12 @@ public final class MovieCrudder {
         return movieDao.getAllMovies().map(movieModelMapper::mapMovies);
     }
 
-    public Single<List<Integer>> getAllFavoriteMovies() {
+    public Single<List<Integer>> getAllFavoriteMoviesIds() {
         return favoritesDao.getAllMovieFavoritesId();
+    }
+
+    public Flowable<List<Movie>> getAllFavoriteMovies() {
+        return favoritesDao.getAllFlowableFavorites().map(movieModelMapper::mapFavoriteMovies);
     }
 
     public Single<Boolean> isMovieFavorite(final int movieId) {
@@ -44,5 +49,14 @@ public final class MovieCrudder {
 
     public Completable removeFavorite(final Integer movieId) {
         return Completable.fromAction(() -> favoritesDao.deleteFavorite(new DbFavoriteMovies(movieId)));
+    }
+
+    public Flowable<List<Movie>> getAllFlowableFavoriteMovies() {
+        return favoritesDao.getAllFlowableFavorites().map(movieModelMapper::mapMovies);
+    }
+
+    public Flowable<List<Integer>> getAllFlowableFavoriteMoviesIds() {
+        return favoritesDao.getAllFlowableFavoritesIds()
+                .doOnNext(movies -> {});
     }
 }

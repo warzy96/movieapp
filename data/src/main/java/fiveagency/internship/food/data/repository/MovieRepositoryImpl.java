@@ -8,6 +8,7 @@ import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public final class MovieRepositoryImpl implements MovieRepository {
@@ -28,7 +29,7 @@ public final class MovieRepositoryImpl implements MovieRepository {
     @Override
     public Single<List<Movie>> fetchMovies(final int page) {
         final List<Movie> moviesWithFavorites = new ArrayList<>();
-        return Single.zip(movieClient.getMovies(page), movieCrudder.getAllFavoriteMovies(),
+        return Single.zip(movieClient.getMovies(page), movieCrudder.getAllFavoriteMoviesIds(),
                           (movies, favorites) -> {
                               for (final Movie movie : movies) {
                                   if (favorites.contains(movie.id)) {
@@ -62,7 +63,29 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public Single<List<Movie>> fetchFavorites() {
+    public Single<List<Integer>> fetchFavoritesIds() {
+        return movieCrudder.getAllFavoriteMoviesIds();
+    }
+
+    @Override
+    public Flowable<List<Movie>> fetchFavorites() {
         return movieCrudder.getAllFavoriteMovies();
+    }
+
+    @Override
+    public Flowable<List<Movie>> fetchFlowableMovies(final int page) {
+
+        return Flowable.combineLatest(movieClient.getFlowableMovies(page), movieCrudder.getAllFlowableFavoriteMoviesIds(),
+                                      (movies, favorites) -> {
+                                          final List<Movie> moviesWithFavorites = new ArrayList<>();
+                                          for (final Movie movie : movies) {
+                                              if (favorites.contains(movie.id)) {
+                                                  moviesWithFavorites.add(movie.withIsFavorite(true));
+                                              } else {
+                                                  moviesWithFavorites.add(movie);
+                                              }
+                                          }
+                                          return moviesWithFavorites;
+                                      });
     }
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import fiveagency.internship.food.domain.model.Movie;
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public interface MovieRepository {
@@ -20,5 +21,9 @@ public interface MovieRepository {
 
     Completable removeFavorite(Integer movieId);
 
-    Single<List<Movie>> fetchFavorites();
+    Single<List<Integer>> fetchFavoritesIds();
+
+    Flowable<List<Movie>> fetchFavorites();
+
+    Flowable<List<Movie>> fetchFlowableMovies(int page);
 }

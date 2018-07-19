@@ -20,7 +20,7 @@ public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContr
                                                       .subscribeOn(backgroundScheduler)
                                                       .observeOn(mainThreadScheduler)
                                                       .subscribe(movieDetailsViewModel -> view.render(movieDetailsViewModel),
-                                                                 Throwable::printStackTrace));
+                                                                 throwable -> loggerImpl.log(throwable)));
     }
 
     @Override
