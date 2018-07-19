@@ -44,6 +44,7 @@ allprojects {
         rxJavaRetrofitAdapterVersion = "2.4.0"
         roomVersion = "1.0.0"
         stethoVersion = "1.5.0"
+        designVersion = "27.1.1"
     }
 }
 

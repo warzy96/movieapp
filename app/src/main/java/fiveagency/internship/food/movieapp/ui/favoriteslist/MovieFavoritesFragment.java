@@ -63,13 +63,14 @@ public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesCon
 
     @Override
     public void render(final MoviesListViewModel moviesListViewModel) {
-        swipeRefreshLayout.setRefreshing(true);
+        swipeRefreshLayout.setRefreshing(false);
         movieFavoritesAdapter.setMovies(moviesListViewModel.movieViewModelList);
     }
 
     @Override
     public void onRefresh() {
-
+        swipeRefreshLayout.setRefreshing(true);
+        presenter.start();
     }
 
     private void initRecyclerView(final View rootView) {

@@ -30,7 +30,8 @@ public final class MovieFavoritesPresenter extends BasePresenter<MovieFavoritesC
                                                    .map(movieViewModelMapper::mapMoviesListViewModel)
                                                    .subscribeOn(Schedulers.io())
                                                    .observeOn(AndroidSchedulers.mainThread())
-                                                   .subscribe(movieViewModel -> view.render(movieViewModel)));
+                                                   .subscribe(movieViewModel -> view.render(movieViewModel),
+                                                              Throwable::printStackTrace));
     }
 
     @Override
@@ -38,7 +39,8 @@ public final class MovieFavoritesPresenter extends BasePresenter<MovieFavoritesC
         compositeDisposable.add(insertFavoriteUseCase.execute(movieId)
                                                      .subscribeOn(Schedulers.io())
                                                      .observeOn(Schedulers.io())
-                                                     .subscribe());
+                                                     .subscribe(() -> {},
+                                                                Throwable::printStackTrace));
     }
 
     @Override
@@ -46,7 +48,8 @@ public final class MovieFavoritesPresenter extends BasePresenter<MovieFavoritesC
         compositeDisposable.add(removeFavoriteUseCase.execute(movieId)
                                                      .subscribeOn(Schedulers.io())
                                                      .observeOn(Schedulers.io())
-                                                     .subscribe());
+                                                     .subscribe(() -> {},
+                                                                Throwable::printStackTrace));
     }
 
     @Override
