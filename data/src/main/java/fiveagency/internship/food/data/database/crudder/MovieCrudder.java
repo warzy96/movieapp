@@ -35,7 +35,7 @@ public final class MovieCrudder {
     }
 
     public Single<Boolean> isMovieFavorite(final int movieId) {
-        return favoritesDao.isFavorite(movieId);
+        return Single.fromCallable(() -> favoritesDao.isFavorite(movieId));
     }
 
     public Completable setFavorite(final int movieId) {

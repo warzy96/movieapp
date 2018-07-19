@@ -27,7 +27,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
     @LayoutRes
     private static final int ITEM_MOVIE_LAYOUT = R.layout.item_movie;
     private MovieOnClickListener onMovieClickListener = id -> {};
-    private FavoriteOnChangeListener favoriteOnChangeListener;
+    private FavoriteOnChangeListener favoriteOnChangeListener = (id, isChecked) -> {};
 
     public MoviesListAdapter(final LayoutInflater layoutInflater, final ImageLoader imageLoader) {
         this.layoutInflater = layoutInflater;

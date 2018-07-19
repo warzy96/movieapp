@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.InsertFavoriteUseCase;
+import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
 
 public final class MoviesListPresenter extends BasePresenter<MoviesListContract.View> implements MoviesListContract.Presenter {

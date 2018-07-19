@@ -27,5 +27,5 @@ public interface FavoritesDao {
     Single<List<Integer>> getAllMovieFavoritesId();
 
     @Query("SELECT * FROM favorites WHERE id = :movieId")
-    Single<Boolean> isFavorite(int movieId);
+    boolean isFavorite(int movieId);
 }
