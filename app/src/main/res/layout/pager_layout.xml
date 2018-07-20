@@ -9,6 +9,8 @@
         android:id="@+id/main_pager_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:elevation="4dp"
         android:foregroundGravity="top"
         app:tabGravity="fill"
         app:tabMode="fixed">

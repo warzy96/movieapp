@@ -18,4 +18,14 @@ public final class MovieViewModelMapper {
         }
         return new MoviesListViewModel(movieViewModels);
     }
+
+    public Movie mapMovie(final MovieViewModel movieViewModel) {
+        return new Movie(movieViewModel.title,
+                         movieViewModel.id,
+                         movieViewModel.isAdult,
+                         movieViewModel.overview,
+                         movieViewModel.releaseDate,
+                         movieViewModel.imageSource,
+                         false);
+    }
 }

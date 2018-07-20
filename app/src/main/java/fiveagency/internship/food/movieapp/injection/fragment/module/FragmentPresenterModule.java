@@ -11,6 +11,8 @@ import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsContract;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsPresenter;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListContract;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListPresenter;
+import fiveagency.internship.food.movieapp.ui.searchlist.MoviesSearchContract;
+import fiveagency.internship.food.movieapp.ui.searchlist.MoviesSearchPresenter;
 import io.reactivex.disposables.CompositeDisposable;
 
 @Module
@@ -54,5 +56,13 @@ public final class FragmentPresenterModule {
     @FragmentScope
     CompositeDisposable provideCompositeDisposable() {
         return new CompositeDisposable();
+    }
+
+    @Provides
+    @FragmentScope
+    public MoviesSearchContract.Presenter provideMoviesSearchPresenter() {
+        final MoviesSearchPresenter moviesSearchPresenter = new MoviesSearchPresenter();
+        getFragmentComponent().inject(moviesSearchPresenter);
+        return moviesSearchPresenter;
     }
 }

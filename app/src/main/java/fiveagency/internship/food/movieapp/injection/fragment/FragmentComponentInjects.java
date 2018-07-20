@@ -7,6 +7,9 @@ import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsPresenter
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListAdapter;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListFragment;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListPresenter;
+import fiveagency.internship.food.movieapp.ui.pager.ActivityFragment;
+import fiveagency.internship.food.movieapp.ui.searchlist.MoviesSearchFragment;
+import fiveagency.internship.food.movieapp.ui.searchlist.MoviesSearchPresenter;
 
 public interface FragmentComponentInjects {
 
@@ -23,4 +26,10 @@ public interface FragmentComponentInjects {
     void inject(MovieFavoritesPresenter movieFavoritesPresenter);
 
     void inject(MoviesListAdapter moviesListAdapter);
+
+    void inject(MoviesSearchFragment moviesSearchFragment);
+
+    void inject(MoviesSearchPresenter moviesSearchPresenter);
+
+    void inject(ActivityFragment activityFragment);
 }

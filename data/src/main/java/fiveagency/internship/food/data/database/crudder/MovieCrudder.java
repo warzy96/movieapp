@@ -6,6 +6,7 @@ import fiveagency.internship.food.data.database.dao.FavoritesDao;
 import fiveagency.internship.food.data.database.dao.MovieDao;
 import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
 import fiveagency.internship.food.data.database.model.DbFavoriteMovies;
+import fiveagency.internship.food.data.database.model.DbMovie;
 import fiveagency.internship.food.domain.model.Movie;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -57,6 +58,14 @@ public final class MovieCrudder {
 
     public Flowable<List<Integer>> getAllFlowableFavoriteMoviesIds() {
         return favoritesDao.getAllFlowableFavoritesIds()
-                .doOnNext(movies -> {});
+                           .doOnNext(movies -> {});
+    }
+
+    public Completable insertMovie(final Movie movie) {
+        return Completable.fromAction(() -> {
+            favoritesDao.insertFavorites(new DbFavoriteMovies(movie.id));
+            final DbMovie dbMovie = movieModelMapper.mapMovieToMovieModel(movie);
+            movieDao.insertAllMovies(dbMovie);
+        });
     }
 }

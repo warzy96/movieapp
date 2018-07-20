@@ -57,6 +57,10 @@ public final class MovieModelMapper {
         return movies;
     }
 
+    public DbMovie mapMovieToDbModel(final Movie movie) {
+        return new DbMovie(movie);
+    }
+
     public Movie mapMovie(final DbMovie dbMovie) {
         return new Movie(dbMovie.getTitle(), dbMovie.getId(), dbMovie.isAdult(), dbMovie.getOverview(), dbMovie.getReleaseDate(), dbMovie.getImageSource(), false);
     }

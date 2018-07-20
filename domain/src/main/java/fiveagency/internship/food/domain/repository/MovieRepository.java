@@ -13,7 +13,7 @@ public interface MovieRepository {
 
     Single<List<Movie>> fetchMovies(int page);
 
-    Single<List<Movie>> fetchMovies(String title);
+    Flowable<List<Movie>> queryMovies(String title);
 
     Completable insertMovies(List<Movie> movies);
 
@@ -26,4 +26,6 @@ public interface MovieRepository {
     Flowable<List<Movie>> fetchFavorites();
 
     Flowable<List<Movie>> fetchFlowableMovies(int page);
+
+    Completable insertFavorite(Movie movie);
 }

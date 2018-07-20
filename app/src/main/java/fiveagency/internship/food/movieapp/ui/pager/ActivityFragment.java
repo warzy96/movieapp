@@ -10,19 +10,32 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import fiveagency.internship.food.movieapp.R;
+import javax.inject.Inject;
 
-public final class ActivityFragment extends Fragment {
+import fiveagency.internship.food.movieapp.R;
+import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
+import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
+import fiveagency.internship.food.movieapp.ui.utils.StringUtil;
+
+public final class ActivityFragment extends DaggerFragment {
 
     public static final String TAG = "ActivityFragment";
     private ViewPager viewPager;
     private TabLayout tabLayout;
     MoviePagerAdapter moviePagerAdapter;
 
+    @Inject
+    StringUtil stringUtil;
+
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        moviePagerAdapter = new MoviePagerAdapter(getChildFragmentManager());
+        moviePagerAdapter = new MoviePagerAdapter(getChildFragmentManager(), stringUtil);
+    }
+
+    @Override
+    protected void inject(final FragmentComponent fragmentComponent) {
+        fragmentComponent.inject(this);
     }
 
     @Nullable

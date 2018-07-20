@@ -5,8 +5,8 @@ import javax.inject.Named;
 
 import fiveagency.internship.food.movieapp.injection.application.module.ThreadingModule;
 import fiveagency.internship.food.movieapp.router.Router;
+import fiveagency.internship.food.movieapp.ui.movieslist.MovieViewModelMapper;
 import fiveagency.internship.food.movieapp.ui.utils.Logger;
-import fiveagency.internship.food.movieapp.ui.utils.LoggerImpl;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 

@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import javax.inject.Inject;
 
@@ -23,20 +24,23 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
 
     public static final String TAG = "MoviesListFragment";
 
-    @BindView(R.id.movies_list_swipe_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
-
-    @LayoutRes
-    private static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
-
-    @BindView(R.id.movies_list_recycler_view)
-    RecyclerView moviesListRecyclerView;
-
     @Inject
     MoviesListContract.Presenter presenter;
 
     @Inject
     MoviesListAdapter moviesListAdapter;
+
+    @BindView(R.id.movies_list_swipe_refresh_layout)
+    public SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.movies_list_recycler_view)
+    RecyclerView moviesListRecyclerView;
+
+    @BindView(R.id.movies_list_search_text)
+    EditText searchEditText;
+
+    @LayoutRes
+    public static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
 
     public static MoviesListFragment newInstance() {
         return new MoviesListFragment();
@@ -69,6 +73,7 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         initSwipeRefreshLayout();
+        searchEditText.setVisibility(View.GONE);
         presenter.start();
     }
 

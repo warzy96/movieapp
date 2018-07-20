@@ -1,4 +1,4 @@
-package fiveagency.internship.food.movieapp.ui.movieslist;
+package fiveagency.internship.food.movieapp.ui.searchlist;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
@@ -17,31 +17,32 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fiveagency.internship.food.movieapp.R;
+import fiveagency.internship.food.movieapp.ui.movieslist.MovieViewModel;
 import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
 
-public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder> {
+public final class MoviesSearchAdapter extends RecyclerView.Adapter<MoviesSearchAdapter.MovieViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final ImageLoader imageLoader;
     private List<MovieViewModel> movies = new ArrayList<>();
     @LayoutRes
     private static final int ITEM_MOVIE_LAYOUT = R.layout.item_movie;
-    private MovieOnClickListener onMovieClickListener = id -> {};
-    private FavoriteOnChangeListener favoriteOnChangeListener = (id, isChecked) -> {};
+    private MoviesSearchAdapter.MovieOnClickListener onMovieClickListener = id -> {};
+    private MoviesSearchAdapter.FavoriteOnChangeListener favoriteOnChangeListener = (id, isChecked) -> {};
 
-    public MoviesListAdapter(final LayoutInflater layoutInflater, final ImageLoader imageLoader) {
+    public MoviesSearchAdapter(final LayoutInflater layoutInflater, final ImageLoader imageLoader) {
         this.layoutInflater = layoutInflater;
         this.imageLoader = imageLoader;
     }
 
     @NonNull
     @Override
-    public MovieViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
-        return new MovieViewHolder(layoutInflater.inflate(ITEM_MOVIE_LAYOUT, parent, false), imageLoader);
+    public MoviesSearchAdapter.MovieViewHolder onCreateViewHolder(@NonNull final ViewGroup parent, final int viewType) {
+        return new MoviesSearchAdapter.MovieViewHolder(layoutInflater.inflate(ITEM_MOVIE_LAYOUT, parent, false), imageLoader);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final MoviesSearchAdapter.MovieViewHolder holder, final int position) {
         holder.render(movies.get(position), onMovieClickListener, favoriteOnChangeListener);
     }
 
@@ -56,11 +57,11 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
         notifyDataSetChanged();
     }
 
-    public void setOnMovieClickListener(final MovieOnClickListener movieClickListener) {
+    public void setOnMovieClickListener(final MoviesSearchAdapter.MovieOnClickListener movieClickListener) {
         onMovieClickListener = movieClickListener;
     }
 
-    public void setFavoriteOnCheckedListener(final FavoriteOnChangeListener favoriteOnChangeListener) {
+    public void setFavoriteOnCheckedListener(final MoviesSearchAdapter.FavoriteOnChangeListener favoriteOnChangeListener) {
         this.favoriteOnChangeListener = favoriteOnChangeListener;
     }
 
@@ -86,7 +87,8 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
             this.imageLoader = imageLoader;
         }
 
-        void render(final MovieViewModel movieViewModel, final MovieOnClickListener movieOnClickListener, final FavoriteOnChangeListener favoriteOnCheckedListener) {
+        void render(final MovieViewModel movieViewModel, final MoviesSearchAdapter.MovieOnClickListener movieOnClickListener,
+                    final MoviesSearchAdapter.FavoriteOnChangeListener favoriteOnCheckedListener) {
             starCheckBox.setOnCheckedChangeListener(null);
             movieItemTitleView.setText(movieViewModel.title);
             imageLoader.renderImage(movieViewModel.imageSource, movieItemPosterView, circularProgressbarStrokeWidth);
@@ -96,7 +98,7 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
             } else {
                 starCheckBox.setChecked(false);
             }
-            starCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> favoriteOnCheckedListener.onClick(movieViewModel.id, isChecked));
+            starCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> favoriteOnCheckedListener.onClick(movieViewModel, isChecked));
         }
     }
 
@@ -107,6 +109,6 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
     public interface FavoriteOnChangeListener {
 
-        void onClick(int movieId, boolean isChecked);
+        void onClick(MovieViewModel movie, boolean isChecked);
     }
 }

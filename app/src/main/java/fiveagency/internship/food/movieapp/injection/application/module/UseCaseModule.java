@@ -7,6 +7,8 @@ import dagger.Provides;
 import fiveagency.internship.food.domain.interactor.GetFavoritesUseCase;
 import fiveagency.internship.food.domain.interactor.GetFlowableMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
+import fiveagency.internship.food.domain.interactor.GetSearchMoviesUseCase;
+import fiveagency.internship.food.domain.interactor.InsertFavoriteFromSearchUseCase;
 import fiveagency.internship.food.domain.interactor.InsertFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.domain.repository.MovieRepository;
@@ -42,5 +44,17 @@ public final class UseCaseModule {
     @Singleton
     GetFlowableMoviesUseCase provideGetFlowableMoviesUseCase(final MovieRepository movieRepository) {
         return new GetFlowableMoviesUseCase(movieRepository);
+    }
+
+    @Provides
+    @Singleton
+    GetSearchMoviesUseCase provideGetSearchMoviesUseCase(final MovieRepository movieRepository) {
+        return new GetSearchMoviesUseCase(movieRepository);
+    }
+
+    @Provides
+    @Singleton
+    InsertFavoriteFromSearchUseCase provideInsertFavoriteFromSearchUseCase(final MovieRepository movieRepository) {
+        return new InsertFavoriteFromSearchUseCase(movieRepository);
     }
 }

@@ -59,4 +59,6 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$project.ext.roomVersion"
     implementation "android.arch.persistence.room:rxjava2:$project.ext.roomVersion"
     implementation "com.android.support:design:$project.designVersion"
+    implementation "com.annimon:stream:$project.ext.annimonVersion"
+    implementation "com.jakewharton.rxbinding2:rxbinding:$project.ext.rxBindingVersion"
 }

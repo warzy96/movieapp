@@ -47,6 +47,8 @@ allprojects {
         roomVersion = "1.0.0"
         stethoVersion = "1.5.0"
         designVersion = "27.1.1"
+        annimonVersion = "1.2.0"
+        rxBindingVersion = "2.1.1"
     }
 }
 

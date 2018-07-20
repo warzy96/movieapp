@@ -43,8 +43,19 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public Single<List<Movie>> fetchMovies(final String title) {
-        return movieClient.getMovies(title);
+    public Flowable<List<Movie>> queryMovies(final String title) {
+        return Flowable.combineLatest(movieClient.getMovies(title).toFlowable(), movieCrudder.getAllFlowableFavoriteMoviesIds(),
+                                      (movies, favorites) -> {
+                                          final List<Movie> moviesWithFavorites = new ArrayList<>();
+                                          for (final Movie movie : movies) {
+                                              if (favorites.contains(movie.id)) {
+                                                  moviesWithFavorites.add(movie.withIsFavorite(true));
+                                              } else {
+                                                  moviesWithFavorites.add(movie);
+                                              }
+                                          }
+                                          return moviesWithFavorites;
+                                      });
     }
 
     @Override
@@ -74,7 +85,6 @@ public final class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Flowable<List<Movie>> fetchFlowableMovies(final int page) {
-
         return Flowable.combineLatest(movieClient.getFlowableMovies(page), movieCrudder.getAllFlowableFavoriteMoviesIds(),
                                       (movies, favorites) -> {
                                           final List<Movie> moviesWithFavorites = new ArrayList<>();
@@ -87,5 +97,10 @@ public final class MovieRepositoryImpl implements MovieRepository {
                                           }
                                           return moviesWithFavorites;
                                       });
+    }
+
+    @Override
+    public Completable insertFavorite(final Movie movie) {
+        return movieCrudder.insertMovie(movie);
     }
 }
