@@ -31,7 +31,7 @@ public final class MovieClient {
 
     public Flowable<List<Movie>> getFlowableMovies(final int page) {
         return movieService.listFlowableMovieEntities(ApiConstants.API_KEY, ApiConstants.LANGUAGE_EN_US, page)
-                           .map(movieMapper::mapMovies);
+                           .map(movieMapper::mapMovies).toFlowable();
     }
 
     public Single<List<Movie>> getMovies(final String title) {

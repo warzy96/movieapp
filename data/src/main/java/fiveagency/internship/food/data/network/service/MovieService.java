@@ -14,7 +14,7 @@ public interface MovieService {
     Single<ApiMoviesList> listMovieEntities(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
     @GET("3/movie/popular")
-    Flowable<ApiMoviesList> listFlowableMovieEntities(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
+    Single<ApiMoviesList> listFlowableMovieEntities(@Query("api_key") String apiKey, @Query("language") String language, @Query("page") int page);
 
     @GET("3/movie/{id}")
     Single<ApiMovie> movieDetailsEntity(@Path("id") int id, @Query("api_key") String apiKey, @Query("language") String language);

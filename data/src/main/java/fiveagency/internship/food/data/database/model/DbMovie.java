@@ -9,7 +9,7 @@ import fiveagency.internship.food.domain.model.Movie;
 @Entity(tableName = "movie")
 public final class DbMovie {
 
-    public static final DbMovie EMPTY = new DbMovie(0, "", false, "", "", "");
+    public static final DbMovie EMPTY = new DbMovie(0, "", false, "", "", "", "");
 
     @PrimaryKey
     private int id;
@@ -18,22 +18,25 @@ public final class DbMovie {
     private String overview;
     private String releaseDate;
     private String imageSource;
+    private String personalNote;
 
-    public DbMovie(final int id, final String title, final boolean isAdult, final String overview, final String releaseDate, final String imageSource) {
+    public DbMovie(final int id, final String title, final boolean isAdult, final String overview, final String releaseDate, final String imageSource,
+                   final String personalNote) {
         this.id = id;
         this.title = title;
         this.isAdult = isAdult;
         this.overview = overview;
         this.releaseDate = releaseDate;
         this.imageSource = imageSource;
+        this.personalNote = personalNote;
     }
 
     public DbMovie(final ApiMovie apiMovie) {
-        this(apiMovie.id, apiMovie.title, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate, apiMovie.imageSource);
+        this(apiMovie.id, apiMovie.title, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate, apiMovie.imageSource, EMPTY.personalNote);
     }
 
     public DbMovie(final Movie movie) {
-        this(movie.id, movie.title, movie.isAdult, movie.overview, movie.releaseDate, movie.imageSource);
+        this(movie.id, movie.title, movie.isAdult, movie.overview, movie.releaseDate, movie.imageSource, movie.personalNote);
     }
 
     public int getId() {
@@ -82,5 +85,13 @@ public final class DbMovie {
 
     public void setImageSource(final String imageSource) {
         this.imageSource = imageSource;
+    }
+
+    public String getPersonalNote() {
+        return personalNote;
+    }
+
+    public void setPersonalNote(final String personalNote) {
+        this.personalNote = personalNote;
     }
 }

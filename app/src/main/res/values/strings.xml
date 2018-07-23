@@ -6,4 +6,5 @@
     <string name="title_movies_favorites">Favorites</string>
     <string name="title_movies_search">Search</string>
     <string name="search_view_hint_text">Movie title…</string>
+    <string name="movie_details_submit_button_text">Submit</string>
 </resources>

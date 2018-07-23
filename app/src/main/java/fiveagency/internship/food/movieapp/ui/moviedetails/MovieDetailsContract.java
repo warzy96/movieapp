@@ -7,6 +7,8 @@ public interface MovieDetailsContract {
         void start(int movieId);
 
         void setView(MovieDetailsContract.View view);
+
+        void savePersonalNote(MovieDetailsViewModel movieDetailsViewModel);
     }
 
     interface View {

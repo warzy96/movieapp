@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -32,6 +33,12 @@ public final class MovieDetailsFragment extends DaggerFragment implements MovieD
 
     @BindView(R.id.movie_details_image_view)
     ImageView movieDetailsPoster;
+
+    @BindView(R.id.movie_details_personal_note_text_view)
+    TextView movieDetailsPersonalNoteEditText;
+
+    @BindView(R.id.movie_details_submit_button)
+    Button movieDetailsSubmitButton;
 
     @BindDimen(R.dimen.circular_progressbar_stroke_width)
     float circularProgressbarStrokeWidth;
@@ -83,7 +90,11 @@ public final class MovieDetailsFragment extends DaggerFragment implements MovieD
     public void render(final MovieDetailsViewModel movieDetailsViewModel) {
         movieDetailsMovieName.setText(movieDetailsViewModel.title);
         movieDetailsMovieOverview.setText(movieDetailsViewModel.overview);
+        movieDetailsPersonalNoteEditText.setText(movieDetailsViewModel.personalNote);
         imageLoader.renderImage(movieDetailsViewModel.imageSource, movieDetailsPoster, circularProgressbarStrokeWidth);
+        movieDetailsSubmitButton.setOnClickListener(view -> {
+            presenter.savePersonalNote(movieDetailsViewModel.withPersonalNote(movieDetailsPersonalNoteEditText.getText().toString()));
+        });
     }
 
     @Override

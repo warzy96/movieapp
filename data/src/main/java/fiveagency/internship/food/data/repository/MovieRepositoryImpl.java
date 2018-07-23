@@ -22,8 +22,15 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public Single<Movie> fetchMovieDetails(final int id) {
-        return movieClient.getMovieDetails(id);
+    public Flowable<Movie> fetchMovieDetails(final int id) {
+        return Flowable.combineLatest(movieClient.getMovieDetails(id).toFlowable(), movieCrudder.movieExists(id).toFlowable(),
+                                      (movieDetails, dbMovie) -> {
+                                          if (dbMovie.isEmpty()) {
+                                              return movieDetails;
+                                          } else {
+                                              return movieDetails.withPersonalNote(dbMovie.get(0).personalNote);
+                                          }
+                                      });
     }
 
     @Override
@@ -95,6 +102,7 @@ public final class MovieRepositoryImpl implements MovieRepository {
                                                   moviesWithFavorites.add(movie);
                                               }
                                           }
+                                          insertMovies(moviesWithFavorites);
                                           return moviesWithFavorites;
                                       });
     }
@@ -102,5 +110,10 @@ public final class MovieRepositoryImpl implements MovieRepository {
     @Override
     public Completable insertFavorite(final Movie movie) {
         return movieCrudder.insertMovie(movie);
+    }
+
+    @Override
+    public Completable setPersonalNote(final Movie movie) {
+        return movieCrudder.setPersonalNote(movie);
     }
 }

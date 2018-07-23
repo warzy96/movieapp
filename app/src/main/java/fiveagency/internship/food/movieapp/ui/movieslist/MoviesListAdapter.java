@@ -64,6 +64,11 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
         this.favoriteOnChangeListener = favoriteOnChangeListener;
     }
 
+    public void appendMovies(final List<MovieViewModel> movieViewModelList) {
+        this.movies.addAll(movieViewModelList);
+        notifyDataSetChanged();
+    }
+
     static class MovieViewHolder extends RecyclerView.ViewHolder {
 
         @BindView(R.id.movie_name)

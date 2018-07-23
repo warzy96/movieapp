@@ -68,4 +68,14 @@ public final class MovieCrudder {
             movieDao.insertAllMovies(dbMovie);
         });
     }
+
+    public Completable setPersonalNote(final Movie movie) {
+        return Completable.fromAction(() -> movieDao.setPersonalNote(movie.personalNote, movie.id));
+    }
+
+    public Single<Movie> getMovie(final int movieId) { return movieDao.getMovie(movieId).map(movieModelMapper::mapMovie); }
+
+    public Single<List<Movie>> movieExists(final int movieId) {
+        return movieDao.movieExists(movieId).map(movieModelMapper::mapMovies);
+    }
 }

@@ -42,6 +42,10 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
     @LayoutRes
     public static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
 
+    private static final int DEFAULT_PAGE = 1;
+
+    private int page = DEFAULT_PAGE;
+
     public static MoviesListFragment newInstance() {
         return new MoviesListFragment();
     }
@@ -86,17 +90,37 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
     public void render(final MoviesListViewModel moviesListViewModel) {
         swipeRefreshLayout.setRefreshing(false);
         moviesListAdapter.setMovies(moviesListViewModel.movieViewModelList);
+        presenter.saveMovies(moviesListViewModel.movieViewModelList);
+    }
+
+    @Override
+    public void appendMovies(final MoviesListViewModel moviesListViewModel) {
+        moviesListAdapter.appendMovies(moviesListViewModel.movieViewModelList);
     }
 
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        presenter.getMoviesUseCase();
+        page = DEFAULT_PAGE;
+        presenter.getFlowableMoviesUseCase();
     }
 
     private void initRecyclerView() {
-        moviesListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        moviesListRecyclerView.setLayoutManager(layoutManager);
         moviesListRecyclerView.setAdapter(moviesListAdapter);
+        moviesListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                final int totalItemCount = layoutManager.getItemCount();
+                final int lastItem = layoutManager.findLastCompletelyVisibleItemPosition();
+                if (lastItem == totalItemCount - 1) {
+                    presenter.getAdditionalMovies(++page);
+                }
+            }
+        });
     }
 
     @Override

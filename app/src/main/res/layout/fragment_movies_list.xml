@@ -15,6 +15,7 @@
         android:inputType="text"
         android:textColor="@color/text"
         android:textColorHint="@color/hintText"
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         app:layout_constraintBottom_toTopOf="@id/movies_list_swipe_refresh_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

@@ -11,6 +11,8 @@ import fiveagency.internship.food.domain.interactor.GetSearchMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.InsertFavoriteFromSearchUseCase;
 import fiveagency.internship.food.domain.interactor.InsertFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
+import fiveagency.internship.food.domain.interactor.SaveMoviesUseCase;
+import fiveagency.internship.food.domain.interactor.SavePersonalNoteUseCase;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 
 @Module
@@ -56,5 +58,17 @@ public final class UseCaseModule {
     @Singleton
     InsertFavoriteFromSearchUseCase provideInsertFavoriteFromSearchUseCase(final MovieRepository movieRepository) {
         return new InsertFavoriteFromSearchUseCase(movieRepository);
+    }
+
+    @Provides
+    @Singleton
+    SavePersonalNoteUseCase provideSavePersonalNoteUseCase(final MovieRepository movieRepository) {
+        return new SavePersonalNoteUseCase(movieRepository);
+    }
+
+    @Provides
+    @Singleton
+    SaveMoviesUseCase provideSaveMoviesUseCase(final MovieRepository movieRepository) {
+        return new SaveMoviesUseCase(movieRepository);
     }
 }

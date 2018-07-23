@@ -18,7 +18,8 @@ public final class MovieModelMapper {
                            apiMovie.isAdult,
                            apiMovie.overview == null ? DbMovie.EMPTY.getOverview() : apiMovie.overview,
                            apiMovie.releaseDate == null ? DbMovie.EMPTY.getReleaseDate() : apiMovie.releaseDate,
-                           apiMovie.imageSource == null ? DbMovie.EMPTY.getImageSource() : apiMovie.imageSource);
+                           apiMovie.imageSource == null ? DbMovie.EMPTY.getImageSource() : apiMovie.imageSource,
+                           Movie.EMPTY.personalNote);
     }
 
     public List<DbMovie> mapMovieModels(final List<Movie> movies) {
@@ -38,7 +39,8 @@ public final class MovieModelMapper {
                                  dbMovie.getOverview(),
                                  dbMovie.getReleaseDate(),
                                  dbMovie.getImageSource(),
-                                 false));
+                                 false,
+                                 dbMovie.getPersonalNote()));
         }
         return movies;
     }
@@ -52,7 +54,8 @@ public final class MovieModelMapper {
                                  dbMovie.getOverview(),
                                  dbMovie.getReleaseDate(),
                                  dbMovie.getImageSource(),
-                                 true));
+                                 true,
+                                 dbMovie.getPersonalNote()));
         }
         return movies;
     }
@@ -62,7 +65,8 @@ public final class MovieModelMapper {
     }
 
     public Movie mapMovie(final DbMovie dbMovie) {
-        return new Movie(dbMovie.getTitle(), dbMovie.getId(), dbMovie.isAdult(), dbMovie.getOverview(), dbMovie.getReleaseDate(), dbMovie.getImageSource(), false);
+        return new Movie(dbMovie.getTitle(), dbMovie.getId(), dbMovie.isAdult(), dbMovie.getOverview(), dbMovie.getReleaseDate(), dbMovie.getImageSource(), false,
+                         dbMovie.getPersonalNote());
     }
 
     public DbMovie mapMovieToMovieModel(final Movie movie) {

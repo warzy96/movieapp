@@ -1,5 +1,7 @@
 package fiveagency.internship.food.movieapp.ui.movieslist;
 
+import com.annimon.stream.Stream;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +21,12 @@ public final class MovieViewModelMapper {
         return new MoviesListViewModel(movieViewModels);
     }
 
+    public List<Movie> mapMovies(final List<MovieViewModel> movieViewModels) {
+        return Stream.of(movieViewModels).map(
+                movie -> new Movie(movie.title, movie.id, movie.isAdult, movie.overview, movie.releaseDate, movie.imageSource, movie.isFavorite, Movie.EMPTY.personalNote))
+                     .toList();
+    }
+
     public Movie mapMovie(final MovieViewModel movieViewModel) {
         return new Movie(movieViewModel.title,
                          movieViewModel.id,
@@ -26,6 +34,7 @@ public final class MovieViewModelMapper {
                          movieViewModel.overview,
                          movieViewModel.releaseDate,
                          movieViewModel.imageSource,
-                         false);
+                         false,
+                         Movie.EMPTY.personalNote);
     }
 }

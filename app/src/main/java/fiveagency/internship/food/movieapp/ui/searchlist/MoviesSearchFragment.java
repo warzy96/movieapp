@@ -80,6 +80,12 @@ public final class MoviesSearchFragment extends BaseFragment<MoviesSearchContrac
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
+        final String query = searchEditText.getText().toString();
+        if (query.trim().isEmpty()) {
+            swipeRefreshLayout.setRefreshing(false);
+        } else {
+            presenter.refreshSearch(searchEditText.getText().toString());
+        }
     }
 
     private void initRecyclerView() {

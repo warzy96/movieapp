@@ -4,6 +4,7 @@ import android.widget.EditText;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -12,6 +13,7 @@ import javax.inject.Inject;
 import fiveagency.internship.food.domain.interactor.GetSearchMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.InsertFavoriteFromSearchUseCase;
 import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
+import fiveagency.internship.food.domain.interactor.SaveMoviesUseCase;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
 import fiveagency.internship.food.movieapp.ui.movieslist.MovieViewModel;
@@ -33,6 +35,9 @@ public final class MoviesSearchPresenter extends BasePresenter<MoviesSearchContr
     @Inject
     GetSearchMoviesUseCase getSearchMoviesUseCase;
 
+    @Inject
+    SaveMoviesUseCase saveMoviesUseCase;
+
     @Override
     public void start(final EditText searchEditText) {
         initEditTextSearch(searchEditText);
@@ -46,9 +51,23 @@ public final class MoviesSearchPresenter extends BasePresenter<MoviesSearchContr
                                           .switchMap((Function<String, ObservableSource<List<Movie>>>) title -> getSearchMoviesUseCase.execute(title).toObservable())
                                           .subscribeOn(backgroundScheduler)
                                           .observeOn(mainThreadScheduler)
-                                          .map(movies -> movieViewModelMapper.mapMoviesListViewModel(movies))
+                                          .map(movies -> {
+                                              final List<Movie> moviesToSave = new ArrayList<>();
+                                              moviesToSave.addAll(movies);
+                                              saveMoviesUseCase.execute(moviesToSave).subscribeOn(backgroundScheduler).subscribe(() -> {}, throwable -> loggerImpl.log(throwable));
+                                              return movieViewModelMapper.mapMoviesListViewModel(movies);
+                                          })
                                           .subscribe(movieViewModel -> view.render(movieViewModel),
                                                      throwable -> loggerImpl.log(throwable)));
+    }
+
+    public void refreshSearch(final String title) {
+        compositeDisposable.add(getSearchMoviesUseCase.execute(title)
+                                                      .subscribeOn(backgroundScheduler)
+                                                      .observeOn(mainThreadScheduler)
+                                                      .map(movies -> movieViewModelMapper.mapMoviesListViewModel(movies))
+                                                      .subscribe(moviesListViewModel -> view.render(moviesListViewModel),
+                                                                 throwable -> loggerImpl.log(throwable)));
     }
 
     @Override
