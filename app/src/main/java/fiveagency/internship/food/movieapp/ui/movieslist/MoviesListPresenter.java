@@ -1,5 +1,6 @@
 package fiveagency.internship.food.movieapp.ui.movieslist;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,6 +15,8 @@ import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
 public final class MoviesListPresenter extends BasePresenter<MoviesListContract.View> implements MoviesListContract.Presenter {
 
     private static final int DEFAULT_PAGE = 1;
+
+    private List<MovieViewModel> moviesCache = new ArrayList<>();
     @Inject
     GetMoviesUseCase getMoviesUseCase;
 
@@ -43,16 +46,24 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
                                                         .map(movieViewModelMapper::mapMoviesListViewModel)
                                                         .subscribeOn(backgroundScheduler)
                                                         .observeOn(mainThreadScheduler)
-                                                        .subscribe(moviesListViewModel -> view.render(moviesListViewModel),
+                                                        .subscribe(moviesListViewModel -> {
+                                                                       moviesCache = new ArrayList<>();
+                                                                       moviesCache.addAll(moviesListViewModel.movieViewModelList);
+                                                                       view.render(moviesListViewModel);
+                                                                   },
                                                                    throwable -> loggerImpl.log(throwable)));
     }
 
+    @Override
     public void getAdditionalMovies(final int page) {
         compositeDisposable.add(getFlowableMoviesUseCase.execute(page)
                                                         .map(movieViewModelMapper::mapMoviesListViewModel)
                                                         .subscribeOn(backgroundScheduler)
                                                         .observeOn(mainThreadScheduler)
-                                                        .subscribe(moviesListViewModel -> view.appendMovies(moviesListViewModel),
+                                                        .subscribe(moviesListViewModel -> {
+                                                                       moviesCache.addAll(moviesListViewModel.movieViewModelList);
+                                                                       view.render(new MoviesListViewModel(moviesCache));
+                                                                   },
                                                                    throwable -> loggerImpl.log(throwable)));
     }
 

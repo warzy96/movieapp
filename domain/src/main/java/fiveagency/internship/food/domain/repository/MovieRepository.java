@@ -21,8 +21,6 @@ public interface MovieRepository {
 
     Completable removeFavorite(Integer movieId);
 
-    Single<List<Integer>> fetchFavoritesIds();
-
     Flowable<List<Movie>> fetchFavorites();
 
     Flowable<List<Movie>> fetchFlowableMovies(int page);

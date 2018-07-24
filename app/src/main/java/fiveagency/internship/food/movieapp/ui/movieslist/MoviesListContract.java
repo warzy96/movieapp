@@ -21,12 +21,12 @@ public interface MoviesListContract {
         void saveMovies(List<MovieViewModel> movieViewModelList);
 
         void getAdditionalMovies(int page);
+
+        void onStop();
     }
 
     interface View {
 
         void render(final MoviesListViewModel moviesListViewModel);
-
-        void appendMovies(final MoviesListViewModel moviesListViewModel);
     }
 }

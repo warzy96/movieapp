@@ -81,11 +81,6 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public Single<List<Integer>> fetchFavoritesIds() {
-        return movieCrudder.getAllFavoriteMoviesIds();
-    }
-
-    @Override
     public Flowable<List<Movie>> fetchFavorites() {
         return movieCrudder.getAllFavoriteMovies();
     }

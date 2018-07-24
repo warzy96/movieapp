@@ -2,6 +2,8 @@ package fiveagency.internship.food.movieapp.ui.movieslist;
 
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
+import android.support.v7.recyclerview.extensions.ListAdapter;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,7 +12,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindDimen;
@@ -19,17 +20,17 @@ import butterknife.ButterKnife;
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
 
-public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdapter.MovieViewHolder> {
+public final class MoviesListAdapter extends ListAdapter<MovieViewModel, MoviesListAdapter.MovieViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final ImageLoader imageLoader;
-    private List<MovieViewModel> movies = new ArrayList<>();
     @LayoutRes
     private static final int ITEM_MOVIE_LAYOUT = R.layout.item_movie;
     private MovieOnClickListener onMovieClickListener = id -> {};
     private FavoriteOnChangeListener favoriteOnChangeListener = (id, isChecked) -> {};
 
-    public MoviesListAdapter(final LayoutInflater layoutInflater, final ImageLoader imageLoader) {
+    public MoviesListAdapter(@NonNull final DiffUtil.ItemCallback<MovieViewModel> diffCallback, final LayoutInflater layoutInflater, final ImageLoader imageLoader) {
+        super(diffCallback);
         this.layoutInflater = layoutInflater;
         this.imageLoader = imageLoader;
     }
@@ -42,18 +43,11 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
     @Override
     public void onBindViewHolder(@NonNull final MovieViewHolder holder, final int position) {
-        holder.render(movies.get(position), onMovieClickListener, favoriteOnChangeListener);
-    }
-
-    @Override
-    public int getItemCount() {
-        return movies.size();
+        holder.render(getItem(position), onMovieClickListener, favoriteOnChangeListener);
     }
 
     public void setMovies(final List<MovieViewModel> movies) {
-        this.movies.clear();
-        this.movies.addAll(movies);
-        notifyDataSetChanged();
+        submitList(movies);
     }
 
     public void setOnMovieClickListener(final MovieOnClickListener movieClickListener) {
@@ -62,11 +56,6 @@ public final class MoviesListAdapter extends RecyclerView.Adapter<MoviesListAdap
 
     public void setFavoriteOnCheckedListener(final FavoriteOnChangeListener favoriteOnChangeListener) {
         this.favoriteOnChangeListener = favoriteOnChangeListener;
-    }
-
-    public void appendMovies(final List<MovieViewModel> movieViewModelList) {
-        this.movies.addAll(movieViewModelList);
-        notifyDataSetChanged();
     }
 
     static class MovieViewHolder extends RecyclerView.ViewHolder {

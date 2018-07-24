@@ -62,6 +62,7 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
                 presenter.removeFavorite(movieId);
             }
         });
+        presenter.start();
     }
 
     @NonNull
@@ -78,12 +79,16 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
         initRecyclerView();
         initSwipeRefreshLayout();
         searchEditText.setVisibility(View.GONE);
-        presenter.start();
+    }
+
+    @Override
+    public void onStop() {
+        presenter.onStop();
+        super.onStop();
     }
 
     private void initSwipeRefreshLayout() {
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(true));
     }
 
     @Override
@@ -91,11 +96,6 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
         swipeRefreshLayout.setRefreshing(false);
         moviesListAdapter.setMovies(moviesListViewModel.movieViewModelList);
         presenter.saveMovies(moviesListViewModel.movieViewModelList);
-    }
-
-    @Override
-    public void appendMovies(final MoviesListViewModel moviesListViewModel) {
-        moviesListAdapter.appendMovies(moviesListViewModel.movieViewModelList);
     }
 
     @Override
@@ -115,8 +115,8 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
             public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 final int totalItemCount = layoutManager.getItemCount();
-                final int lastItem = layoutManager.findLastCompletelyVisibleItemPosition();
-                if (lastItem == totalItemCount - 1) {
+                final int lastItem = layoutManager.findLastVisibleItemPosition();
+                if (lastItem >= totalItemCount - 1) {
                     presenter.getAdditionalMovies(++page);
                 }
             }

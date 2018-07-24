@@ -9,6 +9,7 @@ import fiveagency.internship.food.movieapp.injection.fragment.FragmentScope;
 import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesAdapter;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsFragment;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListAdapter;
+import fiveagency.internship.food.movieapp.ui.movieslist.diffutil.MovieDiffUtilCallback;
 import fiveagency.internship.food.movieapp.ui.searchlist.MoviesSearchAdapter;
 import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
 
@@ -24,7 +25,7 @@ public final class FragmentModule {
     @Provides
     @FragmentScope
     public MoviesListAdapter provideMoviesListAdapter(final ImageLoader imageLoader, final LayoutInflater layoutInflater) {
-        return new MoviesListAdapter(layoutInflater, imageLoader);
+        return new MoviesListAdapter(new MovieDiffUtilCallback<>(), layoutInflater, imageLoader);
     }
 
     @Provides
