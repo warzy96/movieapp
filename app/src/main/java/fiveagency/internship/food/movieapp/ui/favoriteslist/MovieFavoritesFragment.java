@@ -80,7 +80,7 @@ public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesCon
 
     @Override
     public void onStop() {
-        compositeDisposable.clear();
+        presenter.onStop();
         super.onStop();
     }
 

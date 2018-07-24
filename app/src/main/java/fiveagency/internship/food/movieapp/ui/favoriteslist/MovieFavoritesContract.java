@@ -17,6 +17,8 @@ public interface MovieFavoritesContract {
         void showMovieDetails(int movieId);
 
         void getFavoritesUseCase();
+
+        void onStop();
     }
 
     interface View {

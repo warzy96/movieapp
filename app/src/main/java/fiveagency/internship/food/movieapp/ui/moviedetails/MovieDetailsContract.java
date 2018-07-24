@@ -9,6 +9,8 @@ public interface MovieDetailsContract {
         void setView(MovieDetailsContract.View view);
 
         void savePersonalNote(MovieDetailsViewModel movieDetailsViewModel);
+
+        void onStop();
     }
 
     interface View {

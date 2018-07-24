@@ -16,11 +16,11 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fiveagency.internship.food.movieapp.R;
-import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
+import fiveagency.internship.food.movieapp.ui.base.BaseFragment;
 import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
 
-public final class MovieDetailsFragment extends DaggerFragment implements MovieDetailsContract.View {
+public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContract.Presenter> implements MovieDetailsContract.View {
 
     public static final String TAG = "MovieDetailsFragment";
     private static final String KEY_MOVIE_ID = "key_movie_id";
@@ -84,6 +84,12 @@ public final class MovieDetailsFragment extends DaggerFragment implements MovieD
         } else {
             throw new IllegalArgumentException("Arguments bundle does not exist.");
         }
+    }
+
+    @Override
+    public void onStop() {
+        presenter.onStop();
+        super.onStop();
     }
 
     @Override
