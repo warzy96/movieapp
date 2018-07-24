@@ -2,7 +2,6 @@ package fiveagency.internship.food.data.network.service;
 
 import fiveagency.internship.food.data.network.model.ApiMovie;
 import fiveagency.internship.food.data.network.model.ApiMoviesList;
-import io.reactivex.Flowable;
 import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
