@@ -14,7 +14,7 @@ import static fiveagency.internship.food.data.database.MovieDatabase.DB_VERSION;
 public abstract class MovieDatabase extends RoomDatabase {
 
     public static final String DB_NAME = "movie-database";
-    public static final int DB_VERSION = 2;
+    public static final int DB_VERSION = 3;
 
     public abstract MovieDao movieDao();
 
