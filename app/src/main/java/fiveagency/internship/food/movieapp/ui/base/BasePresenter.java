@@ -5,6 +5,7 @@ import javax.inject.Named;
 
 import fiveagency.internship.food.movieapp.injection.application.module.ThreadingModule;
 import fiveagency.internship.food.movieapp.router.Router;
+import fiveagency.internship.food.movieapp.ui.utils.Logger;
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -12,6 +13,9 @@ public abstract class BasePresenter<View> {
 
     @Inject
     protected Router router;
+
+    @Inject
+    public Logger loggerImpl;
 
     @Inject
     @Named(ThreadingModule.BACKGROUND_SCHEDULER)
@@ -26,7 +30,6 @@ public abstract class BasePresenter<View> {
 
     public View view;
 
-    //TODO: Call this in BaseFragment
     public void onStop() {
         compositeDisposable.clear();
     }

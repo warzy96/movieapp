@@ -6,6 +6,7 @@ import fiveagency.internship.food.data.network.ApiConstants;
 import fiveagency.internship.food.data.network.mappers.MovieMapper;
 import fiveagency.internship.food.data.network.service.MovieService;
 import fiveagency.internship.food.domain.model.Movie;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public final class MovieClient {
@@ -26,6 +27,11 @@ public final class MovieClient {
     public Single<List<Movie>> getMovies(final int page) {
         return movieService.listMovieEntities(ApiConstants.API_KEY, ApiConstants.LANGUAGE_EN_US, page)
                            .map(movieMapper::mapMovies);
+    }
+
+    public Flowable<List<Movie>> getFlowableMovies(final int page) {
+        return movieService.listFlowableMovieEntities(ApiConstants.API_KEY, ApiConstants.LANGUAGE_EN_US, page)
+                           .map(movieMapper::mapMovies).toFlowable();
     }
 
     public Single<List<Movie>> getMovies(final String title) {

@@ -9,6 +9,8 @@ import android.arch.persistence.room.Query;
 import java.util.List;
 
 import fiveagency.internship.food.data.database.model.DbFavoriteMovies;
+import fiveagency.internship.food.data.database.model.DbMovie;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 @Dao
@@ -20,12 +22,18 @@ public interface FavoritesDao {
     @Delete
     void deleteFavorite(DbFavoriteMovies dbFavoriteMovies);
 
-    @Query("SELECT * FROM favorites")
-    Single<List<Integer>> getAllFavorites();
+    @Query("SELECT movie.* FROM movie NATURAL JOIN favorites")
+    Single<List<DbMovie>> getAllFavorites();
 
     @Query("SELECT movie.id FROM favorites NATURAL JOIN movie")
     Single<List<Integer>> getAllMovieFavoritesId();
 
     @Query("SELECT * FROM favorites WHERE id = :movieId")
     boolean isFavorite(int movieId);
+
+    @Query("SELECT movie.* FROM movie NATURAL JOIN favorites")
+    Flowable<List<DbMovie>> getAllFlowableFavorites();
+
+    @Query("SELECT id FROM favorites")
+    Flowable<List<Integer>> getAllFlowableFavoritesIds();
 }

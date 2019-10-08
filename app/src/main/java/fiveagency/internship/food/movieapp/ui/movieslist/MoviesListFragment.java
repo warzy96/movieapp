@@ -10,33 +10,41 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fiveagency.internship.food.movieapp.R;
-import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
+import fiveagency.internship.food.movieapp.ui.base.BaseFragment;
 
-public final class MoviesListFragment extends DaggerFragment implements MoviesListContract.View, SwipeRefreshLayout.OnRefreshListener {
+public final class MoviesListFragment extends BaseFragment<MoviesListContract.Presenter> implements MoviesListContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "MoviesListFragment";
-
-    @BindView(R.id.movies_list_swipe_refresh_layout)
-    SwipeRefreshLayout swipeRefreshLayout;
-
-    @LayoutRes
-    private static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
-
-    @BindView(R.id.movies_list_recycler_view)
-    RecyclerView moviesListRecyclerView;
 
     @Inject
     MoviesListContract.Presenter presenter;
 
     @Inject
     MoviesListAdapter moviesListAdapter;
+
+    @BindView(R.id.movies_list_swipe_refresh_layout)
+    public SwipeRefreshLayout swipeRefreshLayout;
+
+    @BindView(R.id.movies_list_recycler_view)
+    RecyclerView moviesListRecyclerView;
+
+    @BindView(R.id.movies_list_search_text)
+    EditText searchEditText;
+
+    @LayoutRes
+    public static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
+
+    private static final int DEFAULT_PAGE = 1;
+
+    private int page = DEFAULT_PAGE;
 
     public static MoviesListFragment newInstance() {
         return new MoviesListFragment();
@@ -54,6 +62,7 @@ public final class MoviesListFragment extends DaggerFragment implements MoviesLi
                 presenter.removeFavorite(movieId);
             }
         });
+        presenter.start();
     }
 
     @NonNull
@@ -69,29 +78,49 @@ public final class MoviesListFragment extends DaggerFragment implements MoviesLi
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         initSwipeRefreshLayout();
-        presenter.start();
+        searchEditText.setVisibility(View.GONE);
+    }
+
+    @Override
+    public void onStop() {
+        presenter.onStop();
+        super.onStop();
     }
 
     private void initSwipeRefreshLayout() {
         swipeRefreshLayout.setOnRefreshListener(this);
-        swipeRefreshLayout.post(() -> swipeRefreshLayout.setRefreshing(true));
     }
 
     @Override
     public void render(final MoviesListViewModel moviesListViewModel) {
         swipeRefreshLayout.setRefreshing(false);
         moviesListAdapter.setMovies(moviesListViewModel.movieViewModelList);
+        presenter.saveMovies(moviesListViewModel.movieViewModelList);
     }
 
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        presenter.getMoviesUseCase();
+        page = DEFAULT_PAGE;
+        presenter.getFlowableMoviesUseCase();
     }
 
     private void initRecyclerView() {
-        moviesListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        moviesListRecyclerView.setLayoutManager(layoutManager);
         moviesListRecyclerView.setAdapter(moviesListAdapter);
+        moviesListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+
+            @Override
+            public void onScrolled(final RecyclerView recyclerView, final int dx, final int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                final int totalItemCount = layoutManager.getItemCount();
+                final int lastItem = layoutManager.findLastVisibleItemPosition();
+                if (lastItem >= totalItemCount - 1) {
+                    presenter.getAdditionalMovies(++page);
+                }
+            }
+        });
     }
 
     @Override

@@ -18,7 +18,8 @@ public final class MovieModelMapper {
                            apiMovie.isAdult,
                            apiMovie.overview == null ? DbMovie.EMPTY.getOverview() : apiMovie.overview,
                            apiMovie.releaseDate == null ? DbMovie.EMPTY.getReleaseDate() : apiMovie.releaseDate,
-                           apiMovie.imageSource == null ? DbMovie.EMPTY.getImageSource() : apiMovie.imageSource);
+                           apiMovie.imageSource == null ? DbMovie.EMPTY.getImageSource() : apiMovie.imageSource,
+                           Movie.EMPTY.personalNote);
     }
 
     public List<DbMovie> mapMovieModels(final List<Movie> movies) {
@@ -38,9 +39,34 @@ public final class MovieModelMapper {
                                  dbMovie.getOverview(),
                                  dbMovie.getReleaseDate(),
                                  dbMovie.getImageSource(),
-                                 false));
+                                 false,
+                                 dbMovie.getPersonalNote()));
         }
         return movies;
+    }
+
+    public List<Movie> mapFavoriteMovies(final List<DbMovie> dbMovies) {
+        final List<Movie> movies = new LinkedList<>();
+        for (final DbMovie dbMovie : dbMovies) {
+            movies.add(new Movie(dbMovie.getTitle(),
+                                 dbMovie.getId(),
+                                 dbMovie.isAdult(),
+                                 dbMovie.getOverview(),
+                                 dbMovie.getReleaseDate(),
+                                 dbMovie.getImageSource(),
+                                 true,
+                                 dbMovie.getPersonalNote()));
+        }
+        return movies;
+    }
+
+    public DbMovie mapMovieToDbModel(final Movie movie) {
+        return new DbMovie(movie);
+    }
+
+    public Movie mapMovie(final DbMovie dbMovie) {
+        return new Movie(dbMovie.getTitle(), dbMovie.getId(), dbMovie.isAdult(), dbMovie.getOverview(), dbMovie.getReleaseDate(), dbMovie.getImageSource(), false,
+                         dbMovie.getPersonalNote());
     }
 
     public DbMovie mapMovieToMovieModel(final Movie movie) {

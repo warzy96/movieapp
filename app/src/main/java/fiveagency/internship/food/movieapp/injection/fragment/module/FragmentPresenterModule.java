@@ -5,10 +5,14 @@ import dagger.Provides;
 import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentScope;
+import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesContract;
+import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesPresenter;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsContract;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsPresenter;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListContract;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListPresenter;
+import fiveagency.internship.food.movieapp.ui.searchlist.MoviesSearchContract;
+import fiveagency.internship.food.movieapp.ui.searchlist.MoviesSearchPresenter;
 import io.reactivex.disposables.CompositeDisposable;
 
 @Module
@@ -42,7 +46,23 @@ public final class FragmentPresenterModule {
 
     @Provides
     @FragmentScope
+    public MovieFavoritesContract.Presenter provideMovieFavoritesContract() {
+        final MovieFavoritesPresenter movieFavoritesPresenter = new MovieFavoritesPresenter();
+        getFragmentComponent().inject(movieFavoritesPresenter);
+        return movieFavoritesPresenter;
+    }
+
+    @Provides
+    @FragmentScope
     CompositeDisposable provideCompositeDisposable() {
         return new CompositeDisposable();
+    }
+
+    @Provides
+    @FragmentScope
+    public MoviesSearchContract.Presenter provideMoviesSearchPresenter() {
+        final MoviesSearchPresenter moviesSearchPresenter = new MoviesSearchPresenter();
+        getFragmentComponent().inject(moviesSearchPresenter);
+        return moviesSearchPresenter;
     }
 }

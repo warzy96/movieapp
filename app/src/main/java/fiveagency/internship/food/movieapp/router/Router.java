@@ -8,7 +8,7 @@ import javax.inject.Inject;
 
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsFragment;
-import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListFragment;
+import fiveagency.internship.food.movieapp.ui.pager.ActivityFragment;
 
 public final class Router {
 
@@ -25,7 +25,7 @@ public final class Router {
 
     public void showMoviesListScreen() {
         fragmentManager.beginTransaction()
-                       .replace(CONTAINER_ID, MoviesListFragment.newInstance(), MoviesListFragment.TAG)
+                       .add(CONTAINER_ID, ActivityFragment.newInstance(), ActivityFragment.TAG)
                        .commit();
     }
 

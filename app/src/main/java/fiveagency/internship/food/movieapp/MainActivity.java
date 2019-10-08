@@ -17,7 +17,6 @@ public final class MainActivity extends DaggerActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         router.showMoviesListScreen();
     }
 

@@ -8,6 +8,7 @@ import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import io.reactivex.Completable;
+import io.reactivex.Flowable;
 import io.reactivex.Single;
 
 public final class MovieRepositoryImpl implements MovieRepository {
@@ -21,14 +22,21 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public Single<Movie> fetchMovieDetails(final int id) {
-        return movieClient.getMovieDetails(id);
+    public Flowable<Movie> fetchMovieDetails(final int id) {
+        return Flowable.combineLatest(movieClient.getMovieDetails(id).toFlowable(), movieCrudder.movieExists(id).toFlowable(),
+                                      (movieDetails, dbMovie) -> {
+                                          if (dbMovie.isEmpty()) {
+                                              return movieDetails;
+                                          } else {
+                                              return movieDetails.withPersonalNote(dbMovie.get(0).personalNote);
+                                          }
+                                      });
     }
 
     @Override
     public Single<List<Movie>> fetchMovies(final int page) {
         final List<Movie> moviesWithFavorites = new ArrayList<>();
-        return Single.zip(movieClient.getMovies(page), movieCrudder.getAllFavoriteMovies(),
+        return Single.zip(movieClient.getMovies(page), movieCrudder.getAllFavoriteMoviesIds(),
                           (movies, favorites) -> {
                               for (final Movie movie : movies) {
                                   if (favorites.contains(movie.id)) {
@@ -42,8 +50,19 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public Single<List<Movie>> fetchMovies(final String title) {
-        return movieClient.getMovies(title);
+    public Flowable<List<Movie>> queryMovies(final String title) {
+        return Flowable.combineLatest(movieClient.getMovies(title).toFlowable(), movieCrudder.getAllFlowableFavoriteMoviesIds(),
+                                      (movies, favorites) -> {
+                                          final List<Movie> moviesWithFavorites = new ArrayList<>();
+                                          for (final Movie movie : movies) {
+                                              if (favorites.contains(movie.id)) {
+                                                  moviesWithFavorites.add(movie.withIsFavorite(true));
+                                              } else {
+                                                  moviesWithFavorites.add(movie);
+                                              }
+                                          }
+                                          return moviesWithFavorites;
+                                      });
     }
 
     @Override
@@ -59,5 +78,37 @@ public final class MovieRepositoryImpl implements MovieRepository {
     @Override
     public Completable removeFavorite(final Integer movieId) {
         return movieCrudder.removeFavorite(movieId);
+    }
+
+    @Override
+    public Flowable<List<Movie>> fetchFavorites() {
+        return movieCrudder.getAllFavoriteMovies();
+    }
+
+    @Override
+    public Flowable<List<Movie>> fetchFlowableMovies(final int page) {
+        return Flowable.combineLatest(movieClient.getFlowableMovies(page), movieCrudder.getAllFlowableFavoriteMoviesIds(),
+                                      (movies, favorites) -> {
+                                          final List<Movie> moviesWithFavorites = new ArrayList<>();
+                                          for (final Movie movie : movies) {
+                                              if (favorites.contains(movie.id)) {
+                                                  moviesWithFavorites.add(movie.withIsFavorite(true));
+                                              } else {
+                                                  moviesWithFavorites.add(movie);
+                                              }
+                                          }
+                                          insertMovies(moviesWithFavorites);
+                                          return moviesWithFavorites;
+                                      });
+    }
+
+    @Override
+    public Completable insertFavorite(final Movie movie) {
+        return movieCrudder.insertMovie(movie);
+    }
+
+    @Override
+    public Completable setPersonalNote(final Movie movie) {
+        return movieCrudder.setPersonalNote(movie);
     }
 }

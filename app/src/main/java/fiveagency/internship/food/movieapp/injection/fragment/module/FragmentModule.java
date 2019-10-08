@@ -6,10 +6,12 @@ import dagger.Module;
 import dagger.Provides;
 import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentScope;
+import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesAdapter;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsFragment;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListAdapter;
+import fiveagency.internship.food.movieapp.ui.movieslist.diffutil.MovieDiffUtilCallback;
+import fiveagency.internship.food.movieapp.ui.searchlist.MoviesSearchAdapter;
 import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
-import fiveagency.internship.food.movieapp.ui.utils.ImageLoaderImpl;
 
 @Module
 public final class FragmentModule {
@@ -23,12 +25,24 @@ public final class FragmentModule {
     @Provides
     @FragmentScope
     public MoviesListAdapter provideMoviesListAdapter(final ImageLoader imageLoader, final LayoutInflater layoutInflater) {
-        return new MoviesListAdapter(layoutInflater, imageLoader);
+        return new MoviesListAdapter(new MovieDiffUtilCallback<>(), layoutInflater, imageLoader);
     }
 
     @Provides
     @FragmentScope
     public MovieDetailsFragment provideMovieDetailsFragment(final int movieId) {
         return MovieDetailsFragment.newInstance(movieId);
+    }
+
+    @Provides
+    @FragmentScope
+    public MovieFavoritesAdapter provideMovieFavoritesAdapter(final LayoutInflater layoutInflater, final ImageLoader imageLoader) {
+        return new MovieFavoritesAdapter(layoutInflater, imageLoader);
+    }
+
+    @Provides
+    @FragmentScope
+    public MoviesSearchAdapter provideMoviesSearchAdapter(final LayoutInflater layoutInflater, final ImageLoader imageLoader) {
+        return new MoviesSearchAdapter(layoutInflater, imageLoader);
     }
 }
