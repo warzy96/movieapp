@@ -1,6 +1,6 @@
 package fiveagency.internship.food.movieapp.ui.movieslist.diffutil;
 
-import android.support.v7.util.DiffUtil;
+import androidx.recyclerview.widget.DiffUtil;
 
 public final class MovieDiffUtilCallback<T extends DiffUtilViewModel> extends DiffUtil.ItemCallback<T> {
 

@@ -1,16 +1,17 @@
 package fiveagency.internship.food.movieapp.ui.pager;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.tabs.TabLayout;
+
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.viewpager.widget.ViewPager;
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;

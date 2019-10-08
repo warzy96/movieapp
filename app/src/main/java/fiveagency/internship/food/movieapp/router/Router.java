@@ -1,11 +1,11 @@
 package fiveagency.internship.food.movieapp.router;
 
 import android.app.Activity;
-import android.support.annotation.IdRes;
-import android.support.v4.app.FragmentManager;
 
 import javax.inject.Inject;
 
+import androidx.annotation.IdRes;
+import androidx.fragment.app.FragmentManager;
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsFragment;
 import fiveagency.internship.food.movieapp.ui.pager.ActivityFragment;

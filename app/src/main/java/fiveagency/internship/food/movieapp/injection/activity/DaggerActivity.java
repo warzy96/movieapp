@@ -1,9 +1,9 @@
 package fiveagency.internship.food.movieapp.injection.activity;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import fiveagency.internship.food.movieapp.app.MovieApplication;
 import fiveagency.internship.food.movieapp.injection.ComponentFactory;
 

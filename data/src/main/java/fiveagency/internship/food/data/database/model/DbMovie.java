@@ -1,8 +1,7 @@
 package fiveagency.internship.food.data.database.model;
 
-import android.arch.persistence.room.Entity;
-import android.arch.persistence.room.PrimaryKey;
-
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 import fiveagency.internship.food.data.network.model.ApiMovie;
 import fiveagency.internship.food.domain.model.Movie;
 

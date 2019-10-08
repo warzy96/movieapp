@@ -1,9 +1,9 @@
 package fiveagency.internship.food.movieapp.injection.activity.module;
 
 import android.content.Context;
-import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 
+import androidx.fragment.app.FragmentManager;
 import dagger.Module;
 import dagger.Provides;
 import fiveagency.internship.food.movieapp.injection.activity.ActivityScope;

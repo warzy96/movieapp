@@ -1,15 +1,14 @@
 package fiveagency.internship.food.movieapp.ui.pager;
 
-import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-
 import com.annimon.stream.function.Supplier;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentPagerAdapter;
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesFragment;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListFragment;

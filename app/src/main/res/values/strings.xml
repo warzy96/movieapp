@@ -7,4 +7,6 @@
     <string name="title_movies_search">Search</string>
     <string name="search_view_hint_text">Movie title…</string>
     <string name="movie_details_submit_button_text">Submit</string>
+    <string name="facebook_app_id">[APP_ID]</string>
+    <string name="fb_login_protocol_scheme">fb[APP_ID]</string>
 </resources>
