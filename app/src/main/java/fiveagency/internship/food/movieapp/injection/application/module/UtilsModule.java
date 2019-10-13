@@ -2,6 +2,8 @@ package fiveagency.internship.food.movieapp.injection.application.module;
 
 import android.content.Context;
 
+import com.facebook.CallbackManager;
+
 import javax.inject.Singleton;
 
 import dagger.Module;
@@ -33,5 +35,11 @@ public final class UtilsModule {
     @Singleton
     public StringUtil provideStringUtil(@ForApplication final Context context) {
         return new StringUtilImpl(context);
+    }
+
+    @Provides
+    @Singleton
+    CallbackManager provideCallbackManager() {
+        return CallbackManager.Factory.create();
     }
 }

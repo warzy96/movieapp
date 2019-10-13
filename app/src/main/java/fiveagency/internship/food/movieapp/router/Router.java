@@ -7,6 +7,7 @@ import javax.inject.Inject;
 import androidx.annotation.IdRes;
 import androidx.fragment.app.FragmentManager;
 import fiveagency.internship.food.movieapp.R;
+import fiveagency.internship.food.movieapp.ui.login.LogInFragment;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsFragment;
 import fiveagency.internship.food.movieapp.ui.pager.ActivityFragment;
 
@@ -25,7 +26,13 @@ public final class Router {
 
     public void showMoviesListScreen() {
         fragmentManager.beginTransaction()
-                       .add(CONTAINER_ID, ActivityFragment.newInstance(), ActivityFragment.TAG)
+                       .replace(CONTAINER_ID, ActivityFragment.newInstance(), ActivityFragment.TAG)
+                       .commit();
+    }
+
+    public void showLogInScreen() {
+        fragmentManager.beginTransaction()
+                       .add(CONTAINER_ID, LogInFragment.newInstance(), LogInFragment.TAG)
                        .commit();
     }
 

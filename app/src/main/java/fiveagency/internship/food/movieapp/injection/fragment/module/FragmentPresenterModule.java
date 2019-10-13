@@ -1,5 +1,7 @@
 package fiveagency.internship.food.movieapp.injection.fragment.module;
 
+import com.facebook.CallbackManager;
+
 import dagger.Module;
 import dagger.Provides;
 import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
@@ -7,6 +9,8 @@ import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentScope;
 import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesContract;
 import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesPresenter;
+import fiveagency.internship.food.movieapp.ui.login.LogInContract;
+import fiveagency.internship.food.movieapp.ui.login.LogInPresenter;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsContract;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsPresenter;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListContract;
@@ -34,6 +38,12 @@ public final class FragmentPresenterModule {
         final MoviesListPresenter moviesListPresenter = new MoviesListPresenter();
         getFragmentComponent().inject(moviesListPresenter);
         return moviesListPresenter;
+    }
+
+    @Provides
+    @FragmentScope
+    public LogInContract.Presenter provideLogInPresenter(final CallbackManager callbackManager) {
+        return new LogInPresenter(callbackManager);
     }
 
     @Provides

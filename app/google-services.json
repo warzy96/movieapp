@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "932599713517",
+    "firebase_url": "https://movieapp-1570731618311.firebaseio.com",
+    "project_id": "movieapp-1570731618311",
+    "storage_bucket": "movieapp-1570731618311.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:932599713517:android:3994e63a7f2fbf16b646e4",
+        "android_client_info": {
+          "package_name": "fiveagency.internship.food.movieapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "932599713517-258sf3hdp9bov6nd8lkhr45oeclrou29.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "fiveagency.internship.food.movieapp",
+            "certificate_hash": "8dc31dee6d7820fd7308865b739ef7a618e7f51c"
+          }
+        },
+        {
+          "client_id": "932599713517-0u1t6gs56cc64m6stqsglh31hkpj630i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXgcGs8mmu3q9M16P_gUUre9SLDHexyRI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "932599713517-0u1t6gs56cc64m6stqsglh31hkpj630i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
