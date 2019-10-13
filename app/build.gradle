@@ -36,6 +36,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':data')
     implementation project(':domain')
+    implementation "com.firebaseui:firebase-ui-auth:$project.ext.firebaseUIAuth"
     implementation "com.google.android.gms:play-services-auth:$project.ext.playServicesVersion"
     implementation "com.facebook.android:facebook-login:$project.ext.facebookLoginVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$project.ext.okhttpVersion"
