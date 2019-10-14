@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent
 import fiveagency.internship.food.movieapp.ui.base.BaseFragment
-import kotlinx.android.synthetic.main.fragment_login.*
 
 class LogInFragment : LogInContract.View, BaseFragment<LogInContract.Presenter>() {
 
@@ -27,11 +26,6 @@ class LogInFragment : LogInContract.View, BaseFragment<LogInContract.Presenter>(
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         presenter.setView(this)
-
-        facebookLogInButton.fragment = this
-        facebookLogInButton.setOnClickListener { presenter.onFacebookLogInButtonClicked(facebookLogInButton) }
-
-        googleSignInButton.setOnClickListener { presenter.onGoogleLogInButtonClicked() }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

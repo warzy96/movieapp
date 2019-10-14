@@ -43,7 +43,9 @@ public final class FragmentPresenterModule {
     @Provides
     @FragmentScope
     public LogInContract.Presenter provideLogInPresenter(final CallbackManager callbackManager) {
-        return new LogInPresenter(callbackManager);
+        final LogInPresenter logInPresenter = new LogInPresenter(callbackManager);
+        getFragmentComponent().inject(logInPresenter);
+        return logInPresenter;
     }
 
     @Provides

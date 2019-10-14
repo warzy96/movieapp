@@ -12,4 +12,5 @@
     <string name="server_client_id">932599713517–42r9opct51k9186i3o9njb1hit894sq5.apps.googleusercontent.com</string>
     <string name="facebook_application_id" translatable="false">414962915882652</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb414962915882652</string>
+    <string name="add_personal_note_here">Add personal note here...</string>
 </resources>

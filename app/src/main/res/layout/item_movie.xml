@@ -22,7 +22,7 @@
         android:layout_marginStart="@dimen/item_movie_movie_name_margin_end"
         android:scrollHorizontally="false"
         android:textAppearance="@android:style/TextAppearance.Material.Large"
-        android:textColor="@color/text"
+        android:textColor="@color/text_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/item_movie_favorite_checkbox"
         app:layout_constraintStart_toEndOf="@id/item_movie_poster_image"
