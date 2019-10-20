@@ -1,18 +1,16 @@
 package fiveagency.internship.food.movieapp.ui.login
 
+import android.app.Activity
 import android.content.Intent
-import android.util.Log
-import com.facebook.CallbackManager
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount
-import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.tasks.Task
+import androidx.fragment.app.Fragment
+import com.firebase.ui.auth.IdpResponse
 import com.google.firebase.auth.FirebaseAuth
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter
 
 const val RC_SIGN_IN = 22
 
-class LogInPresenter(private val callbackManager: CallbackManager) : BasePresenter<LogInContract.View>(), LogInContract.Presenter {
+class LogInPresenter(private val firebaseAuthUIIntent: Intent) : BasePresenter<LogInContract.View>(),
+    LogInContract.Presenter {
 
     private lateinit var firebaseAuth: FirebaseAuth
 
@@ -23,8 +21,15 @@ class LogInPresenter(private val callbackManager: CallbackManager) : BasePresent
          * If user already exists, start movies list screen
          */
         if (isUserSignedIn()) {
-            router.showMoviesListScreen()
+            router.showActivityFragmentScreen()
+        } else {
+            showFirebaseLogInScreen()
         }
+
+    }
+
+    private fun showFirebaseLogInScreen() {
+        (view as Fragment).startActivityForResult(firebaseAuthUIIntent, RC_SIGN_IN)
     }
 
     private fun isUserSignedIn(): Boolean {
@@ -36,24 +41,19 @@ class LogInPresenter(private val callbackManager: CallbackManager) : BasePresent
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        when (requestCode) {
-            RC_SIGN_IN -> handleSignInResult(GoogleSignIn.getSignedInAccountFromIntent(data))
-            else -> callbackManager.onActivityResult(requestCode, resultCode, data)
-        }
-    }
+        if (requestCode == RC_SIGN_IN) {
+            val response = IdpResponse.fromResultIntent(data)
 
-    private fun handleSignInResult(completedTask: Task<GoogleSignInAccount>) {
-        try {
-            val account = completedTask.getResult(ApiException::class.java)
-            //TODO: Send email, id and name to FireBase
-            //TODO: Start movies list screen
-            Log.d("login", account?.email)
-        } catch (e: ApiException) {
-            Log.e("login", e.statusCode.toString())
-            e.stackTrace.forEach {
-                Log.e("login", it.toString())
+            if (resultCode == Activity.RESULT_OK) {
+                // Successfully signed in
+                router.showActivityFragmentScreen()
+            } else {
+                // Sign in failed. If response is null the user canceled the
+                // sign-in flow using the back button. Otherwise check
+                // response.getError().getErrorCode() and handle the error.
+                // ...
+                if (response != null) showFirebaseLogInScreen()
             }
         }
-
     }
 }

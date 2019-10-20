@@ -12,5 +12,10 @@
     <string name="server_client_id">932599713517–42r9opct51k9186i3o9njb1hit894sq5.apps.googleusercontent.com</string>
     <string name="facebook_application_id" translatable="false">414962915882652</string>
     <string name="facebook_login_protocol_scheme" translatable="false">fb414962915882652</string>
-    <string name="add_personal_note_here">Add personal note here...</string>
+    <string name="twitter_consumer_key" translatable="false">adO15ezpq137r46k1BqZiruDH</string>
+    <string name="twitter_consumer_secret" translatable="false">sT24H1I1G0rsx9vxY5MiU0ZLHlkMzc0BlWBs9K6neUkTSJ92OK</string>
+    <string name="add_personal_note_here">Add personal note here…</string>
+    <string name="bottom_nav_recommended">Recommended</string>
+    <string name="bottom_nav_favorites">Favorites</string>
+    <string name="bottom_nav_profile">Profile</string>
 </resources>
