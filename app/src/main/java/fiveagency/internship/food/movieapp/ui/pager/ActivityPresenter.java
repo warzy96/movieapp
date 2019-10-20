@@ -6,6 +6,23 @@ public final class ActivityPresenter extends BasePresenter<ActivityContract.View
 
     @Override
     public void start() {
-
+        view.render();
     }
+
+    @Override
+    public void setView(final ActivityContract.View view) {
+        this.view = view;
+    }
+
+    @Override
+    public void showRecommendedMovies() {
+        router.showMoviesListScreen();
+    }
+
+    @Override
+    public void showFavoriteMovies() {
+        router.showFavoriteMoviesScreen();
+    }
+
+
 }

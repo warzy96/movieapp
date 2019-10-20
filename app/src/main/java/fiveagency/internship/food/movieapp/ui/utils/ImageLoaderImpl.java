@@ -1,11 +1,12 @@
 package fiveagency.internship.food.movieapp.ui.utils;
 
 import android.content.Context;
-import android.support.v4.widget.CircularProgressDrawable;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+
+import androidx.swiperefreshlayout.widget.CircularProgressDrawable;
 
 public final class ImageLoaderImpl implements ImageLoader {
 

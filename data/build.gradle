@@ -1,4 +1,6 @@
 apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion project.ext.compileSdkVersion
@@ -39,4 +41,9 @@ dependencies {
     annotationProcessor "android.arch.persistence.room:compiler:$project.ext.roomVersion"
     implementation "android.arch.persistence.room:rxjava2:$project.ext.roomVersion"
     implementation "com.facebook.stetho:stetho:$project.ext.stethoVersion"
+    implementation "androidx.core:core-ktx:$project.ext.androidXVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

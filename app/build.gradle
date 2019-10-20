@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
-
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-android'
+apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion project.ext.compileSdkVersion
 
@@ -34,9 +36,15 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation project(':data')
     implementation project(':domain')
-    implementation 'com.facebook.android:facebook-login:5.5.2'
+    implementation 'com.firebaseui:firebase-ui-database:6.0.2'
+    implementation("com.twitter.sdk.android:twitter-core:3.1.1") { transitive = true }
+    implementation "com.firebaseui:firebase-ui-auth:$project.ext.firebaseUIAuth"
+    implementation "com.google.android.gms:play-services-auth:$project.ext.playServicesVersion"
+    implementation "com.facebook.android:facebook-login:$project.ext.facebookLoginVersion"
     implementation "com.squareup.okhttp3:logging-interceptor:$project.ext.okhttpVersion"
     implementation "com.squareup.retrofit2:retrofit:$project.ext.retrofitVersion"
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
+    implementation 'com.google.firebase:firebase-firestore:21.2.0'
     implementation "com.google.code.gson:gson:$project.ext.gsonVersion"
     implementation "com.squareup.okhttp3:okhttp:$project.ext.okhttpVersion"
     implementation "com.squareup.retrofit2:converter-gson:$project.ext.retrofitVersion"
@@ -64,4 +72,9 @@ dependencies {
     implementation "com.android.support:design:$project.designVersion"
     implementation "com.annimon:stream:$project.ext.annimonVersion"
     implementation "com.jakewharton.rxbinding2:rxbinding:$project.ext.rxBindingVersion"
+    implementation "androidx.core:core-ktx:$project.ext.androidXVersion"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+}
+repositories {
+    mavenCentral()
 }

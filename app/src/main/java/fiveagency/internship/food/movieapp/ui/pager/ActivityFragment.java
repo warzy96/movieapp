@@ -1,35 +1,36 @@
 package fiveagency.internship.food.movieapp.ui.pager;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+
 import javax.inject.Inject;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import fiveagency.internship.food.movieapp.R;
-import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
+import fiveagency.internship.food.movieapp.ui.base.BaseFragment;
 import fiveagency.internship.food.movieapp.ui.utils.StringUtil;
 
-public final class ActivityFragment extends DaggerFragment {
+public final class ActivityFragment extends BaseFragment<ActivityContract.Presenter> implements ActivityContract.View {
 
     public static final String TAG = "ActivityFragment";
-    private ViewPager viewPager;
-    private TabLayout tabLayout;
-    MoviePagerAdapter moviePagerAdapter;
 
     @Inject
     StringUtil stringUtil;
 
+    @BindView(R.id.bottomNavigation)
+    BottomNavigationView bottomNavigationView;
+
     @Override
     public void onCreate(@Nullable final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        moviePagerAdapter = new MoviePagerAdapter(getChildFragmentManager(), stringUtil);
     }
 
     @Override
@@ -37,10 +38,45 @@ public final class ActivityFragment extends DaggerFragment {
         fragmentComponent.inject(this);
     }
 
-    @Nullable
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.pager_layout, container, false);
+        final View view = inflater.inflate(R.layout.fragment_activity, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        presenter.start();
+    }
+
+    @Override
+    public void render() {
+        setUpBottomNavigation();
+
+        presenter.showRecommendedMovies();
+    }
+
+    private void setUpBottomNavigation() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
+            switch (menuItem.getItemId()) {
+                case R.id.bottomNavigationProfile: {
+                    //TODO: Router.showProfileScreen
+                    return true;
+                }
+                case R.id.bottomNavigationRecommended: {
+                    presenter.showRecommendedMovies();
+                    return true;
+                }
+                case R.id.bottomNavigationFavorites: {
+                    presenter.showFavoriteMovies();
+                    return true;
+                }
+            }
+            return false;
+        });
     }
 
     public static ActivityFragment newInstance() {
@@ -50,9 +86,7 @@ public final class ActivityFragment extends DaggerFragment {
     @Override
     public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        viewPager = view.findViewById(R.id.view_pager);
-        viewPager.setAdapter(moviePagerAdapter);
-        tabLayout = view.findViewById(R.id.main_pager_header);
-        tabLayout.setupWithViewPager(viewPager);
+
+        presenter.setView(this);
     }
 }

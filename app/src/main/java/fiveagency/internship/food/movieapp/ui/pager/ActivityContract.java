@@ -2,12 +2,18 @@ package fiveagency.internship.food.movieapp.ui.pager;
 
 public interface ActivityContract {
 
-    public interface Presenter {
+    interface Presenter {
 
         void start();
+
+        void setView(ActivityContract.View view);
+
+        void showRecommendedMovies();
+
+        void showFavoriteMovies();
     }
 
-    public interface View {
+    interface View {
 
         void render();
     }

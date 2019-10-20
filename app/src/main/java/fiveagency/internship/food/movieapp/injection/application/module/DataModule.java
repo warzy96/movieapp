@@ -1,10 +1,10 @@
 package fiveagency.internship.food.movieapp.injection.application.module;
 
-import android.arch.persistence.room.Room;
 import android.content.Context;
 
 import javax.inject.Singleton;
 
+import androidx.room.Room;
 import dagger.Module;
 import dagger.Provides;
 import fiveagency.internship.food.data.database.MovieDatabase;

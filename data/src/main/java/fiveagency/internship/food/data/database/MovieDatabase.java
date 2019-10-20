@@ -1,8 +1,7 @@
 package fiveagency.internship.food.data.database;
 
-import android.arch.persistence.room.Database;
-import android.arch.persistence.room.RoomDatabase;
-
+import androidx.room.Database;
+import androidx.room.RoomDatabase;
 import fiveagency.internship.food.data.database.dao.FavoritesDao;
 import fiveagency.internship.food.data.database.dao.MovieDao;
 import fiveagency.internship.food.data.database.model.DbFavoriteMovies;
