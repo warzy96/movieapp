@@ -18,4 +18,5 @@
     <string name="bottom_nav_recommended">Recommended</string>
     <string name="bottom_nav_favorites">Favorites</string>
     <string name="bottom_nav_profile">Profile</string>
+    <string name="sign_out">Sign Out</string>
 </resources>

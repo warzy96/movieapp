@@ -17,6 +17,8 @@ import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListContract;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListPresenter;
 import fiveagency.internship.food.movieapp.ui.pager.ActivityContract;
 import fiveagency.internship.food.movieapp.ui.pager.ActivityPresenter;
+import fiveagency.internship.food.movieapp.ui.profile.ProfileContract;
+import fiveagency.internship.food.movieapp.ui.profile.ProfilePresenter;
 import fiveagency.internship.food.movieapp.ui.searchlist.MoviesSearchContract;
 import fiveagency.internship.food.movieapp.ui.searchlist.MoviesSearchPresenter;
 import io.reactivex.disposables.CompositeDisposable;
@@ -86,5 +88,13 @@ public final class FragmentPresenterModule {
         final ActivityPresenter activityPresenter = new ActivityPresenter();
         getFragmentComponent().inject(activityPresenter);
         return activityPresenter;
+    }
+
+    @Provides
+    @FragmentScope
+    public ProfileContract.Presenter provideProfilePresenter() {
+        final ProfilePresenter profilePresenter = new ProfilePresenter();
+        getFragmentComponent().inject(profilePresenter);
+        return profilePresenter;
     }
 }
