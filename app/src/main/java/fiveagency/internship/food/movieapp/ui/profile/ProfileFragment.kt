@@ -4,9 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import fiveagency.internship.food.movieapp.R
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent
 import fiveagency.internship.food.movieapp.ui.base.BaseFragment
+import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : BaseFragment<ProfileContract.Presenter>(), ProfileContract.View {
 
@@ -20,11 +22,26 @@ class ProfileFragment : BaseFragment<ProfileContract.Presenter>(), ProfileContra
         presenter.setView(this)
     }
 
-    override fun render() {
+    override fun onResume() {
+        super.onResume()
         presenter.start()
+    }
+
+    override fun render(email: String?) {
+        userEmailTextView.text = email
+        signOutTextView.setOnClickListener { presenter.logOut() }
     }
 
     override fun inject(fragmentComponent: FragmentComponent?) {
         fragmentComponent?.inject(this)
+    }
+
+    companion object {
+        const val TAG = "ProfileFragment"
+
+        @JvmStatic
+        fun newInstance(): Fragment {
+            return ProfileFragment()
+        }
     }
 }

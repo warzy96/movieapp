@@ -2,6 +2,8 @@ package fiveagency.internship.food.movieapp.injection.fragment.module;
 
 import android.content.Intent;
 
+import com.google.firebase.auth.FirebaseAuth;
+
 import dagger.Module;
 import dagger.Provides;
 import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
@@ -46,8 +48,8 @@ public final class FragmentPresenterModule {
 
     @Provides
     @FragmentScope
-    public LogInContract.Presenter provideLogInPresenter(final Intent firebaseAuthUIIntent) {
-        final LogInPresenter logInPresenter = new LogInPresenter(firebaseAuthUIIntent);
+    public LogInContract.Presenter provideLogInPresenter(final Intent firebaseAuthUIIntent, final FirebaseAuth firebaseAuth) {
+        final LogInPresenter logInPresenter = new LogInPresenter(firebaseAuthUIIntent, firebaseAuth);
         getFragmentComponent().inject(logInPresenter);
         return logInPresenter;
     }
@@ -92,8 +94,8 @@ public final class FragmentPresenterModule {
 
     @Provides
     @FragmentScope
-    public ProfileContract.Presenter provideProfilePresenter() {
-        final ProfilePresenter profilePresenter = new ProfilePresenter();
+    public ProfileContract.Presenter provideProfilePresenter(final FirebaseAuth firebaseAuth) {
+        final ProfilePresenter profilePresenter = new ProfilePresenter(firebaseAuth);
         getFragmentComponent().inject(profilePresenter);
         return profilePresenter;
     }

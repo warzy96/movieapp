@@ -11,8 +11,6 @@ import fiveagency.internship.food.movieapp.injection.activity.DaggerActivity;
 import fiveagency.internship.food.movieapp.router.Router;
 import fiveagency.internship.food.movieapp.ui.login.LogInFragment;
 
-import static fiveagency.internship.food.movieapp.ui.login.LogInPresenterKt.RC_SIGN_IN;
-
 public final class MainActivity extends DaggerActivity {
 
     @Inject
@@ -29,11 +27,10 @@ public final class MainActivity extends DaggerActivity {
     @Override
     protected void onActivityResult(final int requestCode, final int resultCode, @Nullable final Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RC_SIGN_IN) {
-            final LogInFragment logInFragment = (LogInFragment) getSupportFragmentManager().findFragmentByTag(LogInFragment.TAG);
-            if (logInFragment != null) {
-                logInFragment.onActivityResult(requestCode, resultCode, data);
-            }
+
+        final LogInFragment logInFragment = (LogInFragment) getSupportFragmentManager().findFragmentByTag(LogInFragment.TAG);
+        if (logInFragment != null) {
+            logInFragment.onActivityResult(requestCode, resultCode, data);
         }
     }
 

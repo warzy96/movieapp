@@ -11,6 +11,8 @@ public interface ActivityContract {
         void showRecommendedMovies();
 
         void showFavoriteMovies();
+
+        void showUserProfileScreen();
     }
 
     interface View {

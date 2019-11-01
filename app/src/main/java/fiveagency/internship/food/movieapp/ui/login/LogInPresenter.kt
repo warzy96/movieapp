@@ -9,14 +9,10 @@ import fiveagency.internship.food.movieapp.ui.base.BasePresenter
 
 const val RC_SIGN_IN = 22
 
-class LogInPresenter(private val firebaseAuthUIIntent: Intent) : BasePresenter<LogInContract.View>(),
+class LogInPresenter(private val firebaseAuthUIIntent: Intent, private val firebaseAuth: FirebaseAuth) : BasePresenter<LogInContract.View>(),
     LogInContract.Presenter {
 
-    private lateinit var firebaseAuth: FirebaseAuth
-
     override fun start() {
-        firebaseAuth = FirebaseAuth.getInstance()
-
         /**
          * If user already exists, start movies list screen
          */
@@ -49,10 +45,14 @@ class LogInPresenter(private val firebaseAuthUIIntent: Intent) : BasePresenter<L
                 router.showActivityFragmentScreen()
             } else {
                 // Sign in failed. If response is null the user canceled the
-                // sign-in flow using the back button. Otherwise check
+                // sign-in flow using the back button. Since this is our first screen in the app
+                // the app should exit on back. Otherwise check
                 // response.getError().getErrorCode() and handle the error.
-                // ...
-                if (response != null) showFirebaseLogInScreen()
+                if (response == null) {
+                    router.exitApp()
+                } else {
+                    showFirebaseLogInScreen()
+                }
             }
         }
     }

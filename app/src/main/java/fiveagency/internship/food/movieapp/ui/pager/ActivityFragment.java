@@ -46,6 +46,17 @@ public final class ActivityFragment extends BaseFragment<ActivityContract.Presen
     }
 
     @Override
+    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        presenter.setView(this);
+
+        setUpBottomNavigation();
+
+        presenter.showRecommendedMovies();
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
 
@@ -54,16 +65,13 @@ public final class ActivityFragment extends BaseFragment<ActivityContract.Presen
 
     @Override
     public void render() {
-        setUpBottomNavigation();
-
-        presenter.showRecommendedMovies();
     }
 
     private void setUpBottomNavigation() {
         bottomNavigationView.setOnNavigationItemSelectedListener(menuItem -> {
             switch (menuItem.getItemId()) {
                 case R.id.bottomNavigationProfile: {
-                    //TODO: Router.showProfileScreen
+                    presenter.showUserProfileScreen();
                     return true;
                 }
                 case R.id.bottomNavigationRecommended: {
@@ -81,12 +89,5 @@ public final class ActivityFragment extends BaseFragment<ActivityContract.Presen
 
     public static ActivityFragment newInstance() {
         return new ActivityFragment();
-    }
-
-    @Override
-    public void onViewCreated(@NonNull final View view, @Nullable final Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-
-        presenter.setView(this);
     }
 }

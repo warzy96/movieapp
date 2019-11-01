@@ -4,10 +4,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/userEmailTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/profile_list_item_padding"
+        android:textSize="@dimen/profile_list_item_text_size" />
+
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/signOutTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:drawableEnd="@drawable/ic_sign_out_red_24dp"
+        android:focusable="true"
         android:padding="@dimen/profile_list_item_padding"
         android:text="@string/sign_out"
         android:textSize="@dimen/profile_list_item_text_size" />

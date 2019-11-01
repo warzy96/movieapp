@@ -4,7 +4,7 @@ interface ProfileContract {
 
     interface View {
 
-        fun render()
+        fun render(email: String?)
     }
 
     interface Presenter {
@@ -12,5 +12,7 @@ interface ProfileContract {
         fun start()
 
         fun setView(view: View)
+
+        fun logOut()
     }
 }

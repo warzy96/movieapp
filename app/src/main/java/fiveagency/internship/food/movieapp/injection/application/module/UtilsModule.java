@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 
 import com.firebase.ui.auth.AuthUI;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.Arrays;
 import java.util.List;
@@ -49,6 +50,12 @@ public final class UtilsModule {
                              new AuthUI.IdpConfig.FacebookBuilder().build(),
                              new AuthUI.IdpConfig.TwitterBuilder().build(),
                              new AuthUI.IdpConfig.EmailBuilder().build());
+    }
+
+    @Provides
+    @Singleton
+    FirebaseAuth provideFirebaseAuth() {
+        return FirebaseAuth.getInstance();
     }
 
     @Provides

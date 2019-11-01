@@ -24,5 +24,8 @@ public final class ActivityPresenter extends BasePresenter<ActivityContract.View
         router.showFavoriteMoviesScreen();
     }
 
-
+    @Override
+    public void showUserProfileScreen() {
+        router.showUserProfileScreen();
+    }
 }
