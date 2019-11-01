@@ -12,6 +12,15 @@ import kotlinx.android.synthetic.main.fragment_profile.*
 
 class ProfileFragment : BaseFragment<ProfileContract.Presenter>(), ProfileContract.View {
 
+    companion object {
+        const val TAG = "ProfileFragment"
+
+        @JvmStatic
+        fun newInstance(): Fragment {
+            return ProfileFragment()
+        }
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_profile, container, false)
     }
@@ -34,14 +43,5 @@ class ProfileFragment : BaseFragment<ProfileContract.Presenter>(), ProfileContra
 
     override fun inject(fragmentComponent: FragmentComponent?) {
         fragmentComponent?.inject(this)
-    }
-
-    companion object {
-        const val TAG = "ProfileFragment"
-
-        @JvmStatic
-        fun newInstance(): Fragment {
-            return ProfileFragment()
-        }
     }
 }
