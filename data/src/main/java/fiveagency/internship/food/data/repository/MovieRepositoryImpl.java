@@ -5,6 +5,7 @@ import java.util.List;
 
 import fiveagency.internship.food.data.database.crudder.MovieCrudder;
 import fiveagency.internship.food.data.network.client.MovieClient;
+import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import io.reactivex.Completable;
@@ -22,15 +23,20 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public Flowable<Movie> fetchMovieDetails(final int id) {
-        return Flowable.combineLatest(movieClient.getMovieDetails(id).toFlowable(), movieCrudder.movieExists(id).toFlowable(),
-                                      (movieDetails, dbMovie) -> {
-                                          if (dbMovie.isEmpty()) {
-                                              return movieDetails;
-                                          } else {
-                                              return movieDetails.withPersonalNote(dbMovie.get(0).personalNote);
-                                          }
-                                      });
+    public Single<Movie> fetchMovieDetails(final int id) {
+        return Single.zip(movieClient.getMovieDetails(id), movieCrudder.movieExists(id),
+                          (movieDetails, dbMovie) -> {
+                              if (dbMovie.isEmpty()) {
+                                  return movieDetails;
+                              } else {
+                                  return movieDetails.withPersonalNote(dbMovie.get(0).personalNote);
+                              }
+                          });
+    }
+
+    @Override
+    public Single<List<Cast>> fetchMovieCast(final int movieId) {
+        return movieClient.getMovieCast(movieId);
     }
 
     @Override

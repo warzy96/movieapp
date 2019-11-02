@@ -2,12 +2,12 @@ package fiveagency.internship.food.domain.interactor;
 
 import javax.inject.Inject;
 
-import fiveagency.internship.food.domain.interactor.type.FlowableQueryUseCase;
+import fiveagency.internship.food.domain.interactor.type.SingleQueryUseCase;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.repository.MovieRepository;
-import io.reactivex.Flowable;
+import io.reactivex.Single;
 
-public final class GetMovieDetailsUseCase implements FlowableQueryUseCase<Integer, Movie> {
+public final class GetMovieDetailsUseCase implements SingleQueryUseCase<Integer, Movie> {
 
     private final MovieRepository movieRepository;
 
@@ -17,7 +17,7 @@ public final class GetMovieDetailsUseCase implements FlowableQueryUseCase<Intege
     }
 
     @Override
-    public Flowable<Movie> execute(final Integer id) {
+    public Single<Movie> execute(final Integer id) {
         return movieRepository.fetchMovieDetails(id);
     }
 }

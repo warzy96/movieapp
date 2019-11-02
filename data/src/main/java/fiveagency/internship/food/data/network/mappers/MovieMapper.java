@@ -4,8 +4,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 import fiveagency.internship.food.data.network.ApiConstants;
+import fiveagency.internship.food.data.network.model.ApiCast;
 import fiveagency.internship.food.data.network.model.ApiMovie;
 import fiveagency.internship.food.data.network.model.ApiMoviesList;
+import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
 
 public final class MovieMapper {
@@ -29,6 +31,23 @@ public final class MovieMapper {
                                  parseImageSourceUrl(apiMovie.imageSource), false, Movie.EMPTY.personalNote));
         }
         return movies;
+    }
+
+    public Cast mapCast(final ApiCast apiCast) {
+        return new Cast(
+                apiCast.getId() == null ? Cast.Companion.getEMPTY().getId() : apiCast.getId(),
+                apiCast.getCharacter() == null ? Cast.Companion.getEMPTY().getCharacter() : apiCast.getCharacter(),
+                apiCast.getName() == null ? Cast.Companion.getEMPTY().getName() : apiCast.getName(),
+                apiCast.getProfileUrl() == null ? Cast.Companion.getEMPTY().getProfileUrl() : parseImageSourceUrl(apiCast.getProfileUrl())
+        );
+    }
+
+    public List<Cast> mapCast(final List<ApiCast> apiCast) {
+        final List<Cast> cast = new LinkedList<>();
+        for (final ApiCast tempCast : apiCast) {
+            cast.add(mapCast(tempCast));
+        }
+        return cast;
     }
 
     private String parseImageSourceUrl(final String imageSource) {

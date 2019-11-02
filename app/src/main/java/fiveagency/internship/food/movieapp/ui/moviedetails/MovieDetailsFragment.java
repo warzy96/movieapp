@@ -4,14 +4,17 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import javax.inject.Inject;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatButton;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,25 +29,31 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
     private static final String KEY_MOVIE_ID = "key_movie_id";
 
     @BindView(R.id.movie_details_movie_name)
-    TextView movieDetailsMovieName;
+    AppCompatTextView movieDetailsMovieName;
 
     @BindView(R.id.movie_details_overview_text_view)
-    TextView movieDetailsMovieOverview;
+    AppCompatTextView movieDetailsMovieOverview;
 
     @BindView(R.id.movie_details_image_view)
-    ImageView movieDetailsPoster;
+    AppCompatImageView movieDetailsPoster;
 
     @BindView(R.id.movie_details_personal_note_text_view)
-    TextView movieDetailsPersonalNoteEditText;
+    AppCompatEditText movieDetailsPersonalNoteEditText;
 
     @BindView(R.id.movie_details_submit_button)
-    Button movieDetailsSubmitButton;
+    AppCompatButton movieDetailsSubmitButton;
+
+    @BindView(R.id.castRecyclerView)
+    RecyclerView castRecyclerView;
 
     @BindDimen(R.dimen.circular_progressbar_stroke_width)
     float circularProgressbarStrokeWidth;
 
     @Inject
     ImageLoader imageLoader;
+
+    @Inject
+    MovieDetailsCastAdapter movieDetailsCastAdapter;
 
     @Inject
     MovieDetailsContract.Presenter presenter;
@@ -63,7 +72,7 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
         presenter.setView(this);
     }
 
-    @Nullable
+    @NonNull
     @Override
     public View onCreateView(@NonNull final LayoutInflater inflater, @Nullable final ViewGroup container, @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.fragment_movie_details, container, false);
@@ -84,6 +93,16 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
         } else {
             throw new IllegalArgumentException("Arguments bundle does not exist.");
         }
+
+        initRecyclerView();
+    }
+
+    private void initRecyclerView() {
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        castRecyclerView.setLayoutManager(layoutManager);
+
+        castRecyclerView.setAdapter(movieDetailsCastAdapter);
     }
 
     @Override
@@ -101,6 +120,7 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
         movieDetailsSubmitButton.setOnClickListener(view -> {
             presenter.savePersonalNote(movieDetailsViewModel.withPersonalNote(movieDetailsPersonalNoteEditText.getText().toString()));
         });
+        movieDetailsCastAdapter.setCast(movieDetailsViewModel.castList);
     }
 
     @Override

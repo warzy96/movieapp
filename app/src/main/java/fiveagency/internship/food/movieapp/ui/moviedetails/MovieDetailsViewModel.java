@@ -1,6 +1,9 @@
 package fiveagency.internship.food.movieapp.ui.moviedetails;
 
+import java.util.List;
 import java.util.Objects;
+
+import fiveagency.internship.food.domain.model.Cast;
 
 public final class MovieDetailsViewModel {
 
@@ -11,9 +14,10 @@ public final class MovieDetailsViewModel {
     public final String releaseDate;
     public final String imageSource;
     public final String personalNote;
+    public final List<Cast> castList;
 
     public MovieDetailsViewModel(final int id, final String title, final String overview, final boolean isAdult, final String releaseDate, final String imageSource,
-                                 final String personalNote) {
+                                 final String personalNote, final List<Cast> castList) {
         this.id = id;
         this.title = title;
         this.overview = overview;
@@ -21,10 +25,11 @@ public final class MovieDetailsViewModel {
         this.releaseDate = releaseDate;
         this.imageSource = imageSource;
         this.personalNote = personalNote;
+        this.castList = castList;
     }
 
     public MovieDetailsViewModel withPersonalNote(final String personalNote) {
-        return new MovieDetailsViewModel(this.id, this.title, this.overview, this.isAdult, this.releaseDate, this.imageSource, personalNote);
+        return new MovieDetailsViewModel(this.id, this.title, this.overview, this.isAdult, this.releaseDate, this.imageSource, personalNote, this.castList);
     }
 
     @Override

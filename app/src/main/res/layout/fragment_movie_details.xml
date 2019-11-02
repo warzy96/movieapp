@@ -3,48 +3,61 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@android:color/background_light"
-    android:layout_height="match_parent">
+    android:clickable="true"
+    android:focusable="true">
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/movie_details_image_view"
         android:layout_width="match_parent"
         android:layout_height="@dimen/movie_details_image_height"
         android:contentDescription="@string/movie_details_poster_picture_content_description"
-        android:layout_margin="@dimen/movie_details_overview_margin"
         android:scaleType="fitCenter"
         app:layout_constraintBottom_toTopOf="@id/movie_details_movie_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/movie_details_movie_name"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/movie_details_title_margin_top"
         android:textAlignment="center"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="@color/text_dark"
         android:textSize="32sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/movie_details_overview_text_view"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_details_image_view"
         tools:text="Titanic" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/movie_details_overview_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/movie_details_overview_margin"
+        android:layout_marginStart="@dimen/movie_details_overview_margin"
+        android:layout_marginEnd="@dimen/movie_details_overview_margin"
         android:textColor="@color/text_dark"
         android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@id/castRecyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_details_movie_name" />
 
-    <EditText
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/castRecyclerView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toTopOf="@id/movie_details_personal_note_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/movie_details_overview_text_view" />
+
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/movie_details_personal_note_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -58,16 +71,16 @@
         app:layout_constraintBottom_toTopOf="@id/movie_details_submit_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/movie_details_overview_text_view" />
+        app:layout_constraintTop_toBottomOf="@id/castRecyclerView" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/movie_details_submit_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/movie_details_overview_margin"
         android:background="@drawable/rounded_button_background"
         android:text="@string/movie_details_submit_button_text"
         android:textColor="@color/text_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/movie_details_personal_note_text_view" />

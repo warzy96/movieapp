@@ -2,6 +2,7 @@ package fiveagency.internship.food.domain.repository;
 
 import java.util.List;
 
+import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -9,7 +10,7 @@ import io.reactivex.Single;
 
 public interface MovieRepository {
 
-    Flowable<Movie> fetchMovieDetails(int id);
+    Single<Movie> fetchMovieDetails(int id);
 
     Single<List<Movie>> fetchMovies(int page);
 
@@ -28,4 +29,6 @@ public interface MovieRepository {
     Completable insertFavorite(Movie movie);
 
     Completable setPersonalNote(Movie movie);
+
+    Single<List<Cast>> fetchMovieCast(final int movieId);
 }

@@ -6,7 +6,7 @@
     <string name="title_movies_favorites">Favorites</string>
     <string name="title_movies_search">Search</string>
     <string name="search_view_hint_text">Movie title…</string>
-    <string name="movie_details_submit_button_text">Submit</string>
+    <string name="movie_details_submit_button_text">Save</string>
     <string name="facebook_app_id">414962915882652</string>
     <string name="fb_login_protocol_scheme">fb414962915882652</string>
     <string name="server_client_id">932599713517–42r9opct51k9186i3o9njb1hit894sq5.apps.googleusercontent.com</string>

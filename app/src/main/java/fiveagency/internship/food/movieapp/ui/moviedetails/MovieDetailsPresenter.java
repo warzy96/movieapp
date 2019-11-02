@@ -2,14 +2,19 @@ package fiveagency.internship.food.movieapp.ui.moviedetails;
 
 import javax.inject.Inject;
 
+import fiveagency.internship.food.domain.interactor.GetMovieCastUseCase;
 import fiveagency.internship.food.domain.interactor.GetMovieDetailsUseCase;
 import fiveagency.internship.food.domain.interactor.SavePersonalNoteUseCase;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
+import io.reactivex.Single;
 
 public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContract.View> implements MovieDetailsContract.Presenter {
 
     @Inject
     GetMovieDetailsUseCase getMovieDetailsUseCase;
+
+    @Inject
+    GetMovieCastUseCase getMovieCastUseCase;
 
     @Inject
     MovieDetailsViewModelMapper movieDetailsViewModelMapper;
@@ -19,12 +24,15 @@ public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContr
 
     @Override
     public void start(final int id) {
-        compositeDisposable.add(getMovieDetailsUseCase.execute(id)
-                                                      .map(movieDetailsViewModelMapper::mapMovieDetailsViewModel)
-                                                      .subscribeOn(backgroundScheduler)
-                                                      .observeOn(mainThreadScheduler)
-                                                      .subscribe(movieDetailsViewModel -> view.render(movieDetailsViewModel),
-                                                                 throwable -> loggerImpl.log(throwable)));
+        compositeDisposable.add(
+                Single.zip(
+                        getMovieDetailsUseCase.execute(id),
+                        getMovieCastUseCase.execute(id),
+                        (movie, cast) -> movieDetailsViewModelMapper.mapMovieDetailsViewModel(movie, cast)
+                )
+                      .subscribeOn(backgroundScheduler)
+                      .observeOn(mainThreadScheduler)
+                      .subscribe(movieDetailsViewModel -> view.render(movieDetailsViewModel), throwable -> loggerImpl.log(throwable)));
     }
 
     @Override

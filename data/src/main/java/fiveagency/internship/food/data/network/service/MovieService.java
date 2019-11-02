@@ -1,5 +1,6 @@
 package fiveagency.internship.food.data.network.service;
 
+import fiveagency.internship.food.data.network.model.ApiCredits;
 import fiveagency.internship.food.data.network.model.ApiMovie;
 import fiveagency.internship.food.data.network.model.ApiMoviesList;
 import io.reactivex.Single;
@@ -17,6 +18,9 @@ public interface MovieService {
 
     @GET("3/movie/{id}")
     Single<ApiMovie> movieDetailsEntity(@Path("id") int id, @Query("api_key") String apiKey, @Query("language") String language);
+
+    @GET("3/movie/{id}/credits")
+    Single<ApiCredits> movieCreditsEntity(@Path("id") int id, @Query("api_key") String apiKey);
 
     @GET("3/search/movie")
     Single<ApiMoviesList> searchMovieEntities(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String title);

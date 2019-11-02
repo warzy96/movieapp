@@ -5,6 +5,7 @@ import java.util.List;
 import fiveagency.internship.food.data.network.ApiConstants;
 import fiveagency.internship.food.data.network.mappers.MovieMapper;
 import fiveagency.internship.food.data.network.service.MovieService;
+import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
@@ -22,6 +23,11 @@ public final class MovieClient {
     public Single<Movie> getMovieDetails(final int movieId) {
         return movieService.movieDetailsEntity(movieId, ApiConstants.API_KEY, ApiConstants.LANGUAGE_EN_US)
                            .map(movieMapper::mapMovie);
+    }
+
+    public Single<List<Cast>> getMovieCast(final int movieId) {
+        return movieService.movieCreditsEntity(movieId, ApiConstants.API_KEY)
+                           .map(credits -> movieMapper.mapCast(credits.getCast()));
     }
 
     public Single<List<Movie>> getMovies(final int page) {
