@@ -28,6 +28,9 @@ allprojects {
     }
 
     project.ext {
+        firestoreVersion = "21.3.0"
+        firebaseAuthVersion = "19.1.0"
+        youtubePlayerVersion = "10.0.5"
         firebaseUIAuth = "4.3.1"
         playServicesVersion = "17.0.0"
         facebookLoginVersion = "5.5.2"
