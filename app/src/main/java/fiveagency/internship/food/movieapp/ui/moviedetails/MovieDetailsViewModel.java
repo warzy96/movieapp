@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import fiveagency.internship.food.domain.model.Cast;
+import fiveagency.internship.food.domain.model.Rating;
 
 public final class MovieDetailsViewModel {
 
@@ -15,9 +16,15 @@ public final class MovieDetailsViewModel {
     public final String imageSource;
     public final String personalNote;
     public final List<Cast> castList;
+    public final float tmdbRating;
+    public final String backdropPath;
+    public final boolean isFavorite;
+    public final String imdbId;
+    public final List<Rating> ratings;
 
     public MovieDetailsViewModel(final int id, final String title, final String overview, final boolean isAdult, final String releaseDate, final String imageSource,
-                                 final String personalNote, final List<Cast> castList) {
+                                 final String personalNote, final List<Cast> castList, final float tmdbRating, final String backdropPath, final boolean isFavorite,
+                                 final String imdbId, final List<Rating> ratings) {
         this.id = id;
         this.title = title;
         this.overview = overview;
@@ -26,10 +33,16 @@ public final class MovieDetailsViewModel {
         this.imageSource = imageSource;
         this.personalNote = personalNote;
         this.castList = castList;
+        this.tmdbRating = tmdbRating;
+        this.backdropPath = backdropPath;
+        this.isFavorite = isFavorite;
+        this.ratings = ratings;
+        this.imdbId = imdbId;
     }
 
     public MovieDetailsViewModel withPersonalNote(final String personalNote) {
-        return new MovieDetailsViewModel(this.id, this.title, this.overview, this.isAdult, this.releaseDate, this.imageSource, personalNote, this.castList);
+        return new MovieDetailsViewModel(this.id, this.title, this.overview, this.isAdult, this.releaseDate, this.imageSource, personalNote, this.castList, this.tmdbRating,
+                                         this.backdropPath, this.isFavorite, this.imdbId, this.ratings);
     }
 
     @Override
@@ -43,17 +56,19 @@ public final class MovieDetailsViewModel {
         final MovieDetailsViewModel that = (MovieDetailsViewModel) o;
         return id == that.id &&
                 isAdult == that.isAdult &&
+                Float.compare(that.tmdbRating, tmdbRating) == 0 &&
                 Objects.equals(title, that.title) &&
                 Objects.equals(overview, that.overview) &&
                 Objects.equals(releaseDate, that.releaseDate) &&
                 Objects.equals(imageSource, that.imageSource) &&
-                Objects.equals(personalNote, that.personalNote);
+                Objects.equals(personalNote, that.personalNote) &&
+                Objects.equals(castList, that.castList) &&
+                Objects.equals(backdropPath, that.backdropPath);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(id, title, overview, isAdult, releaseDate, imageSource, personalNote);
+        return Objects.hash(id, title, overview, isAdult, releaseDate, imageSource, personalNote, castList, tmdbRating, backdropPath);
     }
 
     @Override
@@ -66,6 +81,9 @@ public final class MovieDetailsViewModel {
                 ", releaseDate='" + releaseDate + '\'' +
                 ", imageSource='" + imageSource + '\'' +
                 ", personalNote='" + personalNote + '\'' +
+                ", castList=" + castList +
+                ", tmdbRating=" + tmdbRating +
+                ", backdropPath='" + backdropPath + '\'' +
                 '}';
     }
 }

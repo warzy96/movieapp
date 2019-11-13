@@ -8,7 +8,7 @@ import fiveagency.internship.food.domain.model.Movie;
 @Entity(tableName = "movie")
 public final class DbMovie {
 
-    public static final DbMovie EMPTY = new DbMovie(0, "", false, "", "", "", "");
+    public static final DbMovie EMPTY = new DbMovie(0, "", false, "", "", "", "", 0f, "");
 
     @PrimaryKey
     private int id;
@@ -18,9 +18,11 @@ public final class DbMovie {
     private String releaseDate;
     private String imageSource;
     private String personalNote;
+    private float tmdbVote;
+    private String backdropSource;
 
     public DbMovie(final int id, final String title, final boolean isAdult, final String overview, final String releaseDate, final String imageSource,
-                   final String personalNote) {
+                   final String personalNote, final float tmdbVote, final String backdropSource) {
         this.id = id;
         this.title = title;
         this.isAdult = isAdult;
@@ -28,14 +30,17 @@ public final class DbMovie {
         this.releaseDate = releaseDate;
         this.imageSource = imageSource;
         this.personalNote = personalNote;
+        this.tmdbVote = tmdbVote;
+        this.backdropSource = backdropSource;
     }
 
     public DbMovie(final ApiMovie apiMovie) {
-        this(apiMovie.id, apiMovie.title, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate, apiMovie.imageSource, EMPTY.personalNote);
+        this(apiMovie.id, apiMovie.title, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate, apiMovie.imageSource, EMPTY.personalNote, apiMovie.tmdbRating,
+             apiMovie.backdropSource);
     }
 
     public DbMovie(final Movie movie) {
-        this(movie.id, movie.title, movie.isAdult, movie.overview, movie.releaseDate, movie.imageSource, movie.personalNote);
+        this(movie.id, movie.title, movie.isAdult, movie.overview, movie.releaseDate, movie.imageSource, movie.personalNote, movie.tmdbVote, movie.backdropSource);
     }
 
     public int getId() {
@@ -92,5 +97,21 @@ public final class DbMovie {
 
     public void setPersonalNote(final String personalNote) {
         this.personalNote = personalNote;
+    }
+
+    public float getTmdbVote() {
+        return tmdbVote;
+    }
+
+    public String getBackdropSource() {
+        return backdropSource;
+    }
+
+    public void setTmdbVote(final float tmdbVote) {
+        this.tmdbVote = tmdbVote;
+    }
+
+    public void setBackdropSource(final String backdropSource) {
+        this.backdropSource = backdropSource;
     }
 }

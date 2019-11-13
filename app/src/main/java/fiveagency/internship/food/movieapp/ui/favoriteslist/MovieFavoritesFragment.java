@@ -5,13 +5,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import javax.inject.Inject;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import butterknife.BindView;
@@ -25,6 +27,7 @@ import io.reactivex.disposables.CompositeDisposable;
 public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesContract.Presenter> implements MovieFavoritesContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "MovieFavoritesFragment";
+    private static final int SPAN_COUNT = 2;
 
     @Inject
     MovieFavoritesAdapter movieFavoritesAdapter;
@@ -37,6 +40,9 @@ public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesCon
 
     @BindView(R.id.movies_list_search_text)
     EditText searchEditText;
+
+    @BindView(R.id.background_image)
+    AppCompatImageView backgroundImage;
 
     @LayoutRes
     private static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
@@ -75,6 +81,9 @@ public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesCon
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         initSwipeRefreshLayout();
+
+        backgroundImage.setScaleType(ImageView.ScaleType.FIT_END);
+        backgroundImage.setImageResource(R.drawable.oscar);
         searchEditText.setVisibility(View.GONE);
     }
 
@@ -97,7 +106,7 @@ public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesCon
     }
 
     private void initRecyclerView() {
-        moviesListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        moviesListRecyclerView.setLayoutManager(new GridLayoutManager(getContext(), SPAN_COUNT));
         moviesListRecyclerView.setAdapter(movieFavoritesAdapter);
     }
 

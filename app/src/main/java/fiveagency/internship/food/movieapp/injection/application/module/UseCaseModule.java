@@ -7,6 +7,7 @@ import dagger.Provides;
 import fiveagency.internship.food.domain.interactor.GetFavoritesUseCase;
 import fiveagency.internship.food.domain.interactor.GetFlowableMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.GetMovieCastUseCase;
+import fiveagency.internship.food.domain.interactor.GetMovieRatingsUseCase;
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.GetSearchMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.InsertFavoriteFromSearchUseCase;
@@ -77,5 +78,11 @@ public final class UseCaseModule {
     @Singleton
     GetMovieCastUseCase provideGetMovieCastUseCase(final MovieRepository movieRepository) {
         return new GetMovieCastUseCase(movieRepository);
+    }
+
+    @Provides
+    @Singleton
+    GetMovieRatingsUseCase provideGetMovieRatingsUseCase(final MovieRepository movieRepository) {
+        return new GetMovieRatingsUseCase(movieRepository);
     }
 }

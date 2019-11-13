@@ -19,7 +19,9 @@ public final class MovieModelMapper {
                            apiMovie.overview == null ? DbMovie.EMPTY.getOverview() : apiMovie.overview,
                            apiMovie.releaseDate == null ? DbMovie.EMPTY.getReleaseDate() : apiMovie.releaseDate,
                            apiMovie.imageSource == null ? DbMovie.EMPTY.getImageSource() : apiMovie.imageSource,
-                           Movie.EMPTY.personalNote);
+                           Movie.EMPTY.personalNote,
+                           apiMovie.tmdbRating,
+                           apiMovie.backdropSource == null ? DbMovie.EMPTY.getBackdropSource() : apiMovie.backdropSource);
     }
 
     public List<DbMovie> mapMovieModels(final List<Movie> movies) {
@@ -40,7 +42,11 @@ public final class MovieModelMapper {
                                  dbMovie.getReleaseDate(),
                                  dbMovie.getImageSource(),
                                  false,
-                                 dbMovie.getPersonalNote()));
+                                 dbMovie.getPersonalNote(),
+                                 dbMovie.getTmdbVote(),
+                                 dbMovie.getBackdropSource(),
+                                 Movie.EMPTY.imdbId,
+                                 Movie.EMPTY.rating));
         }
         return movies;
     }
@@ -55,7 +61,11 @@ public final class MovieModelMapper {
                                  dbMovie.getReleaseDate(),
                                  dbMovie.getImageSource(),
                                  true,
-                                 dbMovie.getPersonalNote()));
+                                 dbMovie.getPersonalNote(),
+                                 dbMovie.getTmdbVote(),
+                                 dbMovie.getBackdropSource(),
+                                 Movie.EMPTY.imdbId,
+                                 Movie.EMPTY.rating));
         }
         return movies;
     }
@@ -66,7 +76,9 @@ public final class MovieModelMapper {
 
     public Movie mapMovie(final DbMovie dbMovie) {
         return new Movie(dbMovie.getTitle(), dbMovie.getId(), dbMovie.isAdult(), dbMovie.getOverview(), dbMovie.getReleaseDate(), dbMovie.getImageSource(), false,
-                         dbMovie.getPersonalNote());
+                         dbMovie.getPersonalNote(), dbMovie.getTmdbVote(), dbMovie.getBackdropSource(),
+                         Movie.EMPTY.imdbId,
+                         Movie.EMPTY.rating);
     }
 
     public DbMovie mapMovieToMovieModel(final Movie movie) {

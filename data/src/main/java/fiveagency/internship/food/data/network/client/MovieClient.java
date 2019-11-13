@@ -5,8 +5,10 @@ import java.util.List;
 import fiveagency.internship.food.data.network.ApiConstants;
 import fiveagency.internship.food.data.network.mappers.MovieMapper;
 import fiveagency.internship.food.data.network.service.MovieService;
+import fiveagency.internship.food.data.network.service.OmdbService;
 import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
+import fiveagency.internship.food.domain.model.Rating;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
@@ -14,10 +16,12 @@ public final class MovieClient {
 
     private final MovieService movieService;
     private final MovieMapper movieMapper;
+    private final OmdbService omdbService;
 
-    public MovieClient(final MovieService movieService, final MovieMapper movieMapper) {
+    public MovieClient(final MovieService movieService, final MovieMapper movieMapper, final OmdbService omdbService) {
         this.movieService = movieService;
         this.movieMapper = movieMapper;
+        this.omdbService = omdbService;
     }
 
     public Single<Movie> getMovieDetails(final int movieId) {
@@ -43,5 +47,9 @@ public final class MovieClient {
     public Single<List<Movie>> getMovies(final String title) {
         return movieService.searchMovieEntities(ApiConstants.API_KEY, ApiConstants.LANGUAGE_EN_US, title)
                            .map(movieMapper::mapMovies);
+    }
+
+    public Single<List<Rating>> getMovieRating(final String imdbId) {
+        return omdbService.movieRatingEntity(ApiConstants.OMDB_API_KEY, imdbId).map(movieMapper::mapRatings);
     }
 }
