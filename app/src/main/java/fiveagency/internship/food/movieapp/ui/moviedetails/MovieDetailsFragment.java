@@ -4,6 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -18,9 +23,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import fiveagency.internship.food.domain.model.Rating;
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 import fiveagency.internship.food.movieapp.ui.base.BaseFragment;
+import fiveagency.internship.food.movieapp.ui.movieslist.CheckableFloatingActionButton;
 import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
 
 public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContract.Presenter> implements MovieDetailsContract.View {
@@ -28,11 +35,11 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
     public static final String TAG = "MovieDetailsFragment";
     private static final String KEY_MOVIE_ID = "key_movie_id";
 
-    @BindView(R.id.movie_details_movie_name)
-    AppCompatTextView movieDetailsMovieName;
-
     @BindView(R.id.movie_details_overview_text_view)
     AppCompatTextView movieDetailsMovieOverview;
+
+    @BindView(R.id.tmdbRatingText)
+    AppCompatTextView tmdbRatingText;
 
     @BindView(R.id.movie_details_image_view)
     AppCompatImageView movieDetailsPoster;
@@ -46,6 +53,17 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
     @BindView(R.id.castRecyclerView)
     RecyclerView castRecyclerView;
 
+    @BindView(R.id.favoriteFab)
+    CheckableFloatingActionButton favoriteFloatingActionButton;
+
+    @BindView(R.id.collapsingToolbarLayout)
+    CollapsingToolbarLayout collapsingToolbarLayout;
+
+    @BindView(R.id.imdbRatingText)
+    TextView imdbRatingText;
+
+    @BindView(R.id.rottenTomatoesRatingText)
+    TextView rottenTomatoesRatingText;
     @BindDimen(R.dimen.circular_progressbar_stroke_width)
     float circularProgressbarStrokeWidth;
 
@@ -113,14 +131,38 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
 
     @Override
     public void render(final MovieDetailsViewModel movieDetailsViewModel) {
-        movieDetailsMovieName.setText(movieDetailsViewModel.title);
+        collapsingToolbarLayout.setTitle(movieDetailsViewModel.title);
         movieDetailsMovieOverview.setText(movieDetailsViewModel.overview);
         movieDetailsPersonalNoteEditText.setText(movieDetailsViewModel.personalNote);
-        imageLoader.renderImage(movieDetailsViewModel.imageSource, movieDetailsPoster, circularProgressbarStrokeWidth);
-        movieDetailsSubmitButton.setOnClickListener(view -> {
-            presenter.savePersonalNote(movieDetailsViewModel.withPersonalNote(movieDetailsPersonalNoteEditText.getText().toString()));
-        });
+        imageLoader.renderImage(movieDetailsViewModel.backdropPath, movieDetailsPoster, circularProgressbarStrokeWidth);
+        movieDetailsSubmitButton.setOnClickListener(
+                view -> presenter.savePersonalNote(movieDetailsViewModel.withPersonalNote(movieDetailsPersonalNoteEditText.getText().toString()))
+        );
         movieDetailsCastAdapter.setCast(movieDetailsViewModel.castList);
+        tmdbRatingText.setText(parseRating(movieDetailsViewModel.tmdbRating));
+        favoriteFloatingActionButton.setChecked(movieDetailsViewModel.isFavorite);
+        favoriteFloatingActionButton.setOnCheckedChangeListener(isChecked -> {
+            if (isChecked) {
+                presenter.insertFavorite(movieDetailsViewModel.id);
+            } else {
+                presenter.removeFavorite(movieDetailsViewModel.id);
+            }
+        });
+    }
+
+    @Override
+    public void renderRatings(final List<Rating> ratings) {
+        for (final Rating rating : ratings) {
+            if (rating.getSource().equals(Rating.IMDB_SOURCE)) {
+                imdbRatingText.setText(rating.getValue());
+            } else if (rating.getSource().equals(Rating.ROTTEN_TOMATOES_SOURCE)) {
+                rottenTomatoesRatingText.setText(rating.getValue());
+            }
+        }
+    }
+
+    private String parseRating(final float rating) {
+        return rating + "/10";
     }
 
     @Override

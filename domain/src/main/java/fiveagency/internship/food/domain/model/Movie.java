@@ -1,10 +1,12 @@
 package fiveagency.internship.food.domain.model;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 
 public final class Movie {
 
-    public static final Movie EMPTY = new Movie("", 0, false, "", "", "", false, "");
+    public static final Movie EMPTY = new Movie("", 0, false, "", "", "", false, "", 0f, "", "", Collections.emptyList());
     public final String title;
     public final int id;
     public final boolean isAdult;
@@ -13,9 +15,13 @@ public final class Movie {
     public final String imageSource;
     public final boolean isFavorite;
     public final String personalNote;
+    public final float tmdbVote;
+    public final String backdropSource;
+    public final String imdbId;
+    public final List<Rating> rating;
 
     public Movie(final String title, final int id, final boolean isAdult, final String overview, final String releaseDate, final String imageSource, final boolean isFavorite,
-                 final String personalNote) {
+                 final String personalNote, final float tmdbVote, final String backdropSource, final String imdbId, final List<Rating> rating) {
         this.title = title;
         this.id = id;
         this.isAdult = isAdult;
@@ -24,6 +30,10 @@ public final class Movie {
         this.imageSource = imageSource;
         this.isFavorite = isFavorite;
         this.personalNote = personalNote;
+        this.tmdbVote = tmdbVote;
+        this.backdropSource = backdropSource;
+        this.imdbId = imdbId;
+        this.rating = rating;
     }
 
     @Override
@@ -37,6 +47,9 @@ public final class Movie {
                 ", imageSource='" + imageSource + '\'' +
                 ", isFavorite=" + isFavorite +
                 ", personalNote='" + personalNote + '\'' +
+                ", tmdbVote=" + tmdbVote +
+                ", backdropSource='" + backdropSource + '\'' +
+                ", imdbId='" + imdbId + '\'' +
                 '}';
     }
 
@@ -52,24 +65,33 @@ public final class Movie {
         return id == movie.id &&
                 isAdult == movie.isAdult &&
                 isFavorite == movie.isFavorite &&
-                Objects.equals(title, movie.title) &&
-                Objects.equals(overview, movie.overview) &&
-                Objects.equals(releaseDate, movie.releaseDate) &&
-                Objects.equals(imageSource, movie.imageSource) &&
-                Objects.equals(personalNote, movie.personalNote);
+                Float.compare(movie.tmdbVote, tmdbVote) == 0 &&
+                title.equals(movie.title) &&
+                overview.equals(movie.overview) &&
+                releaseDate.equals(movie.releaseDate) &&
+                imageSource.equals(movie.imageSource) &&
+                personalNote.equals(movie.personalNote) &&
+                backdropSource.equals(movie.backdropSource) &&
+                imdbId.equals(movie.imdbId);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(title, id, isAdult, overview, releaseDate, imageSource, isFavorite, personalNote);
+        return Objects.hash(title, id, isAdult, overview, releaseDate, imageSource, isFavorite, personalNote, tmdbVote, backdropSource, imdbId);
     }
 
     public Movie withIsFavorite(final boolean isFavorite) {
-        return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, isFavorite, this.personalNote);
+        return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, isFavorite, this.personalNote, this.tmdbVote, this.backdropSource,
+                         this.imdbId, this.rating);
     }
 
     public Movie withPersonalNote(final String personalNote) {
-        return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, this.isFavorite, personalNote);
+        return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, this.isFavorite, personalNote, this.tmdbVote, this.backdropSource,
+                         this.imdbId, this.rating);
+    }
+
+    public Movie withRatings(final List<Rating> ratings) {
+        return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, this.isFavorite, personalNote, this.tmdbVote, this.backdropSource,
+                         this.imdbId, ratings);
     }
 }

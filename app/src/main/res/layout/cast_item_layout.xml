@@ -4,36 +4,44 @@
     style="@style/ContentContainer"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/cast_item_background"
-    android:padding="20dp">
+    android:layout_marginBottom="@dimen/common_gutter_size">
 
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/profilePicture"
-        android:layout_width="@dimen/cast_item_profile_picture_size"
-        android:layout_height="@dimen/cast_item_profile_picture_size"
-        android:background="@color/text_light"
-        android:scaleType="centerCrop"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/profilePictureCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/common_smallest_margin"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profilePicture"
+            android:layout_width="@dimen/cast_item_profile_picture_width"
+            android:layout_height="@dimen/cast_item_profile_picture_height"
+            android:background="@drawable/cast_item_background"
+            android:scaleType="centerCrop" />
+    </com.google.android.material.card.MaterialCardView>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/castName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_dark"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profilePicture" />
+        app:layout_constraintTop_toBottomOf="@id/profilePictureCard" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/characterName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/text_dark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/castName" />

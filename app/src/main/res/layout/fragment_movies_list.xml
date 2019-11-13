@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -23,6 +22,16 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:text="titanic" />
 
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/background_image"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/movies_list_background_height"
+        android:scaleType="fitStart"
+        android:src="@drawable/movie_reel"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/movies_list_swipe_refresh_layout"
         android:layout_width="match_parent"
@@ -33,7 +42,8 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/movies_list_recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:clipToPadding="false" />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 

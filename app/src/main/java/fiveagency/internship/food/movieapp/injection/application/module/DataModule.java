@@ -2,6 +2,7 @@ package fiveagency.internship.food.movieapp.injection.application.module;
 
 import android.content.Context;
 
+import javax.inject.Named;
 import javax.inject.Singleton;
 
 import androidx.room.Room;
@@ -16,6 +17,7 @@ import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.data.network.configuration.Urls;
 import fiveagency.internship.food.data.network.mappers.MovieMapper;
 import fiveagency.internship.food.data.network.service.MovieService;
+import fiveagency.internship.food.data.network.service.OmdbService;
 import fiveagency.internship.food.data.repository.MovieRepositoryImpl;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import fiveagency.internship.food.movieapp.injection.application.ForApplication;
@@ -57,6 +59,24 @@ public final class DataModule {
 
     @Provides
     @Singleton
+    @Named("omdbRetrofit")
+    Retrofit provideOmdbRetrofit(final OkHttpClient okHttpClient) {
+        return new Retrofit.Builder()
+                .baseUrl(Urls.OMDB_RETROFIT_BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    OmdbService provideOmdbService(@Named("omdbRetrofit") final Retrofit retrofit) {
+        return retrofit.create(OmdbService.class);
+    }
+
+    @Provides
+    @Singleton
     MovieMapper provideMovieMapper() {
         return new MovieMapper();
     }
@@ -69,8 +89,8 @@ public final class DataModule {
 
     @Provides
     @Singleton
-    MovieClient provideMovieClient(final MovieService movieService, final MovieMapper mapper) {
-        return new MovieClient(movieService, mapper);
+    MovieClient provideMovieClient(final MovieService movieService, final MovieMapper mapper, final OmdbService omdbService) {
+        return new MovieClient(movieService, mapper, omdbService);
     }
 
     @Provides

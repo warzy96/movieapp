@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="movie_details_image_height">200dp</dimen>
+    <dimen name="movie_details_image_height">300dp</dimen>
+    <dimen name="movie_details_image_overlay_height">150dp</dimen>
     <dimen name="movie_details_title_margin_top">20dp</dimen>
     <dimen name="movie_details_title_margin_end">20dp</dimen>
     <dimen name="movie_details_overview_margin">32dp</dimen>
     <dimen name="item_movie_movie_name_margin_end">20dp</dimen>
-    <dimen name="item_movie_margin_bottom">10dp</dimen>
-    <dimen name="item_movie_poster_width">120dp</dimen>
-    <dimen name="item_movie_poster_height">160dp</dimen>
+    <dimen name="item_movie_border_width">16dp</dimen>
+    <dimen name="item_movie_poster_width">220dp</dimen>
+    <dimen name="item_movie_poster_height">320dp</dimen>
     <dimen name="circular_progressbar_stroke_width">10dp</dimen>
     <dimen name="favorite_star_size">30dp</dimen>
     <dimen name="comment_text_size">18sp</dimen>
@@ -16,5 +17,18 @@
     <dimen name="edit_text_padding">16dp</dimen>
     <dimen name="profile_list_item_padding">12dp</dimen>
     <dimen name="profile_list_item_text_size">24sp</dimen>
-    <dimen name="cast_item_profile_picture_size">100dp</dimen>
+    <dimen name="cast_item_profile_picture_width">100dp</dimen>
+    <dimen name="cast_item_profile_picture_height">125dp</dimen>
+    <dimen name="rating_icon_size">24dp</dimen>
+    <dimen name="common_gutter_size">8dp</dimen>
+    <dimen name="common_large_margin_size">32dp</dimen>
+    <dimen name="common_small_margin_size">16dp</dimen>
+    <dimen name="fab_margin_size">24dp</dimen>
+    <dimen name="item_movie_rating_text_size">20sp</dimen>
+    <dimen name="item_movie_star_margin">12dp</dimen>
+    <dimen name="movies_list_background_height">400dp</dimen>
+    <dimen name="item_movie_elevation">4dp</dimen>
+    <dimen name="item_movie_margin">4dp</dimen>
+    <dimen name="star_background_size">40dp</dimen>
+    <dimen name="common_smallest_margin">8dp</dimen>
 </resources>

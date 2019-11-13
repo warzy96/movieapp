@@ -21,4 +21,13 @@ public final class ApiMovie {
 
     @SerializedName("poster_path")
     public String imageSource;
+
+    @SerializedName("vote_average")
+    public float tmdbRating;
+
+    @SerializedName("backdrop_path")
+    public String backdropSource;
+
+    @SerializedName("imdb_id")
+    public String imdbId;
 }

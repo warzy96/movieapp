@@ -7,6 +7,7 @@ import fiveagency.internship.food.data.database.crudder.MovieCrudder;
 import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
+import fiveagency.internship.food.domain.model.Rating;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -24,12 +25,18 @@ public final class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Single<Movie> fetchMovieDetails(final int id) {
-        return Single.zip(movieClient.getMovieDetails(id), movieCrudder.movieExists(id),
-                          (movieDetails, dbMovie) -> {
+        return Single.zip(movieClient.getMovieDetails(id), movieCrudder.movieExists(id), movieCrudder.getAllFavoriteMoviesIds(),
+                          (movieDetails, dbMovie, favorites) -> {
+                              Movie result = movieDetails;
+                              for (final int favorite : favorites) {
+                                  if (favorite == movieDetails.id) {
+                                      result = result.withIsFavorite(true);
+                                  }
+                              }
                               if (dbMovie.isEmpty()) {
-                                  return movieDetails;
+                                  return result;
                               } else {
-                                  return movieDetails.withPersonalNote(dbMovie.get(0).personalNote);
+                                  return result.withPersonalNote(dbMovie.get(0).personalNote);
                               }
                           });
     }
@@ -37,6 +44,11 @@ public final class MovieRepositoryImpl implements MovieRepository {
     @Override
     public Single<List<Cast>> fetchMovieCast(final int movieId) {
         return movieClient.getMovieCast(movieId);
+    }
+
+    @Override
+    public Single<List<Rating>> fetchRatings(final String imdbId) {
+        return movieClient.getMovieRating(imdbId);
     }
 
     @Override

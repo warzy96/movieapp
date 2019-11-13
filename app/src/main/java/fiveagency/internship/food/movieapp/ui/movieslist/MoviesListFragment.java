@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -23,6 +24,7 @@ import fiveagency.internship.food.movieapp.ui.base.BaseFragment;
 public final class MoviesListFragment extends BaseFragment<MoviesListContract.Presenter> implements MoviesListContract.View, SwipeRefreshLayout.OnRefreshListener {
 
     public static final String TAG = "MoviesListFragment";
+    private static int SPAN_COUNT = 2;
 
     @Inject
     MoviesListContract.Presenter presenter;
@@ -106,7 +108,7 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
     }
 
     private void initRecyclerView() {
-        final LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
+        final LinearLayoutManager layoutManager = new GridLayoutManager(getContext(), SPAN_COUNT);
         moviesListRecyclerView.setLayoutManager(layoutManager);
         moviesListRecyclerView.setAdapter(moviesListAdapter);
         moviesListRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {

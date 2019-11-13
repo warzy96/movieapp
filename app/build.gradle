@@ -44,7 +44,7 @@ dependencies {
     implementation "com.squareup.okhttp3:logging-interceptor:$project.ext.okhttpVersion"
     implementation "com.squareup.retrofit2:retrofit:$project.ext.retrofitVersion"
     implementation 'com.google.firebase:firebase-auth:19.1.0'
-    implementation 'com.google.firebase:firebase-firestore:21.2.0'
+    implementation 'com.google.firebase:firebase-firestore:21.2.1'
     implementation "com.google.code.gson:gson:$project.ext.gsonVersion"
     implementation "com.squareup.okhttp3:okhttp:$project.ext.okhttpVersion"
     implementation "com.squareup.retrofit2:converter-gson:$project.ext.retrofitVersion"

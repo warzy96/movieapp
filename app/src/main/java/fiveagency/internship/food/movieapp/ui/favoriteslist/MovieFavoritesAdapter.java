@@ -5,7 +5,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -68,8 +67,6 @@ public final class MovieFavoritesAdapter extends RecyclerView.Adapter<MovieFavor
 
     static class MovieFavoriteViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.movie_name)
-        TextView movieItemTitleView;
         @BindView(R.id.item_movie_poster_image)
         ImageView movieItemPosterView;
         private ImageLoader imageLoader;
@@ -87,7 +84,6 @@ public final class MovieFavoritesAdapter extends RecyclerView.Adapter<MovieFavor
         void render(final MovieViewModel movieViewModel, final MoviesListAdapter.MovieOnClickListener movieOnClickListener,
                     final MoviesListAdapter.FavoriteOnChangeListener favoriteOnChangeListener) {
             starCheckBox.setOnCheckedChangeListener(null);
-            movieItemTitleView.setText(movieViewModel.title);
             imageLoader.renderImage(movieViewModel.imageSource, movieItemPosterView, circularProgressbarStrokeWidth);
             itemView.setOnClickListener(view -> movieOnClickListener.onClick(movieViewModel.id));
             if (movieViewModel.isFavorite) {
