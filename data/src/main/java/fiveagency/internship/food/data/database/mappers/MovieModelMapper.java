@@ -46,7 +46,7 @@ public final class MovieModelMapper {
                                  dbMovie.getTmdbVote(),
                                  dbMovie.getBackdropSource(),
                                  Movie.EMPTY.imdbId,
-                                 Movie.EMPTY.rating));
+                                 Movie.EMPTY.videos));
         }
         return movies;
     }
@@ -65,7 +65,7 @@ public final class MovieModelMapper {
                                  dbMovie.getTmdbVote(),
                                  dbMovie.getBackdropSource(),
                                  Movie.EMPTY.imdbId,
-                                 Movie.EMPTY.rating));
+                                 Movie.EMPTY.videos));
         }
         return movies;
     }
@@ -78,7 +78,7 @@ public final class MovieModelMapper {
         return new Movie(dbMovie.getTitle(), dbMovie.getId(), dbMovie.isAdult(), dbMovie.getOverview(), dbMovie.getReleaseDate(), dbMovie.getImageSource(), false,
                          dbMovie.getPersonalNote(), dbMovie.getTmdbVote(), dbMovie.getBackdropSource(),
                          Movie.EMPTY.imdbId,
-                         Movie.EMPTY.rating);
+                         Movie.EMPTY.videos);
     }
 
     public DbMovie mapMovieToMovieModel(final Movie movie) {

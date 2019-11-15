@@ -10,9 +10,12 @@ import fiveagency.internship.food.data.network.model.ApiMovie;
 import fiveagency.internship.food.data.network.model.ApiMoviesList;
 import fiveagency.internship.food.data.network.model.ApiRating;
 import fiveagency.internship.food.data.network.model.ApiRatings;
+import fiveagency.internship.food.data.network.model.ApiVideo;
+import fiveagency.internship.food.data.network.model.ApiVideos;
 import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.model.Rating;
+import fiveagency.internship.food.domain.model.Video;
 
 public final class MovieMapper {
 
@@ -31,7 +34,7 @@ public final class MovieMapper {
                          apiMovie.tmdbRating,
                          apiMovie.backdropSource == null ? Movie.EMPTY.backdropSource : parseImageSourceUrl(apiMovie.backdropSource),
                          apiMovie.imdbId == null ? Movie.EMPTY.imdbId : apiMovie.imdbId,
-                         Movie.EMPTY.rating);
+                         Movie.EMPTY.videos);
     }
 
     public List<Movie> mapMovies(final ApiMoviesList apiMoviesList) {
@@ -70,6 +73,20 @@ public final class MovieMapper {
             ratings.add(mapRating(apiRating));
         }
         return ratings;
+    }
+
+    public List<Video> mapVideos(final ApiVideos apiVideos) {
+        List<Video> videos = new ArrayList<>();
+        for (final ApiVideo apiVideo : apiVideos.getVideos()) {
+            videos.add(mapVideo(apiVideo));
+        }
+        return videos;
+    }
+
+    private Video mapVideo(final ApiVideo apiVideo) {
+        return new Video(apiVideo.getKey() == null ? Video.EMPTY.getKey() : apiVideo.getKey(),
+                         apiVideo.getSource() == null ? Video.EMPTY.getSource() : apiVideo.getSource(),
+                         apiVideo.getType() == null ? Video.EMPTY.getType() : apiVideo.getType());
     }
 
     private String parseImageSourceUrl(final String imageSource) {

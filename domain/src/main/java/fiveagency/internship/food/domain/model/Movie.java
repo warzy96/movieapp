@@ -1,12 +1,12 @@
 package fiveagency.internship.food.domain.model;
 
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 public final class Movie {
 
-    public static final Movie EMPTY = new Movie("", 0, false, "", "", "", false, "", 0f, "", "", Collections.emptyList());
+    public static final Movie EMPTY = new Movie("", 0, false, "", "", "", false, "", 0f, "", "", new ArrayList<>());
     public final String title;
     public final int id;
     public final boolean isAdult;
@@ -18,10 +18,10 @@ public final class Movie {
     public final float tmdbVote;
     public final String backdropSource;
     public final String imdbId;
-    public final List<Rating> rating;
+    public final List<Video> videos;
 
     public Movie(final String title, final int id, final boolean isAdult, final String overview, final String releaseDate, final String imageSource, final boolean isFavorite,
-                 final String personalNote, final float tmdbVote, final String backdropSource, final String imdbId, final List<Rating> rating) {
+                 final String personalNote, final float tmdbVote, final String backdropSource, final String imdbId, final List<Video> videos) {
         this.title = title;
         this.id = id;
         this.isAdult = isAdult;
@@ -33,7 +33,7 @@ public final class Movie {
         this.tmdbVote = tmdbVote;
         this.backdropSource = backdropSource;
         this.imdbId = imdbId;
-        this.rating = rating;
+        this.videos = videos;
     }
 
     @Override
@@ -82,16 +82,16 @@ public final class Movie {
 
     public Movie withIsFavorite(final boolean isFavorite) {
         return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, isFavorite, this.personalNote, this.tmdbVote, this.backdropSource,
-                         this.imdbId, this.rating);
+                         this.imdbId, this.videos);
     }
 
     public Movie withPersonalNote(final String personalNote) {
         return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, this.isFavorite, personalNote, this.tmdbVote, this.backdropSource,
-                         this.imdbId, this.rating);
+                         this.imdbId, this.videos);
     }
 
-    public Movie withRatings(final List<Rating> ratings) {
+    public Movie withVideos(final List<Video> videos) {
         return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, this.isFavorite, personalNote, this.tmdbVote, this.backdropSource,
-                         this.imdbId, ratings);
+                         this.imdbId, videos);
     }
 }

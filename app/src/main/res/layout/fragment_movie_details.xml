@@ -51,7 +51,7 @@
         android:id="@+id/favoriteFab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:backgroundTint="@color/text_light"
+        android:backgroundTint="@color/tabBackgroundColor"
         android:clickable="true"
         android:focusable="true"
         android:src="@drawable/star"
@@ -195,7 +195,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/common_smallest_margin"
-                app:layout_constraintBottom_toTopOf="@id/movie_details_personal_note_text_view"
+                android:nestedScrollingEnabled="false"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/movie_details_overview_text_view" />
@@ -211,15 +211,15 @@
                 android:textColor="@color/text_dark"
                 android:textColorHint="@color/hintText"
                 android:textSize="@dimen/comment_text_size"
-                app:layout_constraintBottom_toTopOf="@id/movie_details_submit_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/castRecyclerView" />
+                app:layout_constraintTop_toBottomOf="@id/youtubePlayer" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/movie_details_submit_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_smallest_margin"
                 android:layout_marginBottom="@dimen/common_small_margin_size"
                 android:background="@drawable/rounded_button_background"
                 android:text="@string/movie_details_submit_button_text"
@@ -229,6 +229,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/movie_details_personal_note_text_view" />
 
+            <com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView
+                android:id="@+id/youtubePlayer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_smallest_margin"
+                app:layout_constraintBottom_toTopOf="@id/movie_details_personal_note_text_view"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/castRecyclerView"
+                app:showFullScreenButton="false" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 

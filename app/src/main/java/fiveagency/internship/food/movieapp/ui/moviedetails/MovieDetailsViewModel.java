@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import fiveagency.internship.food.domain.model.Cast;
-import fiveagency.internship.food.domain.model.Rating;
+import fiveagency.internship.food.domain.model.Video;
 
 public final class MovieDetailsViewModel {
 
@@ -20,11 +20,11 @@ public final class MovieDetailsViewModel {
     public final String backdropPath;
     public final boolean isFavorite;
     public final String imdbId;
-    public final List<Rating> ratings;
+    public final List<Video> videos;
 
     public MovieDetailsViewModel(final int id, final String title, final String overview, final boolean isAdult, final String releaseDate, final String imageSource,
                                  final String personalNote, final List<Cast> castList, final float tmdbRating, final String backdropPath, final boolean isFavorite,
-                                 final String imdbId, final List<Rating> ratings) {
+                                 final String imdbId, final List<Video> videos) {
         this.id = id;
         this.title = title;
         this.overview = overview;
@@ -36,13 +36,13 @@ public final class MovieDetailsViewModel {
         this.tmdbRating = tmdbRating;
         this.backdropPath = backdropPath;
         this.isFavorite = isFavorite;
-        this.ratings = ratings;
+        this.videos = videos;
         this.imdbId = imdbId;
     }
 
     public MovieDetailsViewModel withPersonalNote(final String personalNote) {
         return new MovieDetailsViewModel(this.id, this.title, this.overview, this.isAdult, this.releaseDate, this.imageSource, personalNote, this.castList, this.tmdbRating,
-                                         this.backdropPath, this.isFavorite, this.imdbId, this.ratings);
+                                         this.backdropPath, this.isFavorite, this.imdbId, this.videos);
     }
 
     @Override

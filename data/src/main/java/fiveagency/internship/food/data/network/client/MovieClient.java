@@ -9,6 +9,7 @@ import fiveagency.internship.food.data.network.service.OmdbService;
 import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.model.Rating;
+import fiveagency.internship.food.domain.model.Video;
 import io.reactivex.Flowable;
 import io.reactivex.Single;
 
@@ -51,5 +52,9 @@ public final class MovieClient {
 
     public Single<List<Rating>> getMovieRating(final String imdbId) {
         return omdbService.movieRatingEntity(ApiConstants.OMDB_API_KEY, imdbId).map(movieMapper::mapRatings);
+    }
+
+    public Single<List<Video>> getMovieVideos(final int movieId) {
+        return movieService.movieVideosEntity(movieId, ApiConstants.API_KEY, ApiConstants.LANGUAGE_EN_US).map(movieMapper::mapVideos);
     }
 }
