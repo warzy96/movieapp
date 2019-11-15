@@ -3,6 +3,7 @@ package fiveagency.internship.food.data.network.service;
 import fiveagency.internship.food.data.network.model.ApiCredits;
 import fiveagency.internship.food.data.network.model.ApiMovie;
 import fiveagency.internship.food.data.network.model.ApiMoviesList;
+import fiveagency.internship.food.data.network.model.ApiVideos;
 import io.reactivex.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
@@ -24,4 +25,7 @@ public interface MovieService {
 
     @GET("3/search/movie")
     Single<ApiMoviesList> searchMovieEntities(@Query("api_key") String apiKey, @Query("language") String language, @Query("query") String title);
+
+    @GET("3/movie/{id}/videos")
+    Single<ApiVideos> movieVideosEntity(@Path("id") int id, @Query("api_key") String apiKey, @Query("language") String language);
 }

@@ -1,5 +1,7 @@
 package fiveagency.internship.food.data.repository;
 
+import com.annimon.stream.Stream;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -8,6 +10,7 @@ import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.model.Rating;
+import fiveagency.internship.food.domain.model.Video;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -25,9 +28,10 @@ public final class MovieRepositoryImpl implements MovieRepository {
 
     @Override
     public Single<Movie> fetchMovieDetails(final int id) {
-        return Single.zip(movieClient.getMovieDetails(id), movieCrudder.movieExists(id), movieCrudder.getAllFavoriteMoviesIds(),
-                          (movieDetails, dbMovie, favorites) -> {
-                              Movie result = movieDetails;
+        return Single.zip(movieClient.getMovieDetails(id), movieCrudder.movieExists(id), movieCrudder.getAllFavoriteMoviesIds(), movieClient.getMovieVideos(id),
+                          (movieDetails, dbMovie, favorites, videos) -> {
+                              List<Video> filteredVideos = filterVideos(videos);
+                              Movie result = movieDetails.withVideos(filteredVideos);
                               for (final int favorite : favorites) {
                                   if (favorite == movieDetails.id) {
                                       result = result.withIsFavorite(true);
@@ -39,6 +43,10 @@ public final class MovieRepositoryImpl implements MovieRepository {
                                   return result.withPersonalNote(dbMovie.get(0).personalNote);
                               }
                           });
+    }
+
+    private List<Video> filterVideos(final List<Video> videos) {
+        return Stream.of(videos).filter(video -> video.getSource().equals(Video.SOURCE_YOUTUBE)).toList();
     }
 
     @Override

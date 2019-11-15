@@ -7,6 +7,11 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener;
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTubePlayerView;
+
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -61,6 +66,9 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
 
     @BindView(R.id.imdbRatingText)
     TextView imdbRatingText;
+
+    @BindView(R.id.youtubePlayer)
+    YouTubePlayerView youtubePlayer;
 
     @BindView(R.id.rottenTomatoesRatingText)
     TextView rottenTomatoesRatingText;
@@ -148,6 +156,19 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
                 presenter.removeFavorite(movieDetailsViewModel.id);
             }
         });
+        getLifecycle().addObserver(youtubePlayer);
+        if (!movieDetailsViewModel.videos.isEmpty()) {
+            youtubePlayer.addYouTubePlayerListener(new AbstractYouTubePlayerListener() {
+
+                @Override
+                public void onReady(@NotNull final YouTubePlayer thisYoutubePlayer) {
+                    thisYoutubePlayer.loadVideo(movieDetailsViewModel.videos.get(0).getKey(), 0);
+                    thisYoutubePlayer.pause();
+                }
+            });
+        } else {
+            youtubePlayer.setEnabled(false);
+        }
     }
 
     @Override

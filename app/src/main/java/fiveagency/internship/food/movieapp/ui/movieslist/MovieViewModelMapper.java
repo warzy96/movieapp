@@ -24,7 +24,7 @@ public final class MovieViewModelMapper {
     public List<Movie> mapMovies(final List<MovieViewModel> movieViewModels) {
         return Stream.of(movieViewModels).map(
                 movie -> new Movie(movie.title, movie.id, movie.isAdult, movie.overview, movie.releaseDate, movie.imageSource, movie.isFavorite, Movie.EMPTY.personalNote,
-                                   Movie.EMPTY.tmdbVote, Movie.EMPTY.backdropSource, Movie.EMPTY.imdbId, Movie.EMPTY.rating))
+                                   Movie.EMPTY.tmdbVote, Movie.EMPTY.backdropSource, Movie.EMPTY.imdbId, Movie.EMPTY.videos))
                      .toList();
     }
 
@@ -40,6 +40,6 @@ public final class MovieViewModelMapper {
                          Movie.EMPTY.tmdbVote,
                          Movie.EMPTY.backdropSource,
                          Movie.EMPTY.imdbId,
-                         Movie.EMPTY.rating);
+                         Movie.EMPTY.videos);
     }
 }
