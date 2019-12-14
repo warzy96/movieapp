@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/default_background_color"
     android:clickable="true"
+    android:fitsSystemWindows="true"
     android:focusable="true">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -13,23 +14,28 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/common_large_margin_size"
+        android:background="@android:color/transparent"
+        android:fitsSystemWindows="false"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <com.google.android.material.appbar.CollapsingToolbarLayout
             android:id="@+id/collapsingToolbarLayout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
             app:collapsedTitleTextAppearance="@style/CollapsedTitleTextAppearance"
             app:contentScrim="@color/tabBackgroundColor"
             app:expandedTitleMarginStart="30dp"
             app:expandedTitleTextAppearance="@style/ExpandedTitleTextAppearance"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="@android:color/transparent">
 
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/movie_details_image_view"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/movie_details_image_height"
                 android:contentDescription="@string/movie_details_poster_picture_content_description"
+                android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax" />
 
@@ -37,13 +43,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/movie_details_image_overlay_height"
                 android:layout_gravity="bottom"
-                android:background="@drawable/backdrop_image_overlay" />
+                android:background="@drawable/backdrop_image_overlay"
+                android:fitsSystemWindows="true" />
 
             <androidx.appcompat.widget.Toolbar
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
+                android:fitsSystemWindows="false"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <ImageView
+                    android:id="@+id/arrowBack"
+                    android:layout_width="@dimen/arrow_back_size"
+                    android:layout_height="@dimen/arrow_back_size"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_arrow_back_black_24dp" />
+            </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
 

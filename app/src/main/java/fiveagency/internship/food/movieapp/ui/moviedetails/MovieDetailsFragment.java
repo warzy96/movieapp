@@ -1,9 +1,11 @@
 package fiveagency.internship.food.movieapp.ui.moviedetails;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.android.material.appbar.CollapsingToolbarLayout;
@@ -72,6 +74,10 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
 
     @BindView(R.id.rottenTomatoesRatingText)
     TextView rottenTomatoesRatingText;
+
+    @BindView(R.id.arrowBack)
+    ImageView arrowBack;
+
     @BindDimen(R.dimen.circular_progressbar_stroke_width)
     float circularProgressbarStrokeWidth;
 
@@ -120,7 +126,15 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
             throw new IllegalArgumentException("Arguments bundle does not exist.");
         }
 
+        arrowBack.setOnClickListener(back -> presenter.goBack());
         initRecyclerView();
+
+        initCollapsingToolbarTitle();
+    }
+
+    private void initCollapsingToolbarTitle() {
+        collapsingToolbarLayout.setExpandedTitleTypeface(Typeface.create(collapsingToolbarLayout.getExpandedTitleTypeface(), Typeface.BOLD));
+        collapsingToolbarLayout.setCollapsedTitleTypeface(Typeface.create(collapsingToolbarLayout.getCollapsedTitleTypeface(), Typeface.BOLD));
     }
 
     private void initRecyclerView() {

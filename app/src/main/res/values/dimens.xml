@@ -31,4 +31,5 @@
     <dimen name="item_movie_margin">4dp</dimen>
     <dimen name="star_background_size">40dp</dimen>
     <dimen name="common_smallest_margin">8dp</dimen>
+    <dimen name="arrow_back_size">24dp</dimen>
 </resources>

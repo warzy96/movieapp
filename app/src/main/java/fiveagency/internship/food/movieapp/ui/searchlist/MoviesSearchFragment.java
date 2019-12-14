@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import javax.inject.Inject;
 
@@ -31,8 +30,8 @@ public final class MoviesSearchFragment extends BaseFragment<MoviesSearchContrac
     @BindView(R.id.movies_list_swipe_refresh_layout)
     SwipeRefreshLayout swipeRefreshLayout;
 
-    @BindView(R.id.movies_list_search_text)
-    EditText searchEditText;
+    //@BindView(R.id.movies_list_search_text)
+    //EditText searchEditText;
 
     @LayoutRes
     public static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
@@ -73,18 +72,18 @@ public final class MoviesSearchFragment extends BaseFragment<MoviesSearchContrac
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         initSwipeRefreshLayout();
-        presenter.start(searchEditText);
+        //presenter.start(searchEditText);
     }
 
     @Override
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
-        final String query = searchEditText.getText().toString();
+        /*final String query = searchEditText.getText().toString();
         if (query.trim().isEmpty()) {
             swipeRefreshLayout.setRefreshing(false);
         } else {
             presenter.refreshSearch(searchEditText.getText().toString());
-        }
+        }*/
     }
 
     private void initRecyclerView() {

@@ -90,4 +90,8 @@ public final class Router {
     public void exitApp() {
         activity.finish();
     }
+
+    public void goBack() {
+        fragmentManager.popBackStack();
+    }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import javax.inject.Inject;
@@ -37,9 +36,6 @@ public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesCon
 
     @BindView(R.id.movies_list_swipe_refresh_layout)
     public SwipeRefreshLayout swipeRefreshLayout;
-
-    @BindView(R.id.movies_list_search_text)
-    EditText searchEditText;
 
     @BindView(R.id.background_image)
     AppCompatImageView backgroundImage;
@@ -84,7 +80,6 @@ public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesCon
 
         backgroundImage.setScaleType(ImageView.ScaleType.FIT_END);
         backgroundImage.setImageResource(R.drawable.oscar);
-        searchEditText.setVisibility(View.GONE);
     }
 
     @Override
