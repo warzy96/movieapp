@@ -2,6 +2,7 @@ package fiveagency.internship.food.data.network.service
 
 import fiveagency.internship.food.data.Location
 import fiveagency.internship.food.data.network.model.ApiCities
+import fiveagency.internship.food.data.network.model.ApiCity
 import fiveagency.internship.food.data.network.model.ApiCityDetails
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -14,7 +15,7 @@ interface WeatherService {
     fun citySearch(@Query("query") cityName: String): Single<ApiCities>
 
     @GET("location/search/")
-    fun citySearch(@Query("lattlong") location: Location): Single<ApiCities>
+    fun citySearch(@Query("lattlong") location: Location): Single<List<ApiCity>>
 
     @GET("location/{cityId}")
     fun cityDetailsEntity(@Path("cityId") cityId: Int): Single<ApiCityDetails>

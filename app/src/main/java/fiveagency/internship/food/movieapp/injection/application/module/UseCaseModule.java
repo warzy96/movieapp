@@ -4,6 +4,7 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import fiveagency.internship.food.domain.interactor.FetchFiveDayForecastUseCase;
 import fiveagency.internship.food.domain.interactor.GetFavoritesUseCase;
 import fiveagency.internship.food.domain.interactor.GetFlowableMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.GetMovieCastUseCase;
@@ -16,6 +17,7 @@ import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.SaveMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.SavePersonalNoteUseCase;
 import fiveagency.internship.food.domain.repository.MovieRepository;
+import fiveagency.internship.food.domain.repository.WeatherRepository;
 
 @Module
 public final class UseCaseModule {
@@ -84,5 +86,11 @@ public final class UseCaseModule {
     @Singleton
     GetMovieRatingsUseCase provideGetMovieRatingsUseCase(final MovieRepository movieRepository) {
         return new GetMovieRatingsUseCase(movieRepository);
+    }
+
+    @Provides
+    @Singleton
+    FetchFiveDayForecastUseCase provideFetchFiveDayForecastUseCase(final WeatherRepository weatherRepository) {
+        return new FetchFiveDayForecastUseCase(weatherRepository);
     }
 }
