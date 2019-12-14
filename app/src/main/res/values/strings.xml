@@ -19,4 +19,13 @@
     <string name="bottom_nav_favorites">Favorites</string>
     <string name="bottom_nav_profile">Profile</string>
     <string name="sign_out">Sign Out</string>
+    <string name="movies_list_toolbar_title">Recommend by:</string>
+    <string name="weather_recommendation_menu_title">Weather</string>
+    <string name="favorites_recommendation_menu_title">Favorites</string>
+    <string name="popular_recommendation_menu_title">Popular</string>
+    <string-array name="recommendations">
+        <item>@string/popular_recommendation_menu_title</item>
+        <item>@string/favorites_recommendation_menu_title</item>
+        <item>@string/weather_recommendation_menu_title</item>
+    </string-array>
 </resources>

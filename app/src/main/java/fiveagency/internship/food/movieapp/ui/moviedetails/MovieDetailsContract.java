@@ -19,6 +19,8 @@ public interface MovieDetailsContract {
         void insertFavorite(final int movieId);
 
         void removeFavorite(final int movieId);
+
+        void goBack();
     }
 
     interface View {

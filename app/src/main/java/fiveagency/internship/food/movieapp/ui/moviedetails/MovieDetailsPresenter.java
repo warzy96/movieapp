@@ -81,6 +81,11 @@ public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContr
                                                                 throwable -> loggerImpl.log(throwable)));
     }
 
+    @Override
+    public void goBack() {
+        router.goBack();
+    }
+
     private void fetchRatings(final String imdbId) {
         compositeDisposable.add(
                 getMovieRatingsUseCase.execute(imdbId)

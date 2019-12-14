@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 
 import javax.inject.Inject;
 
@@ -37,9 +36,6 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
 
     @BindView(R.id.movies_list_recycler_view)
     RecyclerView moviesListRecyclerView;
-
-    @BindView(R.id.movies_list_search_text)
-    EditText searchEditText;
 
     @LayoutRes
     public static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
@@ -80,7 +76,6 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         initSwipeRefreshLayout();
-        searchEditText.setVisibility(View.GONE);
     }
 
     @Override
