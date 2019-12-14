@@ -14,12 +14,16 @@ import fiveagency.internship.food.data.database.dao.FavoritesDao;
 import fiveagency.internship.food.data.database.dao.MovieDao;
 import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
 import fiveagency.internship.food.data.network.client.MovieClient;
+import fiveagency.internship.food.data.network.client.WeatherClient;
 import fiveagency.internship.food.data.network.configuration.Urls;
 import fiveagency.internship.food.data.network.mappers.MovieMapper;
 import fiveagency.internship.food.data.network.service.MovieService;
 import fiveagency.internship.food.data.network.service.OmdbService;
+import fiveagency.internship.food.data.network.service.WeatherService;
 import fiveagency.internship.food.data.repository.MovieRepositoryImpl;
+import fiveagency.internship.food.data.repository.WeatherRepositoryImpl;
 import fiveagency.internship.food.domain.repository.MovieRepository;
+import fiveagency.internship.food.domain.repository.WeatherRepository;
 import fiveagency.internship.food.movieapp.injection.application.ForApplication;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -31,6 +35,9 @@ import static fiveagency.internship.food.data.database.MovieDatabase.DB_NAME;
 
 @Module
 public final class DataModule {
+
+    private static final String OMDB_RETROFIT = "omdbRetrofit";
+    private static final String WEATHER_RETROFIT = "weatherRetrofit";
 
     @Provides
     @Singleton
@@ -59,7 +66,7 @@ public final class DataModule {
 
     @Provides
     @Singleton
-    @Named("omdbRetrofit")
+    @Named(OMDB_RETROFIT)
     Retrofit provideOmdbRetrofit(final OkHttpClient okHttpClient) {
         return new Retrofit.Builder()
                 .baseUrl(Urls.OMDB_RETROFIT_BASE_URL)
@@ -71,7 +78,19 @@ public final class DataModule {
 
     @Provides
     @Singleton
-    OmdbService provideOmdbService(@Named("omdbRetrofit") final Retrofit retrofit) {
+    @Named(WEATHER_RETROFIT)
+    Retrofit provideWeatherRetrofit(final OkHttpClient okHttpClient) {
+        return new Retrofit.Builder()
+                .baseUrl(Urls.WEATHER_RETROFIT_BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+    }
+
+    @Provides
+    @Singleton
+    OmdbService provideOmdbService(@Named(OMDB_RETROFIT) final Retrofit retrofit) {
         return retrofit.create(OmdbService.class);
     }
 
@@ -89,8 +108,20 @@ public final class DataModule {
 
     @Provides
     @Singleton
+    WeatherService provideWeatherService(@Named(WEATHER_RETROFIT) final Retrofit retrofit) {
+        return retrofit.create(WeatherService.class);
+    }
+
+    @Provides
+    @Singleton
     MovieClient provideMovieClient(final MovieService movieService, final MovieMapper mapper, final OmdbService omdbService) {
         return new MovieClient(movieService, mapper, omdbService);
+    }
+
+    @Provides
+    @Singleton
+    WeatherClient provideWeatherClient(final WeatherService weatherService) {
+        return new WeatherClient(weatherService);
     }
 
     @Provides
@@ -129,5 +160,11 @@ public final class DataModule {
     @Singleton
     MovieRepository provideMovieRepository(final MovieClient movieClient, final MovieCrudder movieCrudder) {
         return new MovieRepositoryImpl(movieClient, movieCrudder);
+    }
+
+    @Provides
+    @Singleton
+    WeatherRepository provideWeatherRepository(final WeatherClient weatherClient) {
+        return new WeatherRepositoryImpl(weatherClient);
     }
 }

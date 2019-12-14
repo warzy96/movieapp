@@ -9,7 +9,7 @@
     <dimen name="item_movie_border_width">16dp</dimen>
     <dimen name="item_movie_poster_width">220dp</dimen>
     <dimen name="item_movie_poster_height">320dp</dimen>
-    <dimen name="circular_progressbar_stroke_width">10dp</dimen>
+    <dimen name="circular_progressbar_stroke_width">4dp</dimen>
     <dimen name="favorite_star_size">30dp</dimen>
     <dimen name="comment_text_size">18sp</dimen>
     <dimen name="border_stroke_width">2dp</dimen>
@@ -32,4 +32,5 @@
     <dimen name="star_background_size">40dp</dimen>
     <dimen name="common_smallest_margin">8dp</dimen>
     <dimen name="arrow_back_size">24dp</dimen>
+    <dimen name="weather_icon_size">48dp</dimen>
 </resources>

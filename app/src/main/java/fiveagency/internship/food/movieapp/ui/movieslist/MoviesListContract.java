@@ -2,6 +2,8 @@ package fiveagency.internship.food.movieapp.ui.movieslist;
 
 import java.util.List;
 
+import fiveagency.internship.food.domain.model.WeatherModel;
+
 public interface MoviesListContract {
 
     interface Presenter {
@@ -23,10 +25,14 @@ public interface MoviesListContract {
         void getAdditionalMovies(int page);
 
         void onStop();
+
+        void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
     }
 
     interface View {
 
         void render(final MoviesListViewModel moviesListViewModel);
+
+        void renderWeather(WeatherModel fiveDayForecast);
     }
 }

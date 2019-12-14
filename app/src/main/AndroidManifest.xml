@@ -3,6 +3,7 @@
     package="fiveagency.internship.food.movieapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <application
         android:name=".app.MovieApplication"
         android:allowBackup="true"

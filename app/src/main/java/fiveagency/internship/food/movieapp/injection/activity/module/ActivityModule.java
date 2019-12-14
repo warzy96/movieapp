@@ -1,5 +1,6 @@
 package fiveagency.internship.food.movieapp.injection.activity.module;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 
@@ -24,6 +25,13 @@ public final class ActivityModule {
     @ActivityScope
     @ForActivity
     Context provideActivityContext() {
+        return daggerActivity;
+    }
+
+    @Provides
+    @ActivityScope
+    @ForActivity
+    Activity provideActivity() {
         return daggerActivity;
     }
 

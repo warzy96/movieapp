@@ -22,7 +22,7 @@
     <string name="movies_list_toolbar_title">Recommend by:</string>
     <string name="weather_recommendation_menu_title">Weather</string>
     <string name="favorites_recommendation_menu_title">Favorites</string>
-    <string name="popular_recommendation_menu_title">Popular</string>
+    <string name="popular_recommendation_menu_title">Popularity</string>
     <string-array name="recommendations">
         <item>@string/popular_recommendation_menu_title</item>
         <item>@string/favorites_recommendation_menu_title</item>
