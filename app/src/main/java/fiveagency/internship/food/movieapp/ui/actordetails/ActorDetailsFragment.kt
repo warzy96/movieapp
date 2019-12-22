@@ -1,5 +1,6 @@
 package fiveagency.internship.food.movieapp.ui.actordetails
 
+import android.animation.ValueAnimator
 import android.graphics.Typeface
 import android.location.Geocoder
 import android.os.Bundle
@@ -23,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_actor_details.*
 import java.io.IOException
 import javax.inject.Inject
 import kotlin.math.abs
+import kotlin.math.roundToInt
 
 @StringRes
 private const val NO_DATA_TEXT_STRING_RESOURCE = R.string.no_available_data_placeholder
@@ -109,6 +111,35 @@ class ActorDetailsFragment : BaseFragment<ActorDetailsContract.Presenter>(), Act
                 }
             }
             (movieImagesRecyclerView.adapter as? ActorDetailsMovieAdapter)?.setItems(actorMovieCredits)
+
+            val animator = initRevealingMapAnimator(placeOfBirthMapContainer, placeOfBirthMapView.height)
+
+            var isExpanded = false
+            mapIcon.setOnClickListener {
+                if (isExpanded) {
+                    animator.reverse()
+                } else {
+                    animator.start()
+                }
+                isExpanded = !isExpanded
+            }
+        }
+    }
+
+    private fun initRevealingMapAnimator(
+        view: View,
+        height: Int,
+        duration: Long = 500L,
+        startValue: Float = 0f,
+        endValue: Float = 100f
+    ): ValueAnimator {
+        val layoutParams = view.layoutParams
+        return ValueAnimator.ofFloat(startValue, endValue).apply {
+            addUpdateListener {
+                layoutParams.height = (height * it.animatedFraction).roundToInt()
+                view.layoutParams = layoutParams
+            }
+            this.duration = duration
         }
     }
 

@@ -34,6 +34,6 @@
     <dimen name="arrow_back_size">24dp</dimen>
     <dimen name="weather_icon_size">48dp</dimen>
     <dimen name="actor_details_recycler_view_height">250dp</dimen>
-    <dimen name="actor_details_map_height">200dp</dimen>
+    <dimen name="actor_details_map_height">150dp</dimen>
     <dimen name="actor_details_profession_label_margin_top">72dp</dimen>
 </resources>
