@@ -2,8 +2,10 @@ package fiveagency.internship.food.domain.repository;
 
 import java.util.List;
 
+import fiveagency.internship.food.domain.model.ActorDetails;
 import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
+import fiveagency.internship.food.domain.model.PersonMovieCredits;
 import fiveagency.internship.food.domain.model.Rating;
 import io.reactivex.Completable;
 import io.reactivex.Flowable;
@@ -34,4 +36,8 @@ public interface MovieRepository {
     Single<List<Cast>> fetchMovieCast(final int movieId);
 
     Single<List<Rating>> fetchRatings(final String imdbId);
+
+    Single<PersonMovieCredits> fetchPersonMovieCredits(int personId);
+
+    Single<ActorDetails> fetchActorDetails(int actorId);
 }

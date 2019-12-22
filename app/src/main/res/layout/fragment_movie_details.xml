@@ -57,6 +57,8 @@
                     android:id="@+id/arrowBack"
                     android:layout_width="@dimen/arrow_back_size"
                     android:layout_height="@dimen/arrow_back_size"
+                    android:layout_marginStart="@dimen/common_small_margin_size"
+                    android:layout_marginEnd="@dimen/common_small_margin_size"
                     android:background="?android:attr/selectableItemBackground"
                     android:clickable="true"
                     android:focusable="true"

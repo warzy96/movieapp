@@ -15,12 +15,17 @@ class MovieDetailsCastAdapter(
 ) : RecyclerView.Adapter<MovieDetailsCastAdapter.CastViewHolder>() {
 
     private var castList: List<Cast> = listOf()
+    private var onCastClick: (Int) -> Unit = {}
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CastViewHolder {
-        return CastViewHolder(layoutInflater.inflate(R.layout.cast_item_layout, parent, false), imageLoader)
+        return CastViewHolder(layoutInflater.inflate(R.layout.cast_item_layout, parent, false), imageLoader, onCastClick)
     }
 
     override fun getItemCount(): Int = castList.size
+
+    fun setOnCastClick(action: (Int) -> Unit) {
+        onCastClick = action
+    }
 
     fun setCast(cast: List<Cast>) {
         castList = cast
@@ -31,13 +36,15 @@ class MovieDetailsCastAdapter(
         holder.render(castList[position])
     }
 
-    class CastViewHolder(itemView: View, private val imageLoader: ImageLoader) : RecyclerView.ViewHolder(itemView) {
+    class CastViewHolder(itemView: View, private val imageLoader: ImageLoader, private val onCastClick: (Int) -> Unit) :
+        RecyclerView.ViewHolder(itemView) {
 
         fun render(cast: Cast) {
             with(cast) {
                 itemView.castName.text = name
                 itemView.characterName.text = character
                 imageLoader.renderImage(cast.profileUrl, itemView.profilePicture, 0f)
+                itemView.setOnClickListener { onCastClick.invoke(id!!) }
             }
         }
     }

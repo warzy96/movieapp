@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/default_background_color"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBarLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/transparent"
+        android:fitsSystemWindows="true">
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsingToolbarLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fitsSystemWindows="true"
+            app:collapsedTitleTextAppearance="@style/CollapsedTitleTextAppearance"
+            app:contentScrim="@color/tabBackgroundColor"
+            app:expandedTitleGravity="center|bottom"
+            app:expandedTitleMarginBottom="16dp"
+            app:expandedTitleMarginEnd="@dimen/common_small_margin_size"
+            app:expandedTitleMarginStart="148dp"
+            app:expandedTitleTextAppearance="@style/ExpandedTitleTextAppearance"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:statusBarScrim="@android:color/transparent"
+            tools:title="Dwayne Johnson">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/movieImagesRecyclerView"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/actor_details_recycler_view_height"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/actor_details_recycler_view_height"
+                android:background="@drawable/backdrop_image_overlay"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="parallax"
+                app:layout_constraintBottom_toBottomOf="@id/movieImagesRecyclerView"
+                app:layout_constraintEnd_toEndOf="@id/movieImagesRecyclerView"
+                app:layout_constraintStart_toStartOf="@id/movieImagesRecyclerView"
+                app:layout_constraintTop_toTopOf="@id/movieImagesRecyclerView" />
+
+            <androidx.appcompat.widget.Toolbar
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:fitsSystemWindows="true"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+                <ImageView
+                    android:id="@+id/arrowBack"
+                    android:layout_width="@dimen/arrow_back_size"
+                    android:layout_height="@dimen/arrow_back_size"
+                    android:layout_marginStart="@dimen/common_small_margin_size"
+                    android:layout_marginEnd="@dimen/common_small_margin_size"
+                    android:background="?android:attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:fitsSystemWindows="true"
+                    android:focusable="true"
+                    android:src="@drawable/ic_arrow_back_black_24dp" />
+            </androidx.appcompat.widget.Toolbar>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/profilePictureCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/common_large_margin_size"
+        android:layout_marginBottom="@dimen/common_small_margin_size"
+        android:fitsSystemWindows="true"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="4dp"
+        app:layout_anchor="@id/appBarLayout"
+        app:layout_anchorGravity="bottom|start"
+        app:layout_collapseMode="pin"
+        app:layout_constraintBottom_toBottomOf="@id/movieImagesRecyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/movieImagesRecyclerView"
+        app:layout_insetEdge="bottom">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/profilePicture"
+            android:layout_width="@dimen/cast_item_profile_picture_width"
+            android:layout_height="@dimen/cast_item_profile_picture_height"
+            android:background="@drawable/cast_item_background"
+            android:scaleType="centerCrop" />
+    </com.google.android.material.card.MaterialCardView>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/professionLabel"
+                style="@style/Label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/common_large_margin_size"
+                android:layout_marginTop="@dimen/actor_details_profession_label_margin_top"
+                android:text="@string/actor_details_profession_label_text"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/professionText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/no_available_data_placeholder"
+                android:textColor="@color/text_dark"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@id/professionLabel"
+                app:layout_constraintStart_toStartOf="@id/professionLabel"
+                app:layout_constraintTop_toBottomOf="@+id/professionLabel"
+                tools:text="Actor" />
+
+            <TextView
+                android:id="@+id/birthDayLabelText"
+                style="@style/Label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_small_margin_size"
+                android:text="@string/actor_details_date_of_birth_label_text"
+                app:layout_constraintEnd_toEndOf="@id/professionText"
+                app:layout_constraintStart_toStartOf="@id/professionText"
+                app:layout_constraintTop_toBottomOf="@+id/professionText" />
+
+            <TextView
+                android:id="@+id/birthDayText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/no_available_data_placeholder"
+                android:textColor="@color/text_dark"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@id/birthDayLabelText"
+                app:layout_constraintStart_toStartOf="@id/birthDayLabelText"
+                app:layout_constraintTop_toBottomOf="@+id/birthDayLabelText"
+                tools:text="12.12.2012." />
+
+            <TextView
+                android:id="@+id/placeOfBirthLabel"
+                style="@style/Label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_small_margin_size"
+                android:text="@string/actor_details_place_of_birth_label_text"
+                app:layout_constraintEnd_toEndOf="@id/birthDayText"
+                app:layout_constraintStart_toStartOf="@id/birthDayText"
+                app:layout_constraintTop_toBottomOf="@+id/birthDayText" />
+
+            <TextView
+                android:id="@+id/placeOfBirthText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/no_available_data_placeholder"
+                android:textColor="@color/text_dark"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@id/placeOfBirthLabel"
+                app:layout_constraintStart_toStartOf="@id/placeOfBirthLabel"
+                app:layout_constraintTop_toBottomOf="@+id/placeOfBirthLabel"
+                tools:text="12.12.2012." />
+
+            <com.google.android.gms.maps.MapView
+                android:id="@+id/placeOfBirthMapView"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/actor_details_map_height"
+                app:cameraZoom="7"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/placeOfBirthText"
+                app:liteMode="true"
+                app:mapType="normal" />
+
+            <TextView
+                android:id="@+id/mapErrorView"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@drawable/map_error_message_background"
+                android:gravity="center"
+                android:text="@string/location_unavailable_message_text"
+                android:textColor="@color/text_dark"
+                android:textSize="16sp"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/placeOfBirthMapView"
+                app:layout_constraintEnd_toEndOf="@id/placeOfBirthMapView"
+                app:layout_constraintStart_toStartOf="@id/placeOfBirthMapView"
+                app:layout_constraintTop_toTopOf="@id/placeOfBirthMapView" />
+
+            <TextView
+                android:id="@+id/deathDayLabel"
+                style="@style/Label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_small_margin_size"
+                android:text="@string/actor_details_deathday_label_text"
+                app:layout_constraintEnd_toEndOf="@id/placeOfBirthText"
+                app:layout_constraintStart_toStartOf="@id/placeOfBirthText"
+                app:layout_constraintTop_toBottomOf="@+id/placeOfBirthMapView" />
+
+            <TextView
+                android:id="@+id/deathDayText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/no_available_data_placeholder"
+                android:textColor="@color/text_dark"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="@id/deathDayLabel"
+                app:layout_constraintStart_toStartOf="@id/deathDayLabel"
+                app:layout_constraintTop_toBottomOf="@+id/deathDayLabel"
+                tools:text="12.12.2012." />
+
+            <TextView
+                android:id="@+id/bioLabel"
+                style="@style/Label"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/common_small_margin_size"
+                android:text="@string/actor_details_bio_label_text"
+                app:layout_constraintEnd_toEndOf="@id/deathDayText"
+                app:layout_constraintStart_toStartOf="@id/deathDayText"
+                app:layout_constraintTop_toBottomOf="@id/deathDayText" />
+
+            <TextView
+                android:id="@+id/biographyText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/common_large_margin_size"
+                android:text="@string/no_available_data_placeholder"
+                android:textColor="@color/text_dark"
+                android:textSize="16sp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@id/bioLabel"
+                app:layout_constraintStart_toStartOf="@id/bioLabel"
+                app:layout_constraintTop_toBottomOf="@id/bioLabel"
+                app:layout_constraintVertical_bias="0"
+                tools:text="AOWINDOIAWNDOIANWDOINAWODINAOWIDNOAWNIDOWAINDOAINW\nDOAIWNDOIAWNDOAWINDOAIWNDOIANWDONAWDOINAWODNIAWOIDNOAWINDOnDOAIWNDOIAWNDOAWINDOAIWNDOIANWDONAWDOINAWODNIAWOIDNOAWINDOnDOAIWNDOIAWNDOAWINDOAIWNDOIANWDONAWDOINAWODNIAWOIDNOAWINDOnDOAIWNDOIAWNDOAWINDOAIWNDOIANWDONAWDOINAWODNIAWOIDNOAWINDOnDOAIWNDOIAWNDOAWINDOAIWNDOIANWDONAWDOINAWODNIAWOIDNOAWINDOnDOAIWNDOIAWNDOAWINDOAIWNDOIANWDONAWDOINAWODNIAWOIDNOAWINDOnDOAIWNDOIAWNDOAWINDOAIWNDOIANWDONAWDOINAWODNIAWOIDNOAWINDOnDOAIWNDOIAWNDOAWINDOAIWNDOIANWDONAWDOINAWODNIAWOIDNOAWINDOnDOAIWNDOIAWNDOAWINDOAIWNDOIANWDONAWDOINAWODNIAWOIDNOAWINDOnDOAIWNDOIAWNDOAWINDOAIWNDOIANWDONAWDOINAWODNIAWOIDNOAWINDOnDOAIWNDOIAWNDOAWINDOAIWNDOIANWDONAWDOINAWODNIAWOIDNOAWINDO\nAWINDOWAINDOAWINDOAIWNDOAIWNDOAWNIDOAINWDOAWNIDOAWNIDOAINWDOAWINDOIAWNDOAIWNDONAIWDONAIWDOIANWDOIAWNDOIANWDNOAIWDOAWINDOAIWNDOWAINDOANIDOAIWNDOAWIND" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

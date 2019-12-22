@@ -10,6 +10,7 @@ import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.SavePersonalNoteUseCase;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
 import io.reactivex.Single;
+import kotlin.Unit;
 
 public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContract.View> implements MovieDetailsContract.Presenter {
 
@@ -84,6 +85,12 @@ public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContr
     @Override
     public void goBack() {
         router.goBack();
+    }
+
+    @Override
+    public Unit showActorDetailsScreen(final int castId) {
+        router.showActorDetailsScreen(castId);
+        return Unit.INSTANCE;
     }
 
     private void fetchRatings(final String imdbId) {

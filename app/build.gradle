@@ -41,6 +41,7 @@ dependencies {
     implementation "com.firebaseui:firebase-ui-auth:$project.ext.firebaseUIAuth"
     implementation "com.google.android.gms:play-services-auth:$project.ext.playServicesVersion"
     implementation "com.facebook.android:facebook-login:$project.ext.facebookLoginVersion"
+    compile 'com.google.android.gms:play-services-maps:17.0.0'
     implementation "com.squareup.okhttp3:logging-interceptor:$project.ext.okhttpVersion"
     implementation "com.squareup.retrofit2:retrofit:$project.ext.retrofitVersion"
     implementation "com.google.firebase:firebase-auth:$project.ext.firebaseAuthVersion"

@@ -9,6 +9,8 @@ import dagger.Provides;
 import fiveagency.internship.food.movieapp.injection.fragment.DaggerFragment;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentScope;
+import fiveagency.internship.food.movieapp.ui.actordetails.ActorDetailsContract;
+import fiveagency.internship.food.movieapp.ui.actordetails.ActorDetailsPresenter;
 import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesContract;
 import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesPresenter;
 import fiveagency.internship.food.movieapp.ui.login.LogInContract;
@@ -98,5 +100,13 @@ public final class FragmentPresenterModule {
         final ProfilePresenter profilePresenter = new ProfilePresenter(firebaseAuth);
         getFragmentComponent().inject(profilePresenter);
         return profilePresenter;
+    }
+
+    @Provides
+    @FragmentScope
+    public ActorDetailsContract.Presenter provideActorDetailsPresenter() {
+        final ActorDetailsPresenter actorDetailsPresenter = new ActorDetailsPresenter();
+        getFragmentComponent().inject(actorDetailsPresenter);
+        return actorDetailsPresenter;
     }
 }

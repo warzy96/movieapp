@@ -23,6 +23,13 @@
     <string name="weather_recommendation_menu_title">Weather</string>
     <string name="favorites_recommendation_menu_title">Favorites</string>
     <string name="popular_recommendation_menu_title">Popularity</string>
+    <string name="actor_details_date_of_birth_label_text">Date of birth</string>
+    <string name="actor_details_bio_label_text">Biography</string>
+    <string name="actor_details_deathday_label_text">Deathday</string>
+    <string name="actor_details_place_of_birth_label_text">Place of birth</string>
+    <string name="actor_details_profession_label_text">Profession</string>
+    <string name="location_unavailable_message_text">Location unavailable</string>
+    <string name="no_available_data_placeholder">-</string>
     <string-array name="recommendations">
         <item>@string/popular_recommendation_menu_title</item>
         <item>@string/favorites_recommendation_menu_title</item>

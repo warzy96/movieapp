@@ -8,6 +8,7 @@ import androidx.annotation.IdRes;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import fiveagency.internship.food.movieapp.R;
+import fiveagency.internship.food.movieapp.ui.actordetails.ActorDetailsFragment;
 import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesFragment;
 import fiveagency.internship.food.movieapp.ui.login.LogInFragment;
 import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsFragment;
@@ -93,5 +94,12 @@ public final class Router {
 
     public void goBack() {
         fragmentManager.popBackStack();
+    }
+
+    public void showActorDetailsScreen(final int castId) {
+        fragmentManager.beginTransaction()
+                       .add(CONTAINER_ID, ActorDetailsFragment.Companion.newInstance(castId), ActorDetailsFragment.TAG)
+                       .addToBackStack(null)
+                       .commit();
     }
 }
