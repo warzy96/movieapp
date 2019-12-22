@@ -3,7 +3,8 @@
     package="fiveagency.internship.food.movieapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:name=".app.MovieApplication"
         android:allowBackup="true"
@@ -13,6 +14,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyBlUDnu4QkPVu4S7vYwpMWlQDUEG-RfEIY" />
         <activity
             android:name=".MainActivity"
             android:screenOrientation="portrait">

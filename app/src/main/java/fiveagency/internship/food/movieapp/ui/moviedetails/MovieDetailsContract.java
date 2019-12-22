@@ -3,6 +3,7 @@ package fiveagency.internship.food.movieapp.ui.moviedetails;
 import java.util.List;
 
 import fiveagency.internship.food.domain.model.Rating;
+import kotlin.Unit;
 
 public interface MovieDetailsContract {
 
@@ -21,6 +22,8 @@ public interface MovieDetailsContract {
         void removeFavorite(final int movieId);
 
         void goBack();
+
+        Unit showActorDetailsScreen(int castId);
     }
 
     interface View {

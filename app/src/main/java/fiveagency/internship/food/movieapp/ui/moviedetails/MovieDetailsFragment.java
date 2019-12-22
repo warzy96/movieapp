@@ -160,6 +160,7 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
         movieDetailsSubmitButton.setOnClickListener(
                 view -> presenter.savePersonalNote(movieDetailsViewModel.withPersonalNote(movieDetailsPersonalNoteEditText.getText().toString()))
         );
+        movieDetailsCastAdapter.setOnCastClick(castId -> presenter.showActorDetailsScreen(castId));
         movieDetailsCastAdapter.setCast(movieDetailsViewModel.castList);
         tmdbRatingText.setText(parseRating(movieDetailsViewModel.tmdbRating));
         favoriteFloatingActionButton.setChecked(movieDetailsViewModel.isFavorite);

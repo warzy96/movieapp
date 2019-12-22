@@ -8,12 +8,18 @@ import fiveagency.internship.food.data.network.ApiConstants;
 import fiveagency.internship.food.data.network.model.ApiCast;
 import fiveagency.internship.food.data.network.model.ApiMovie;
 import fiveagency.internship.food.data.network.model.ApiMoviesList;
+import fiveagency.internship.food.data.network.model.ApiPersonDetails;
+import fiveagency.internship.food.data.network.model.ApiPersonMovieCredit;
+import fiveagency.internship.food.data.network.model.ApiPersonMovieCredits;
 import fiveagency.internship.food.data.network.model.ApiRating;
 import fiveagency.internship.food.data.network.model.ApiRatings;
 import fiveagency.internship.food.data.network.model.ApiVideo;
 import fiveagency.internship.food.data.network.model.ApiVideos;
 import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
+import fiveagency.internship.food.domain.model.PersonDetails;
+import fiveagency.internship.food.domain.model.PersonMovieCredit;
+import fiveagency.internship.food.domain.model.PersonMovieCredits;
 import fiveagency.internship.food.domain.model.Rating;
 import fiveagency.internship.food.domain.model.Video;
 
@@ -81,6 +87,31 @@ public final class MovieMapper {
             videos.add(mapVideo(apiVideo));
         }
         return videos;
+    }
+
+    public PersonMovieCredits mapPersonMovieCredits(final ApiPersonMovieCredits apiPersonMovieCredits) {
+        final PersonMovieCredits result = new PersonMovieCredits(new ArrayList<>());
+        for (final ApiPersonMovieCredit apiPersonMovieCredit : apiPersonMovieCredits.getCredits()) {
+            result.getCredits().add(mapPersonMovieCredit(apiPersonMovieCredit));
+        }
+        return result;
+    }
+
+    public PersonDetails mapPersonDetails(final ApiPersonDetails apiPersonDetails) {
+        return new PersonDetails(apiPersonDetails.getName() == null ? PersonDetails.EMPTY.getName() : apiPersonDetails.getName(),
+                                 apiPersonDetails.getBirthday() == null ? PersonDetails.EMPTY.getBirthday() : apiPersonDetails.getBirthday(),
+                                 apiPersonDetails.getDeathday() == null ? PersonDetails.EMPTY.getDeathday() : apiPersonDetails.getDeathday(),
+                                 apiPersonDetails.getProfession() == null ? PersonDetails.EMPTY.getProfession() : apiPersonDetails.getProfession(),
+                                 apiPersonDetails.getProfileImageUrl() == null ? PersonDetails.EMPTY.getProfileImageUrl()
+                                                                               : parseImageSourceUrl(apiPersonDetails.getProfileImageUrl()),
+                                 apiPersonDetails.getBiography() == null || apiPersonDetails.getBiography().isEmpty() ? PersonDetails.EMPTY.getBiography()
+                                                                                                                      : apiPersonDetails.getBiography(),
+                                 apiPersonDetails.getPlaceOfBirth() == null ? PersonDetails.EMPTY.getPlaceOfBirth() : apiPersonDetails.getPlaceOfBirth());
+    }
+
+    private PersonMovieCredit mapPersonMovieCredit(final ApiPersonMovieCredit apiPersonMovieCredit) {
+        return apiPersonMovieCredit.getBackdropPath() == null ? PersonMovieCredit.Companion.getEMPTY() : new PersonMovieCredit(
+                parseImageSourceUrl(apiPersonMovieCredit.getBackdropPath()));
     }
 
     private Video mapVideo(final ApiVideo apiVideo) {

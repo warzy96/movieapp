@@ -8,6 +8,8 @@ import fiveagency.internship.food.data.network.service.MovieService;
 import fiveagency.internship.food.data.network.service.OmdbService;
 import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
+import fiveagency.internship.food.domain.model.PersonDetails;
+import fiveagency.internship.food.domain.model.PersonMovieCredits;
 import fiveagency.internship.food.domain.model.Rating;
 import fiveagency.internship.food.domain.model.Video;
 import io.reactivex.Flowable;
@@ -51,10 +53,22 @@ public final class MovieClient {
     }
 
     public Single<List<Rating>> getMovieRating(final String imdbId) {
-        return omdbService.movieRatingEntity(ApiConstants.OMDB_API_KEY, imdbId).map(movieMapper::mapRatings);
+        return omdbService.movieRatingEntity(ApiConstants.OMDB_API_KEY, imdbId)
+                          .map(movieMapper::mapRatings);
     }
 
     public Single<List<Video>> getMovieVideos(final int movieId) {
-        return movieService.movieVideosEntity(movieId, ApiConstants.API_KEY, ApiConstants.LANGUAGE_EN_US).map(movieMapper::mapVideos);
+        return movieService.movieVideosEntity(movieId, ApiConstants.API_KEY, ApiConstants.LANGUAGE_EN_US)
+                           .map(movieMapper::mapVideos);
+    }
+
+    public Single<PersonMovieCredits> getPersonMovieCredits(final int personId) {
+        return movieService.personMovieCreditsEntity(personId, ApiConstants.API_KEY, ApiConstants.LANGUAGE_EN_US)
+                           .map(movieMapper::mapPersonMovieCredits);
+    }
+
+    public Single<PersonDetails> getPersonDetails(final int actorId) {
+        return movieService.personDetails(actorId, ApiConstants.API_KEY, ApiConstants.LANGUAGE_EN_US)
+                           .map(movieMapper::mapPersonDetails);
     }
 }

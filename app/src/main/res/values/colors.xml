@@ -9,6 +9,7 @@
     <color name="text_dark">#2C2C2C</color>
     <color name="hintText">#A8A8A8</color>
     <color name="light_gray">#E2E2E2</color>
+    <color name="label_color">#999999</color>
     <color name="star_checked">#FFD700</color>
     <color name="white">#FFFFFF</color>
     <color name="gradient_end">#66000000</color>

@@ -16,6 +16,7 @@ import fiveagency.internship.food.domain.interactor.InsertFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.SaveMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.SavePersonalNoteUseCase;
+import fiveagency.internship.food.domain.interactor.type.GetActorDetailsUseCase;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import fiveagency.internship.food.domain.repository.WeatherRepository;
 
@@ -92,5 +93,11 @@ public final class UseCaseModule {
     @Singleton
     FetchFiveDayForecastUseCase provideFetchFiveDayForecastUseCase(final WeatherRepository weatherRepository) {
         return new FetchFiveDayForecastUseCase(weatherRepository);
+    }
+
+    @Provides
+    @Singleton
+    GetActorDetailsUseCase provideGetActorDetailsUseCase(final MovieRepository movieRepository) {
+        return new GetActorDetailsUseCase(movieRepository);
     }
 }

@@ -7,8 +7,10 @@ import java.util.List;
 
 import fiveagency.internship.food.data.database.crudder.MovieCrudder;
 import fiveagency.internship.food.data.network.client.MovieClient;
+import fiveagency.internship.food.domain.model.ActorDetails;
 import fiveagency.internship.food.domain.model.Cast;
 import fiveagency.internship.food.domain.model.Movie;
+import fiveagency.internship.food.domain.model.PersonMovieCredits;
 import fiveagency.internship.food.domain.model.Rating;
 import fiveagency.internship.food.domain.model.Video;
 import fiveagency.internship.food.domain.repository.MovieRepository;
@@ -57,6 +59,24 @@ public final class MovieRepositoryImpl implements MovieRepository {
     @Override
     public Single<List<Rating>> fetchRatings(final String imdbId) {
         return movieClient.getMovieRating(imdbId);
+    }
+
+    @Override
+    public Single<PersonMovieCredits> fetchPersonMovieCredits(final int personId) {
+        return movieClient.getPersonMovieCredits(personId);
+    }
+
+    @Override
+    public Single<ActorDetails> fetchActorDetails(final int actorId) {
+        return Single.zip(fetchPersonMovieCredits(actorId), movieClient.getPersonDetails(actorId),
+                          (personMovieCredits, personDetails) -> new ActorDetails(personMovieCredits,
+                                                                                  personDetails.getName(),
+                                                                                  personDetails.getBirthday(),
+                                                                                  personDetails.getDeathday(),
+                                                                                  personDetails.getProfession(),
+                                                                                  personDetails.getProfileImageUrl(),
+                                                                                  personDetails.getBiography(),
+                                                                                  personDetails.getPlaceOfBirth()));
     }
 
     @Override

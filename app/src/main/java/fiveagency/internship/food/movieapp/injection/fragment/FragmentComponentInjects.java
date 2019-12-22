@@ -1,6 +1,6 @@
 package fiveagency.internship.food.movieapp.injection.fragment;
 
-import fiveagency.internship.food.movieapp.ui.actordetails.ActorDetailsDialogFragment;
+import fiveagency.internship.food.movieapp.ui.actordetails.ActorDetailsFragment;
 import fiveagency.internship.food.movieapp.ui.actordetails.ActorDetailsPresenter;
 import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesFragment;
 import fiveagency.internship.food.movieapp.ui.favoriteslist.MovieFavoritesPresenter;
@@ -50,7 +50,7 @@ public interface FragmentComponentInjects {
 
     void inject(ProfilePresenter profilePresenter);
 
-    void inject(ActorDetailsDialogFragment actorDetailsDialogFragment);
+    void inject(ActorDetailsFragment actorDetailsFragment);
 
     void inject(ActorDetailsPresenter actorDetailsPresenter);
 }
