@@ -72,7 +72,6 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
                 presenter.removeFavorite(movieId);
             }
         });
-        presenter.start();
     }
 
     @NonNull
@@ -88,6 +87,13 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         initSwipeRefreshLayout();
+        setStatusBarColor(R.color.tabBackgroundColor);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        presenter.start();
     }
 
     @Override

@@ -60,11 +60,14 @@ public final class ActivityFragment extends BaseFragment<ActivityContract.Presen
     public void onResume() {
         super.onResume();
 
+        setStatusBarColor(R.color.transparent);
+
         presenter.start();
     }
 
     @Override
     public void render() {
+        bottomNavigationView.setSelectedItemId(R.id.bottomNavigationRecommended);
     }
 
     private void setUpBottomNavigation() {

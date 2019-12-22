@@ -132,6 +132,12 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
         initCollapsingToolbarTitle();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        setStatusBarColor(R.color.transparent);
+    }
+
     private void initCollapsingToolbarTitle() {
         collapsingToolbarLayout.setExpandedTitleTypeface(Typeface.create(collapsingToolbarLayout.getExpandedTitleTypeface(), Typeface.BOLD));
         collapsingToolbarLayout.setCollapsedTitleTypeface(Typeface.create(collapsingToolbarLayout.getCollapsedTitleTypeface(), Typeface.BOLD));

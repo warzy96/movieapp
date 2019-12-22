@@ -32,13 +32,26 @@ public final class Router {
     }
 
     public void showMoviesListScreen() {
-        Fragment fragment = fragmentManager.findFragmentByTag(MoviesListFragment.TAG);
-        if (fragment == null) {
-            fragment = MoviesListFragment.newInstance();
-        }
-
         fragmentManager.beginTransaction()
-                       .replace(FRAGMENT_CONTAINER_ID, fragment, MoviesListFragment.TAG)
+                       .replace(FRAGMENT_CONTAINER_ID, MoviesListFragment.newInstance(), MoviesListFragment.TAG)
+                       .commit();
+    }
+
+    public void showActivityFragmentScreen() {
+        fragmentManager.beginTransaction()
+                       .replace(CONTAINER_ID, ActivityFragment.newInstance(), ActivityFragment.TAG)
+                       .commit();
+    }
+
+    public void showUserProfileScreen() {
+        fragmentManager.beginTransaction()
+                       .replace(FRAGMENT_CONTAINER_ID, ProfileFragment.newInstance(), ProfileFragment.TAG)
+                       .commit();
+    }
+
+    public void showFavoriteMoviesScreen() {
+        fragmentManager.beginTransaction()
+                       .replace(FRAGMENT_CONTAINER_ID, MovieFavoritesFragment.newInstance(), MovieFavoritesFragment.TAG)
                        .commit();
     }
 
@@ -55,36 +68,8 @@ public final class Router {
 
     public void showMovieDetailsScreen(final int movieId) {
         fragmentManager.beginTransaction()
-                       .add(CONTAINER_ID, MovieDetailsFragment.newInstance(movieId), MovieDetailsFragment.TAG)
+                       .replace(CONTAINER_ID, MovieDetailsFragment.newInstance(movieId), MovieDetailsFragment.TAG)
                        .addToBackStack(null)
-                       .commit();
-    }
-
-    public void showFavoriteMoviesScreen() {
-        Fragment fragment = fragmentManager.findFragmentByTag(MovieFavoritesFragment.TAG);
-        if (fragment == null) {
-            fragment = MovieFavoritesFragment.newInstance();
-        }
-
-        fragmentManager.beginTransaction()
-                       .replace(FRAGMENT_CONTAINER_ID, fragment, MovieFavoritesFragment.TAG)
-                       .commit();
-    }
-
-    public void showActivityFragmentScreen() {
-        fragmentManager.beginTransaction()
-                       .replace(CONTAINER_ID, ActivityFragment.newInstance(), ActivityFragment.TAG)
-                       .commit();
-    }
-
-    public void showUserProfileScreen() {
-        Fragment fragment = fragmentManager.findFragmentByTag(ProfileFragment.TAG);
-        if (fragment == null) {
-            fragment = ProfileFragment.newInstance();
-        }
-
-        fragmentManager.beginTransaction()
-                       .replace(FRAGMENT_CONTAINER_ID, fragment, ProfileFragment.TAG)
                        .commit();
     }
 
@@ -98,7 +83,7 @@ public final class Router {
 
     public void showActorDetailsScreen(final int castId) {
         fragmentManager.beginTransaction()
-                       .add(CONTAINER_ID, ActorDetailsFragment.Companion.newInstance(castId), ActorDetailsFragment.TAG)
+                       .replace(CONTAINER_ID, ActorDetailsFragment.Companion.newInstance(castId), ActorDetailsFragment.TAG)
                        .addToBackStack(null)
                        .commit();
     }

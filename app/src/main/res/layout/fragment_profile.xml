@@ -19,7 +19,6 @@
         android:id="@+id/signOutTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="?android:attr/selectableItemBackground"
         android:clickable="true"
         android:drawableEnd="@drawable/ic_sign_out_red_24dp"
         android:focusable="true"

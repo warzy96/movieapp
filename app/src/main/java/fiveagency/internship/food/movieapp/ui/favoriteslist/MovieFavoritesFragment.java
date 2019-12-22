@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
+import com.google.android.material.appbar.AppBarLayout;
+
 import javax.inject.Inject;
 
 import androidx.annotation.LayoutRes;
@@ -39,6 +41,9 @@ public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesCon
 
     @BindView(R.id.background_image)
     AppCompatImageView backgroundImage;
+
+    @BindView(R.id.appBarLayout)
+    AppBarLayout appBarLayout;
 
     @LayoutRes
     private static final int MOVIES_LIST_FRAGMENT = R.layout.fragment_movies_list;
@@ -78,8 +83,16 @@ public final class MovieFavoritesFragment extends BaseFragment<MovieFavoritesCon
         initRecyclerView();
         initSwipeRefreshLayout();
 
+        appBarLayout.setVisibility(View.GONE);
+
         backgroundImage.setScaleType(ImageView.ScaleType.FIT_END);
         backgroundImage.setImageResource(R.drawable.oscar);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setStatusBarColor(R.color.tabBackgroundColor);
     }
 
     @Override

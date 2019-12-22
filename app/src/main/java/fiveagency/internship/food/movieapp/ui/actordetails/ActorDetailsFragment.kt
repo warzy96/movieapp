@@ -7,7 +7,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.StringRes
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.PagerSnapHelper
 import androidx.recyclerview.widget.RecyclerView
@@ -25,9 +24,6 @@ import java.io.IOException
 import javax.inject.Inject
 import kotlin.math.abs
 import kotlin.math.roundToInt
-
-@StringRes
-private const val NO_DATA_TEXT_STRING_RESOURCE = R.string.no_available_data_placeholder
 
 class ActorDetailsFragment : BaseFragment<ActorDetailsContract.Presenter>(), ActorDetailsContract.View {
 
@@ -74,6 +70,7 @@ class ActorDetailsFragment : BaseFragment<ActorDetailsContract.Presenter>(), Act
 
     override fun onResume() {
         super.onResume()
+        setStatusBarColor(R.color.transparent)
         presenter.onStart(actorId)
         timedAction.start()
     }
