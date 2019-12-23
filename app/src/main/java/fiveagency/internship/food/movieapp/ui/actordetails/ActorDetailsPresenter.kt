@@ -22,4 +22,8 @@ class ActorDetailsPresenter : BasePresenter<ActorDetailsContract.View>(), ActorD
     override fun setView(view: ActorDetailsContract.View) {
         this.view = view
     }
+
+    override fun goBack() {
+        router.goBack()
+    }
 }

@@ -203,6 +203,12 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
         }
     }
 
+    @Override
+    public void onDestroy() {
+        setStatusBarColor(R.color.tabBackgroundColor);
+        super.onDestroy();
+    }
+
     private String parseRating(final float rating) {
         return rating + "/10";
     }

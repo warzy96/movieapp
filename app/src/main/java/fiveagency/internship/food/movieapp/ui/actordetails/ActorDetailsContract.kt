@@ -12,5 +12,7 @@ interface ActorDetailsContract {
         fun onStart(actorId: Int)
 
         fun setView(view: View)
+
+        fun goBack()
     }
 }

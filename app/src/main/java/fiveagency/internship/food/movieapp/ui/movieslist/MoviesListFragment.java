@@ -87,12 +87,12 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         initSwipeRefreshLayout();
-        setStatusBarColor(R.color.tabBackgroundColor);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        setStatusBarColor(R.color.tabBackgroundColor);
         presenter.start();
     }
 

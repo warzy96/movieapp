@@ -32,6 +32,9 @@ public final class Router {
     }
 
     public void showMoviesListScreen() {
+        if (isFragmentVisible(MoviesListFragment.TAG)) {
+            return;
+        }
         fragmentManager.beginTransaction()
                        .replace(FRAGMENT_CONTAINER_ID, MoviesListFragment.newInstance(), MoviesListFragment.TAG)
                        .commit();
@@ -44,31 +47,32 @@ public final class Router {
     }
 
     public void showUserProfileScreen() {
+        if (isFragmentVisible(ProfileFragment.TAG)) {
+            return;
+        }
         fragmentManager.beginTransaction()
                        .replace(FRAGMENT_CONTAINER_ID, ProfileFragment.newInstance(), ProfileFragment.TAG)
                        .commit();
     }
 
     public void showFavoriteMoviesScreen() {
+        if (isFragmentVisible(MovieFavoritesFragment.TAG)) {
+            return;
+        }
         fragmentManager.beginTransaction()
                        .replace(FRAGMENT_CONTAINER_ID, MovieFavoritesFragment.newInstance(), MovieFavoritesFragment.TAG)
                        .commit();
     }
 
     public void showLogInScreen() {
-        Fragment fragment = fragmentManager.findFragmentByTag(LogInFragment.TAG);
-        if (fragment == null) {
-            fragment = LogInFragment.newInstance();
-        }
-
         fragmentManager.beginTransaction()
-                       .replace(CONTAINER_ID, fragment, LogInFragment.TAG)
+                       .replace(CONTAINER_ID, LogInFragment.newInstance(), LogInFragment.TAG)
                        .commit();
     }
 
     public void showMovieDetailsScreen(final int movieId) {
         fragmentManager.beginTransaction()
-                       .replace(CONTAINER_ID, MovieDetailsFragment.newInstance(movieId), MovieDetailsFragment.TAG)
+                       .add(CONTAINER_ID, MovieDetailsFragment.newInstance(movieId), MovieDetailsFragment.TAG)
                        .addToBackStack(null)
                        .commit();
     }
@@ -83,8 +87,13 @@ public final class Router {
 
     public void showActorDetailsScreen(final int castId) {
         fragmentManager.beginTransaction()
-                       .replace(CONTAINER_ID, ActorDetailsFragment.Companion.newInstance(castId), ActorDetailsFragment.TAG)
+                       .add(CONTAINER_ID, ActorDetailsFragment.Companion.newInstance(castId), ActorDetailsFragment.TAG)
                        .addToBackStack(null)
                        .commit();
+    }
+
+    private boolean isFragmentVisible(final String tag) {
+        final Fragment fragment = fragmentManager.findFragmentByTag(tag);
+        return fragment != null && fragment.isVisible();
     }
 }

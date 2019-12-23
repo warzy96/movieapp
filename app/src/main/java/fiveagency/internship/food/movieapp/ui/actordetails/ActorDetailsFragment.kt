@@ -65,6 +65,10 @@ class ActorDetailsFragment : BaseFragment<ActorDetailsContract.Presenter>(), Act
 
         placeOfBirthMapView.onCreate(savedInstanceState)
 
+        arrowBack.setOnClickListener {
+            presenter.goBack()
+        }
+
         presenter.setView(this)
     }
 
