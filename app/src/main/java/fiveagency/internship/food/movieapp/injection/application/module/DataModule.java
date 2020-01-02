@@ -1,17 +1,17 @@
 package fiveagency.internship.food.movieapp.injection.application.module;
 
-import android.content.Context;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
 
-import androidx.room.Room;
 import dagger.Module;
 import dagger.Provides;
-import fiveagency.internship.food.data.database.MovieDatabase;
 import fiveagency.internship.food.data.database.crudder.MovieCrudder;
 import fiveagency.internship.food.data.database.dao.FavoritesDao;
 import fiveagency.internship.food.data.database.dao.MovieDao;
+import fiveagency.internship.food.data.database.dao.MovieDatabase;
 import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
 import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.data.network.client.WeatherClient;
@@ -24,14 +24,11 @@ import fiveagency.internship.food.data.repository.MovieRepositoryImpl;
 import fiveagency.internship.food.data.repository.WeatherRepositoryImpl;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import fiveagency.internship.food.domain.repository.WeatherRepository;
-import fiveagency.internship.food.movieapp.injection.application.ForApplication;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-
-import static fiveagency.internship.food.data.database.MovieDatabase.DB_NAME;
 
 @Module
 public final class DataModule {
@@ -126,8 +123,8 @@ public final class DataModule {
 
     @Provides
     @Singleton
-    MovieCrudder provideMovieCrudder(final MovieModelMapper movieModelMapper, final MovieDao movieDao, final FavoritesDao favoritesDao) {
-        return new MovieCrudder(movieDao, favoritesDao, movieModelMapper);
+    MovieCrudder provideMovieCrudder(final MovieModelMapper movieModelMapper, final MovieDao movieDao, final FavoritesDao favoritesDao, final MovieDatabase movieDatabase) {
+        return new MovieCrudder(movieDao, favoritesDao, movieModelMapper, movieDatabase);
     }
 
     @Provides
@@ -138,22 +135,20 @@ public final class DataModule {
 
     @Provides
     @Singleton
-    MovieDao provideMovieDao(final MovieDatabase movieDatabase) {
-        return movieDatabase.movieDao();
+    MovieDao provideMovieDao(final MovieModelMapper movieModelMapper, final FirebaseFirestore firebaseFirestore) {
+        return new MovieDao(firebaseFirestore, movieModelMapper);
     }
 
     @Provides
     @Singleton
-    FavoritesDao provideFavoritesDao(final MovieDatabase movieDatabase) {
-        return movieDatabase.favoritesDao();
+    FavoritesDao provideFavoritesDao(final MovieModelMapper movieModelMapper, final FirebaseFirestore firebaseFirestore, final FirebaseAuth firebaseAuth) {
+        return new FavoritesDao(movieModelMapper, firebaseFirestore, firebaseAuth);
     }
 
     @Provides
     @Singleton
-    MovieDatabase provideMovieDatabase(@ForApplication final Context context) {
-        return Room.databaseBuilder(context, MovieDatabase.class, DB_NAME)
-                   .fallbackToDestructiveMigration()
-                   .build();
+    MovieDatabase provideMovieDatabase(final FavoritesDao favoritesDao, final MovieDao movieDao) {
+        return new MovieDatabase(movieDao, favoritesDao);
     }
 
     @Provides
@@ -166,5 +161,11 @@ public final class DataModule {
     @Singleton
     WeatherRepository provideWeatherRepository(final WeatherClient weatherClient) {
         return new WeatherRepositoryImpl(weatherClient);
+    }
+
+    @Provides
+    @Singleton
+    FirebaseFirestore provideFirebaseFirestore() {
+        return FirebaseFirestore.getInstance();
     }
 }

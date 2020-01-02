@@ -39,10 +39,10 @@ public final class MovieRepositoryImpl implements MovieRepository {
                                       result = result.withIsFavorite(true);
                                   }
                               }
-                              if (dbMovie.isEmpty()) {
+                              if (dbMovie.equals(Movie.EMPTY)) {
                                   return result;
                               } else {
-                                  return result.withPersonalNote(dbMovie.get(0).personalNote);
+                                  return result.withPersonalNote(dbMovie.personalNote);
                               }
                           });
     }
