@@ -87,7 +87,7 @@ class FavoritesDao(
                         }
                         it.onNext(list)
                     }
-                }
+                }.onErrorReturn { listOf() }
         } ?: Flowable.just(listOf())
     }
 }
