@@ -1,16 +1,12 @@
 package fiveagency.internship.food.data.database.model;
 
-import androidx.room.Entity;
-import androidx.room.PrimaryKey;
 import fiveagency.internship.food.data.network.model.ApiMovie;
 import fiveagency.internship.food.domain.model.Movie;
 
-@Entity(tableName = "movie")
 public final class DbMovie {
 
     public static final DbMovie EMPTY = new DbMovie(0, "", false, "", "", "", "", 0f, "");
 
-    @PrimaryKey
     private int id;
     private String title;
     private boolean isAdult;
@@ -20,6 +16,9 @@ public final class DbMovie {
     private String personalNote;
     private float tmdbVote;
     private String backdropSource;
+
+    public DbMovie() {
+    }
 
     public DbMovie(final int id, final String title, final boolean isAdult, final String overview, final String releaseDate, final String imageSource,
                    final String personalNote, final float tmdbVote, final String backdropSource) {

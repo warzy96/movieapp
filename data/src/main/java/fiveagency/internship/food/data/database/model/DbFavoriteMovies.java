@@ -1,19 +1,14 @@
 package fiveagency.internship.food.data.database.model;
 
-import androidx.room.Entity;
-import androidx.room.ForeignKey;
-import androidx.room.PrimaryKey;
+import java.util.Objects;
 
-@Entity(tableName = "favorites")
-@ForeignKey(entity = DbMovie.class,
-        parentColumns = "id",
-        childColumns = "movieId",
-        onDelete = ForeignKey.CASCADE,
-        onUpdate = ForeignKey.CASCADE)
 public final class DbFavoriteMovies {
 
-    @PrimaryKey
     private int id;
+
+    public DbFavoriteMovies() {
+
+    }
 
     public DbFavoriteMovies(final int id) {
         this.id = id;
@@ -25,6 +20,23 @@ public final class DbFavoriteMovies {
 
     public void setId(final int id) {
         this.id = id;
+    }
+
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        final DbFavoriteMovies that = (DbFavoriteMovies) o;
+        return id == that.id;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
 }
 

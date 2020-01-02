@@ -29,7 +29,11 @@ android {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation project(':domain')
+    implementation 'de.aaronoe:rxfirestorekt:0.1.1'
+    implementation "io.reactivex.rxjava2:rxkotlin:2.4.0"
     implementation "com.squareup.retrofit2:retrofit:$project.ext.retrofitVersion"
+    implementation "com.google.firebase:firebase-firestore:$project.ext.firestoreVersion"
+    implementation "com.google.firebase:firebase-auth:$project.ext.firebaseAuthVersion"
     implementation "com.google.code.gson:gson:$project.ext.gsonVersion"
     implementation "com.android.support:appcompat-v7:$project.ext.appcompatVersion"
     testImplementation "junit:junit:$project.ext.junitVersion"
