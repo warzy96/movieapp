@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/common_small_margin_size"
+    android:layout_marginEnd="@dimen/common_small_margin_size"
+    android:background="@drawable/dialog_background"
+    android:elevation="12dp"
+    android:padding="14dp">
+
+    <TextView
+        android:id="@+id/beer_title_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textAlignment="center"
+        android:textColor="@color/text_dark"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/beer_image_view"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_margin="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/beer_title_text_view"
+        tools:srcCompat="@tools:sample/avatars[0]" />
+
+    <TextView
+        android:id="@+id/first_brewed_label_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/first_brewed"
+        android:textAllCaps="true"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/beer_image_view"
+        app:layout_constraintTop_toTopOf="@id/beer_image_view" />
+
+    <TextView
+        android:id="@+id/first_brewed_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/text_dark"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/first_brewed_label_text_view"
+        app:layout_constraintTop_toTopOf="@+id/beer_image_view" />
+
+    <TextView
+        android:id="@+id/abv_label_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:text="@string/alcohol_by_volume"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/beer_image_view"
+        app:layout_constraintTop_toBottomOf="@+id/first_brewed_label_text_view" />
+
+    <TextView
+        android:id="@+id/abv_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:textColor="@color/text_dark"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/abv_label_text_view"
+        app:layout_constraintTop_toBottomOf="@+id/first_brewed_label_text_view" />
+
+    <ScrollView
+        android:id="@+id/description_text_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <TextView
+            android:id="@+id/description_text_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginEnd="8dp"
+            android:paddingBottom="50dp"
+            android:textColor="@color/text_dark"
+            android:textSize="@dimen/default_text_size" />
+
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/food_pairings_label_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/food_pairings"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/food_pairings_scroll_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/beer_image_view" />
+
+    <TextView
+        android:id="@+id/description_label_text_view"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:text="@string/description"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/description_text_scroll_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/food_pairings_scroll_view" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/white_gradient"
+        app:layout_constraintBottom_toBottomOf="@id/description_text_scroll_view"
+        app:layout_constraintEnd_toEndOf="@id/description_text_scroll_view"
+        app:layout_constraintStart_toStartOf="@id/description_text_scroll_view"
+        app:layout_constraintTop_toTopOf="@id/description_text_scroll_view" />
+
+    <ScrollView
+        android:id="@+id/food_pairings_scroll_view"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/description_label_text_view"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/food_pairings_label_text_view">
+
+        <LinearLayout
+            android:id="@+id/food_pairings_linear_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="16dp" />
+    </ScrollView>
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/white_gradient"
+        app:layout_constraintBottom_toBottomOf="@id/food_pairings_scroll_view"
+        app:layout_constraintEnd_toEndOf="@id/food_pairings_scroll_view"
+        app:layout_constraintStart_toStartOf="@id/food_pairings_scroll_view"
+        app:layout_constraintTop_toTopOf="@id/food_pairings_scroll_view" />
+</androidx.constraintlayout.widget.ConstraintLayout>

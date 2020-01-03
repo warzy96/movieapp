@@ -10,6 +10,7 @@ import fiveagency.internship.food.domain.interactor.GetFlowableMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.GetMovieCastUseCase;
 import fiveagency.internship.food.domain.interactor.GetMovieRatingsUseCase;
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
+import fiveagency.internship.food.domain.interactor.GetRandomBeerUseCase;
 import fiveagency.internship.food.domain.interactor.GetSearchMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.InsertFavoriteFromSearchUseCase;
 import fiveagency.internship.food.domain.interactor.InsertFavoriteUseCase;
@@ -17,6 +18,7 @@ import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.SaveMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.SavePersonalNoteUseCase;
 import fiveagency.internship.food.domain.interactor.type.GetActorDetailsUseCase;
+import fiveagency.internship.food.domain.repository.BeerRepository;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import fiveagency.internship.food.domain.repository.WeatherRepository;
 
@@ -99,5 +101,11 @@ public final class UseCaseModule {
     @Singleton
     GetActorDetailsUseCase provideGetActorDetailsUseCase(final MovieRepository movieRepository) {
         return new GetActorDetailsUseCase(movieRepository);
+    }
+
+    @Provides
+    @Singleton
+    GetRandomBeerUseCase provideGetRandomBeerUseCase(final BeerRepository beerRepository) {
+        return new GetRandomBeerUseCase(beerRepository);
     }
 }
