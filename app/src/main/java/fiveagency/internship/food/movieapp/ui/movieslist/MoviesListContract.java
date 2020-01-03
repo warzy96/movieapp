@@ -27,6 +27,8 @@ public interface MoviesListContract {
         void onStop();
 
         void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults);
+
+        void showSearchScreen();
     }
 
     interface View {

@@ -208,4 +208,9 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
                                                  .subscribe(() -> {},
                                                             throwable -> loggerImpl.log(throwable)));
     }
+
+    @Override
+    public void showSearchScreen() {
+        router.showMoviesSearchScreen();
+    }
 }

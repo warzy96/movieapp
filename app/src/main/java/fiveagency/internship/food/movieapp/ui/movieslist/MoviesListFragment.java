@@ -87,6 +87,7 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         initSwipeRefreshLayout();
+        view.findViewById(R.id.search).setOnClickListener(l -> presenter.showSearchScreen());
     }
 
     @Override

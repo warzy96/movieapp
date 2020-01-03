@@ -47,14 +47,16 @@ public final class MoviesSearchPresenter extends BasePresenter<MoviesSearchContr
         compositeDisposable.add(RxTextView.textChanges(searchEditText)
                                           .map(CharSequence::toString)
                                           .debounce(300, TimeUnit.MILLISECONDS)
-                                          .filter(text -> !text.isEmpty()).distinctUntilChanged()
+                                          .filter(text -> !text.isEmpty())
+                                          .distinctUntilChanged()
                                           .switchMap((Function<String, ObservableSource<List<Movie>>>) title -> getSearchMoviesUseCase.execute(title).toObservable())
                                           .subscribeOn(backgroundScheduler)
                                           .observeOn(mainThreadScheduler)
                                           .map(movies -> {
                                               final List<Movie> moviesToSave = new ArrayList<>();
                                               moviesToSave.addAll(movies);
-                                              saveMoviesUseCase.execute(moviesToSave).subscribeOn(backgroundScheduler).subscribe(() -> {}, throwable -> loggerImpl.log(throwable));
+                                              compositeDisposable.add(saveMoviesUseCase.execute(moviesToSave).subscribeOn(backgroundScheduler)
+                                                                                       .subscribe(() -> {}, throwable -> loggerImpl.log(throwable)));
                                               return movieViewModelMapper.mapMoviesListViewModel(movies);
                                           })
                                           .subscribe(movieViewModel -> view.render(movieViewModel),

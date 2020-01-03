@@ -15,6 +15,7 @@ import fiveagency.internship.food.movieapp.ui.moviedetails.MovieDetailsFragment;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListFragment;
 import fiveagency.internship.food.movieapp.ui.pager.ActivityFragment;
 import fiveagency.internship.food.movieapp.ui.profile.ProfileFragment;
+import fiveagency.internship.food.movieapp.ui.searchlist.MoviesSearchFragment;
 
 public final class Router {
 
@@ -88,6 +89,13 @@ public final class Router {
     public void showActorDetailsScreen(final int castId) {
         fragmentManager.beginTransaction()
                        .add(CONTAINER_ID, ActorDetailsFragment.Companion.newInstance(castId), ActorDetailsFragment.TAG)
+                       .addToBackStack(null)
+                       .commit();
+    }
+
+    public void showMoviesSearchScreen() {
+        fragmentManager.beginTransaction()
+                       .add(CONTAINER_ID, MoviesSearchFragment.newInstance(), MoviesSearchFragment.TAG)
                        .addToBackStack(null)
                        .commit();
     }
