@@ -35,4 +35,9 @@
         <item>@string/favorites_recommendation_menu_title</item>
         <item>@string/weather_recommendation_menu_title</item>
     </string-array>
+    <string name="no_results_found">No results found</string>
+    <string name="first_brewed">First brewed:</string>
+    <string name="alcohol_by_volume">Alcohol by volume:</string>
+    <string name="food_pairings">Food pairings</string>
+    <string name="description">Description</string>
 </resources>

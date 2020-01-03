@@ -34,6 +34,8 @@ import fiveagency.internship.food.domain.model.Rating;
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 import fiveagency.internship.food.movieapp.ui.base.BaseFragment;
+import fiveagency.internship.food.movieapp.ui.moviedetails.beer.BeerDetailsDialog;
+import fiveagency.internship.food.movieapp.ui.moviedetails.beer.BeerViewModel;
 import fiveagency.internship.food.movieapp.ui.movieslist.CheckableFloatingActionButton;
 import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
 
@@ -77,6 +79,9 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
 
     @BindView(R.id.arrowBack)
     ImageView arrowBack;
+
+    @BindView(R.id.beerIcon)
+    ImageView beerIcon;
 
     @BindDimen(R.dimen.circular_progressbar_stroke_width)
     float circularProgressbarStrokeWidth;
@@ -127,6 +132,7 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
         }
 
         arrowBack.setOnClickListener(back -> presenter.goBack());
+        beerIcon.setOnClickListener(icon -> presenter.recommendBeer());
         initRecyclerView();
 
         initCollapsingToolbarTitle();
@@ -201,6 +207,13 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
                 rottenTomatoesRatingText.setText(rating.getValue());
             }
         }
+    }
+
+    @Override
+    public void showRecommendBeerDialog(final BeerViewModel beerViewModel) {
+        final BeerDetailsDialog beerDetailsDialog = new BeerDetailsDialog(getContext());
+        beerDetailsDialog.setBeerViewModel(beerViewModel, imageLoader);
+        beerDetailsDialog.show();
     }
 
     @Override

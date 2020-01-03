@@ -5,10 +5,12 @@ import javax.inject.Inject;
 import fiveagency.internship.food.domain.interactor.GetMovieCastUseCase;
 import fiveagency.internship.food.domain.interactor.GetMovieDetailsUseCase;
 import fiveagency.internship.food.domain.interactor.GetMovieRatingsUseCase;
+import fiveagency.internship.food.domain.interactor.GetRandomBeerUseCase;
 import fiveagency.internship.food.domain.interactor.InsertFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.SavePersonalNoteUseCase;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
+import fiveagency.internship.food.movieapp.ui.moviedetails.beer.BeerViewModelMapper;
 import io.reactivex.Single;
 import kotlin.Unit;
 
@@ -34,6 +36,12 @@ public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContr
 
     @Inject
     GetMovieRatingsUseCase getMovieRatingsUseCase;
+
+    @Inject
+    GetRandomBeerUseCase getRandomBeerUseCase;
+
+    @Inject
+    BeerViewModelMapper beerViewModelMapper;
 
     @Override
     public void start(final int id) {
@@ -91,6 +99,16 @@ public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContr
     public Unit showActorDetailsScreen(final int castId) {
         router.showActorDetailsScreen(castId);
         return Unit.INSTANCE;
+    }
+
+    @Override
+    public void recommendBeer() {
+        compositeDisposable.add(getRandomBeerUseCase.execute()
+                                                    .map(beerViewModelMapper::mapBeerViewModel)
+                                                    .subscribeOn(backgroundScheduler)
+                                                    .observeOn(mainThreadScheduler)
+                                                    .subscribe(beersViewModel -> view.showRecommendBeerDialog(beersViewModel),
+                                                               Throwable::printStackTrace));
     }
 
     private void fetchRatings(final String imdbId) {

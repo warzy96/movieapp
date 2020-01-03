@@ -13,17 +13,23 @@ import fiveagency.internship.food.data.database.dao.FavoritesDao;
 import fiveagency.internship.food.data.database.dao.MovieDao;
 import fiveagency.internship.food.data.database.dao.MovieDatabase;
 import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
+import fiveagency.internship.food.data.network.client.BeerClient;
 import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.data.network.client.WeatherClient;
 import fiveagency.internship.food.data.network.configuration.Urls;
+import fiveagency.internship.food.data.network.mappers.BeerMapper;
 import fiveagency.internship.food.data.network.mappers.MovieMapper;
+import fiveagency.internship.food.data.network.service.BeerService;
 import fiveagency.internship.food.data.network.service.MovieService;
 import fiveagency.internship.food.data.network.service.OmdbService;
 import fiveagency.internship.food.data.network.service.WeatherService;
+import fiveagency.internship.food.data.repository.BeerRepositoryImpl;
 import fiveagency.internship.food.data.repository.MovieRepositoryImpl;
 import fiveagency.internship.food.data.repository.WeatherRepositoryImpl;
+import fiveagency.internship.food.domain.repository.BeerRepository;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import fiveagency.internship.food.domain.repository.WeatherRepository;
+import fiveagency.internship.food.movieapp.ui.moviedetails.beer.BeerViewModelMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
@@ -35,6 +41,7 @@ public final class DataModule {
 
     private static final String OMDB_RETROFIT = "omdbRetrofit";
     private static final String WEATHER_RETROFIT = "weatherRetrofit";
+    private static final String BEER_RETROFIT = "beerRetrofit";
 
     @Provides
     @Singleton
@@ -87,6 +94,18 @@ public final class DataModule {
 
     @Provides
     @Singleton
+    @Named(BEER_RETROFIT)
+    Retrofit provideBeerRetrofit(final OkHttpClient okHttpClient) {
+        return new Retrofit.Builder()
+                .baseUrl(Urls.BEER_RETROFIT_BASE_URL)
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(okHttpClient)
+                .build();
+    }
+
+    @Provides
+    @Singleton
     OmdbService provideOmdbService(@Named(OMDB_RETROFIT) final Retrofit retrofit) {
         return retrofit.create(OmdbService.class);
     }
@@ -107,6 +126,36 @@ public final class DataModule {
     @Singleton
     WeatherService provideWeatherService(@Named(WEATHER_RETROFIT) final Retrofit retrofit) {
         return retrofit.create(WeatherService.class);
+    }
+
+    @Provides
+    @Singleton
+    BeerService provideBeerService(@Named(BEER_RETROFIT) final Retrofit retrofit) {
+        return retrofit.create(BeerService.class);
+    }
+
+    @Provides
+    @Singleton
+    BeerMapper provideBeerMapper() {
+        return new BeerMapper();
+    }
+
+    @Provides
+    @Singleton
+    BeerRepository provideBeerRepository(final BeerClient beerClient) {
+        return new BeerRepositoryImpl(beerClient);
+    }
+
+    @Provides
+    @Singleton
+    BeerClient provideBeerClient(final BeerService beerService, final BeerMapper beerMapper) {
+        return new BeerClient(beerService, beerMapper);
+    }
+
+    @Provides
+    @Singleton
+    BeerViewModelMapper provideBeerViewModelMapper() {
+        return new BeerViewModelMapper();
     }
 
     @Provides

@@ -62,6 +62,16 @@
                     android:clickable="true"
                     android:focusable="true"
                     android:src="@drawable/ic_arrow_back_black_24dp" />
+
+                <ImageView
+                    android:id="@+id/beerIcon"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="end"
+                    android:layout_marginStart="@dimen/common_small_margin_size"
+                    android:layout_marginEnd="@dimen/common_small_margin_size"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_beer_24px" />
             </androidx.appcompat.widget.Toolbar>
         </com.google.android.material.appbar.CollapsingToolbarLayout>
     </com.google.android.material.appbar.AppBarLayout>
