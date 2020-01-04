@@ -80,6 +80,38 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
+    public Flowable<List<Movie>> fetchFavoriteMoviesRecommendations() {
+        return Flowable.combineLatest(movieCrudder.getFavoriteMoviesRecommendations(), movieCrudder.getAllFlowableFavoriteMoviesIds(),
+                                      (movies, favorites) -> {
+                                          final List<Movie> moviesWithFavorites = new ArrayList<>();
+                                          for (final Movie movie : movies) {
+                                              if (favorites.contains(movie.id)) {
+                                                  moviesWithFavorites.add(movie.withIsFavorite(true));
+                                              } else {
+                                                  moviesWithFavorites.add(movie);
+                                              }
+                                          }
+                                          return moviesWithFavorites;
+                                      });
+    }
+
+    @Override
+    public Flowable<List<Movie>> fetchWeatherMovieRecommendations() {
+        return Flowable.combineLatest(movieCrudder.getWeatherMovieRecommendations(), movieCrudder.getAllFlowableFavoriteMoviesIds(),
+                                      (movies, favorites) -> {
+                                          final List<Movie> moviesWithFavorites = new ArrayList<>();
+                                          for (final Movie movie : movies) {
+                                              if (favorites.contains(movie.id)) {
+                                                  moviesWithFavorites.add(movie.withIsFavorite(true));
+                                              } else {
+                                                  moviesWithFavorites.add(movie);
+                                              }
+                                          }
+                                          return moviesWithFavorites;
+                                      });
+    }
+
+    @Override
     public Single<List<Movie>> fetchMovies(final int page) {
         final List<Movie> moviesWithFavorites = new ArrayList<>();
         return Single.zip(movieClient.getMovies(page), movieCrudder.getAllFavoriteMoviesIds(),

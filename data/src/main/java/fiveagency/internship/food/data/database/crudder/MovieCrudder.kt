@@ -3,6 +3,7 @@ package fiveagency.internship.food.data.database.crudder
 import fiveagency.internship.food.data.database.dao.FavoritesDao
 import fiveagency.internship.food.data.database.dao.MovieDao
 import fiveagency.internship.food.data.database.dao.MovieDatabase
+import fiveagency.internship.food.data.database.dao.RecommendationsDao
 import fiveagency.internship.food.data.database.mappers.MovieModelMapper
 import fiveagency.internship.food.data.database.model.DbFavoriteMovies
 import fiveagency.internship.food.data.database.model.DbMovie
@@ -15,6 +16,7 @@ import java.util.*
 class MovieCrudder(
     private val movieDao: MovieDao,
     private val favoritesDao: FavoritesDao,
+    private val recommendationsDao: RecommendationsDao,
     private val movieModelMapper: MovieModelMapper,
     private val movieDatabase: MovieDatabase
 ) {
@@ -61,4 +63,11 @@ class MovieCrudder(
             .map { dbMovie: DbMovie? -> movieModelMapper.mapMovie(dbMovie) }
     }
 
+    fun getFavoriteMoviesRecommendations(): Flowable<List<Movie>> {
+        return recommendationsDao.getFavoriteMoviesRecommendations().map { movieModelMapper.mapDbMovies(it) }
+    }
+
+    fun getWeatherMovieRecommendations(): Flowable<List<Movie>> {
+        return recommendationsDao.getWeatherMovieRecommendations().map { movieModelMapper.mapDbMovies(it) }
+    }
 }

@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -87,7 +88,33 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
         super.onViewCreated(view, savedInstanceState);
         initRecyclerView();
         initSwipeRefreshLayout();
-        view.findViewById(R.id.search).setOnClickListener(l -> presenter.showSearchScreen());
+        final Toolbar toolbar = view.findViewById(R.id.toolbar);
+        setUpToolbar(toolbar);
+    }
+
+    private void setUpToolbar(final Toolbar toolbar) {
+        toolbar.setOnMenuItemClickListener(l -> {
+            switch (l.getItemId()) {
+                case R.id.search: {
+                    presenter.showSearchScreen();
+                    break;
+                }
+                case R.id.favorites: {
+                    presenter.getFlowableFavoriteRecommendations();
+                    break;
+                }
+                case R.id.weather: {
+                    presenter.getFlowableWeatherRecommendations();
+                    break;
+                }
+                case R.id.popularity: {
+                    presenter.getFlowableMovies();
+                }
+                default:
+                    return super.onOptionsItemSelected(l);
+            }
+            return true;
+        });
     }
 
     @Override
@@ -129,7 +156,7 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
     public void onRefresh() {
         swipeRefreshLayout.setRefreshing(true);
         page = DEFAULT_PAGE;
-        presenter.getFlowableMoviesUseCase();
+        presenter.onRefresh();
     }
 
     private void initRecyclerView() {

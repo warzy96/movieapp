@@ -12,6 +12,7 @@ import fiveagency.internship.food.data.database.crudder.MovieCrudder;
 import fiveagency.internship.food.data.database.dao.FavoritesDao;
 import fiveagency.internship.food.data.database.dao.MovieDao;
 import fiveagency.internship.food.data.database.dao.MovieDatabase;
+import fiveagency.internship.food.data.database.dao.RecommendationsDao;
 import fiveagency.internship.food.data.database.mappers.MovieModelMapper;
 import fiveagency.internship.food.data.network.client.BeerClient;
 import fiveagency.internship.food.data.network.client.MovieClient;
@@ -172,14 +173,21 @@ public final class DataModule {
 
     @Provides
     @Singleton
-    MovieCrudder provideMovieCrudder(final MovieModelMapper movieModelMapper, final MovieDao movieDao, final FavoritesDao favoritesDao, final MovieDatabase movieDatabase) {
-        return new MovieCrudder(movieDao, favoritesDao, movieModelMapper, movieDatabase);
+    MovieCrudder provideMovieCrudder(final MovieModelMapper movieModelMapper, final MovieDao movieDao, final RecommendationsDao recommendationsDao, final FavoritesDao favoritesDao,
+                                     final MovieDatabase movieDatabase) {
+        return new MovieCrudder(movieDao, favoritesDao, recommendationsDao, movieModelMapper, movieDatabase);
     }
 
     @Provides
     @Singleton
     MovieModelMapper provideMovieModelMapper() {
         return new MovieModelMapper();
+    }
+
+    @Provides
+    @Singleton
+    RecommendationsDao provideRecommendationsDao(final FirebaseFirestore firebaseFirestore, final FirebaseAuth firebaseAuth) {
+        return new RecommendationsDao(firebaseFirestore, firebaseAuth);
     }
 
     @Provides

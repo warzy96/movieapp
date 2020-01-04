@@ -40,4 +40,8 @@ public interface MovieRepository {
     Single<PersonMovieCredits> fetchPersonMovieCredits(int personId);
 
     Single<ActorDetails> fetchActorDetails(int actorId);
+
+    Flowable<List<Movie>> fetchFavoriteMoviesRecommendations();
+
+    Flowable<List<Movie>> fetchWeatherMovieRecommendations();
 }

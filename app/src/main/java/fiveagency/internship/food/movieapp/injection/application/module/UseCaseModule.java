@@ -5,8 +5,10 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import fiveagency.internship.food.domain.interactor.FetchFiveDayForecastUseCase;
+import fiveagency.internship.food.domain.interactor.GetFavoriteMoviesRecommendationsUseCase;
 import fiveagency.internship.food.domain.interactor.GetFavoritesUseCase;
 import fiveagency.internship.food.domain.interactor.GetFlowableMoviesUseCase;
+import fiveagency.internship.food.domain.interactor.GetFlowableWeatherRecommendationsUseCase;
 import fiveagency.internship.food.domain.interactor.GetMovieCastUseCase;
 import fiveagency.internship.food.domain.interactor.GetMovieRatingsUseCase;
 import fiveagency.internship.food.domain.interactor.GetMoviesUseCase;
@@ -107,5 +109,17 @@ public final class UseCaseModule {
     @Singleton
     GetRandomBeerUseCase provideGetRandomBeerUseCase(final BeerRepository beerRepository) {
         return new GetRandomBeerUseCase(beerRepository);
+    }
+
+    @Provides
+    @Singleton
+    GetFavoriteMoviesRecommendationsUseCase provideGetFavoriteMoviesRecommendationsUseCase(final MovieRepository movieRepository) {
+        return new GetFavoriteMoviesRecommendationsUseCase(movieRepository);
+    }
+
+    @Provides
+    @Singleton
+    GetFlowableWeatherRecommendationsUseCase provideGetFlowableWeatherRecommendationsUseCase(final MovieRepository movieRepository) {
+        return new GetFlowableWeatherRecommendationsUseCase(movieRepository);
     }
 }
