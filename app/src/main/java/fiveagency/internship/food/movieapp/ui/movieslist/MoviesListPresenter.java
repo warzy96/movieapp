@@ -9,6 +9,9 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -171,8 +174,20 @@ public final class MoviesListPresenter extends BasePresenter<MoviesListContract.
                                                            .subscribeOn(backgroundScheduler)
                                                            .observeOn(mainThreadScheduler)
                                                            .subscribe(fiveDayForecast -> {
+                                                               saveWeather(fiveDayForecast.getWeatherDetailsList().get(0).getWeatherState());
                                                                view.renderWeather(fiveDayForecast);
                                                            }, throwable -> loggerImpl.log(throwable)));
+    }
+
+    private void saveWeather(final String weatherName) {
+        final FirebaseFirestore firebaseFirestore = FirebaseFirestore.getInstance();
+        final FirebaseAuth firebaseAuth = FirebaseAuth.getInstance();
+        final String userId = firebaseAuth.getUid();
+        if (userId != null) {
+            firebaseFirestore.collection("weather")
+                             .document(userId)
+                             .set(new CurrentWeatherModel(weatherName));
+        }
     }
 
     @Override
