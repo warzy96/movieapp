@@ -6,7 +6,7 @@ import java.util.Objects;
 
 public final class Movie {
 
-    public static final Movie EMPTY = new Movie("", 0, false, "", "", "", false, "", 0f, "", "", new ArrayList<>());
+    public static final Movie EMPTY = new Movie("", 0, false, "", "", "", false, "", 0f, "", "", new ArrayList<>(), new Genres(new ArrayList<>()));
     public final String title;
     public final int id;
     public final boolean isAdult;
@@ -19,9 +19,10 @@ public final class Movie {
     public final String backdropSource;
     public final String imdbId;
     public final List<Video> videos;
+    public final Genres genres;
 
     public Movie(final String title, final int id, final boolean isAdult, final String overview, final String releaseDate, final String imageSource, final boolean isFavorite,
-                 final String personalNote, final float tmdbVote, final String backdropSource, final String imdbId, final List<Video> videos) {
+                 final String personalNote, final float tmdbVote, final String backdropSource, final String imdbId, final List<Video> videos, final Genres genres) {
         this.title = title;
         this.id = id;
         this.isAdult = isAdult;
@@ -34,6 +35,7 @@ public final class Movie {
         this.backdropSource = backdropSource;
         this.imdbId = imdbId;
         this.videos = videos;
+        this.genres = genres;
     }
 
     @Override
@@ -82,16 +84,16 @@ public final class Movie {
 
     public Movie withIsFavorite(final boolean isFavorite) {
         return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, isFavorite, this.personalNote, this.tmdbVote, this.backdropSource,
-                         this.imdbId, this.videos);
+                         this.imdbId, this.videos, this.genres);
     }
 
     public Movie withPersonalNote(final String personalNote) {
         return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, this.isFavorite, personalNote, this.tmdbVote, this.backdropSource,
-                         this.imdbId, this.videos);
+                         this.imdbId, this.videos, this.genres);
     }
 
     public Movie withVideos(final List<Video> videos) {
         return new Movie(this.title, this.id, this.isAdult, this.overview, this.releaseDate, this.imageSource, this.isFavorite, personalNote, this.tmdbVote, this.backdropSource,
-                         this.imdbId, videos);
+                         this.imdbId, videos, this.genres);
     }
 }

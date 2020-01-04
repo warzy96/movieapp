@@ -10,7 +10,7 @@ import fiveagency.internship.food.domain.model.Movie;
 public final class MovieViewModelMapper {
 
     public MovieViewModel mapMovieViewModel(final Movie movie) {
-        return new MovieViewModel(movie.id, movie.title, movie.overview, movie.isAdult, movie.releaseDate, movie.imageSource, movie.isFavorite);
+        return new MovieViewModel(movie.id, movie.title, movie.overview, movie.isAdult, movie.releaseDate, movie.imageSource, movie.isFavorite, movie.genres);
     }
 
     public MoviesListViewModel mapMoviesListViewModel(final List<Movie> movieList) {
@@ -24,7 +24,7 @@ public final class MovieViewModelMapper {
     public List<Movie> mapMovies(final List<MovieViewModel> movieViewModels) {
         return Stream.of(movieViewModels).map(
                 movie -> new Movie(movie.title, movie.id, movie.isAdult, movie.overview, movie.releaseDate, movie.imageSource, movie.isFavorite, Movie.EMPTY.personalNote,
-                                   Movie.EMPTY.tmdbVote, Movie.EMPTY.backdropSource, Movie.EMPTY.imdbId, Movie.EMPTY.videos))
+                                   Movie.EMPTY.tmdbVote, Movie.EMPTY.backdropSource, Movie.EMPTY.imdbId, Movie.EMPTY.videos, movie.genres))
                      .toList();
     }
 
@@ -40,6 +40,7 @@ public final class MovieViewModelMapper {
                          Movie.EMPTY.tmdbVote,
                          Movie.EMPTY.backdropSource,
                          Movie.EMPTY.imdbId,
-                         Movie.EMPTY.videos);
+                         Movie.EMPTY.videos,
+                         Movie.EMPTY.genres);
     }
 }

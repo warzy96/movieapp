@@ -11,7 +11,7 @@ public final class MovieDetailsViewModelMapper {
     public Movie mapMovieDetailsViewModelToMovie(final MovieDetailsViewModel movieDetailsViewModel) {
         return new Movie(movieDetailsViewModel.title, movieDetailsViewModel.id, movieDetailsViewModel.isAdult, movieDetailsViewModel.overview, movieDetailsViewModel.releaseDate,
                          movieDetailsViewModel.imageSource, Movie.EMPTY.isFavorite, movieDetailsViewModel.personalNote, movieDetailsViewModel.tmdbRating,
-                         movieDetailsViewModel.backdropPath, movieDetailsViewModel.imdbId, new ArrayList<>());
+                         movieDetailsViewModel.backdropPath, movieDetailsViewModel.imdbId, new ArrayList<>(), Movie.EMPTY.genres);
     }
 
     public MovieDetailsViewModel mapMovieDetailsViewModel(final Movie movie, final List<Cast> cast) {

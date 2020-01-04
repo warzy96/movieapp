@@ -2,6 +2,7 @@ package fiveagency.internship.food.movieapp.ui.movieslist;
 
 import java.util.Objects;
 
+import fiveagency.internship.food.domain.model.Genres;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.movieapp.ui.movieslist.diffutil.DiffUtilViewModel;
 
@@ -13,12 +14,14 @@ public final class MovieViewModel extends DiffUtilViewModel<Integer> {
     public final String releaseDate;
     public final String imageSource;
     public final boolean isFavorite;
+    public final Genres genres;
 
     MovieViewModel(final Movie movie) {
-        this(movie.id, movie.title, movie.overview, movie.isAdult, movie.releaseDate, movie.imageSource, movie.isFavorite);
+        this(movie.id, movie.title, movie.overview, movie.isAdult, movie.releaseDate, movie.imageSource, movie.isFavorite, movie.genres);
     }
 
-    MovieViewModel(final int id, final String title, final String overview, final boolean isAdult, final String releaseDate, final String imageSource, final boolean isFavorite) {
+    MovieViewModel(final int id, final String title, final String overview, final boolean isAdult, final String releaseDate, final String imageSource, final boolean isFavorite,
+                   final Genres genres) {
         super(id);
         this.title = title;
         this.overview = overview;
@@ -26,6 +29,7 @@ public final class MovieViewModel extends DiffUtilViewModel<Integer> {
         this.releaseDate = releaseDate;
         this.imageSource = imageSource;
         this.isFavorite = isFavorite;
+        this.genres = genres;
     }
 
     @Override

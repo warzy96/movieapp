@@ -16,6 +16,7 @@ import fiveagency.internship.food.data.network.model.ApiRatings;
 import fiveagency.internship.food.data.network.model.ApiVideo;
 import fiveagency.internship.food.data.network.model.ApiVideos;
 import fiveagency.internship.food.domain.model.Cast;
+import fiveagency.internship.food.domain.model.Genres;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.model.PersonDetails;
 import fiveagency.internship.food.domain.model.PersonMovieCredit;
@@ -40,7 +41,8 @@ public final class MovieMapper {
                          apiMovie.tmdbRating,
                          apiMovie.backdropSource == null ? Movie.EMPTY.backdropSource : parseImageSourceUrl(apiMovie.backdropSource),
                          apiMovie.imdbId == null ? Movie.EMPTY.imdbId : apiMovie.imdbId,
-                         Movie.EMPTY.videos);
+                         Movie.EMPTY.videos,
+                         apiMovie.genres == null ? Movie.EMPTY.genres : new Genres(apiMovie.genres));
     }
 
     public List<Movie> mapMovies(final ApiMoviesList apiMoviesList) {

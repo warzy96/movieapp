@@ -1,11 +1,13 @@
 package fiveagency.internship.food.data.database.model;
 
-import fiveagency.internship.food.data.network.model.ApiMovie;
+import java.util.ArrayList;
+import java.util.List;
+
 import fiveagency.internship.food.domain.model.Movie;
 
 public final class DbMovie {
 
-    public static final DbMovie EMPTY = new DbMovie(0, "", false, "", "", "", "", 0f, "");
+    public static final DbMovie EMPTY = new DbMovie(0, "", false, "", "", "", "", 0f, "", new ArrayList<>());
 
     private int id;
     private String title;
@@ -16,12 +18,13 @@ public final class DbMovie {
     private String personalNote;
     private float tmdbVote;
     private String backdropSource;
+    private List<Integer> genres;
 
     public DbMovie() {
     }
 
     public DbMovie(final int id, final String title, final boolean isAdult, final String overview, final String releaseDate, final String imageSource,
-                   final String personalNote, final float tmdbVote, final String backdropSource) {
+                   final String personalNote, final float tmdbVote, final String backdropSource, final List<Integer> genres) {
         this.id = id;
         this.title = title;
         this.isAdult = isAdult;
@@ -31,15 +34,12 @@ public final class DbMovie {
         this.personalNote = personalNote;
         this.tmdbVote = tmdbVote;
         this.backdropSource = backdropSource;
-    }
-
-    public DbMovie(final ApiMovie apiMovie) {
-        this(apiMovie.id, apiMovie.title, apiMovie.isAdult, apiMovie.overview, apiMovie.releaseDate, apiMovie.imageSource, EMPTY.personalNote, apiMovie.tmdbRating,
-             apiMovie.backdropSource);
+        this.genres = genres;
     }
 
     public DbMovie(final Movie movie) {
-        this(movie.id, movie.title, movie.isAdult, movie.overview, movie.releaseDate, movie.imageSource, movie.personalNote, movie.tmdbVote, movie.backdropSource);
+        this(movie.id, movie.title, movie.isAdult, movie.overview, movie.releaseDate, movie.imageSource, movie.personalNote, movie.tmdbVote, movie.backdropSource,
+             movie.genres.getGenreList());
     }
 
     public int getId() {
@@ -112,5 +112,13 @@ public final class DbMovie {
 
     public void setBackdropSource(final String backdropSource) {
         this.backdropSource = backdropSource;
+    }
+
+    public List<Integer> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(final List<Integer> genres) {
+        this.genres = genres;
     }
 }

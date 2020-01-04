@@ -2,6 +2,8 @@ package fiveagency.internship.food.data.network.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.List;
+
 public final class ApiMovie {
 
     @SerializedName("title")
@@ -30,4 +32,7 @@ public final class ApiMovie {
 
     @SerializedName("imdb_id")
     public String imdbId;
+
+    @SerializedName("genre_ids")
+    public List<Integer> genres;
 }
