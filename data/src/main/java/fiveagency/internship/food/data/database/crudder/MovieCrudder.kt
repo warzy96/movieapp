@@ -7,6 +7,7 @@ import fiveagency.internship.food.data.database.dao.RecommendationsDao
 import fiveagency.internship.food.data.database.mappers.MovieModelMapper
 import fiveagency.internship.food.data.database.model.DbFavoriteMovies
 import fiveagency.internship.food.data.database.model.DbMovie
+import fiveagency.internship.food.domain.model.FavoriteMovie
 import fiveagency.internship.food.domain.model.Movie
 import io.reactivex.Completable
 import io.reactivex.Flowable
@@ -29,21 +30,21 @@ class MovieCrudder(
     fun getAllFavoriteMovies(): Flowable<List<Movie>> = movieDatabase.getAllFlowableFavorites()
         .map { dbMovies -> movieModelMapper.mapFavoriteMovies(dbMovies) }
 
-    fun setFavorite(movieId: Int): Completable {
+    fun setFavorite(favoriteMovie: FavoriteMovie): Completable {
         return Completable.fromAction {
-            favoritesDao.insertFavorites(setOf(DbFavoriteMovies(movieId)))
+            favoritesDao.insertFavorites(setOf(DbFavoriteMovies(favoriteMovie)))
         }
     }
 
-    fun removeFavorite(movieId: Int?): Completable {
-        return Completable.fromAction { favoritesDao.deleteFavorite(DbFavoriteMovies(movieId!!)) }
+    fun removeFavorite(favoriteMovie: FavoriteMovie): Completable {
+        return Completable.fromAction { favoritesDao.deleteFavorite(DbFavoriteMovies(favoriteMovie)) }
     }
 
     fun getAllFlowableFavoriteMoviesIds(): Flowable<List<Int>> = favoritesDao.getAllFlowableFavoritesIds()
 
     fun insertMovie(movie: Movie): Completable {
         return Completable.fromAction {
-            favoritesDao.insertFavorites(setOf(DbFavoriteMovies(movie.id)))
+            favoritesDao.insertFavorites(setOf(DbFavoriteMovies(movie.id, movie.genres.genreList)))
             val dbMovie = movieModelMapper.mapMovieToMovieModel(movie)
             movieDao.insertAllMovies(LinkedList(listOf(dbMovie)))
         }

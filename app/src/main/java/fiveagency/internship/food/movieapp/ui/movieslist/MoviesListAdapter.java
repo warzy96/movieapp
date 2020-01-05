@@ -85,7 +85,8 @@ public final class MoviesListAdapter extends ListAdapter<MovieViewModel, MoviesL
             } else {
                 starCheckBox.setChecked(false);
             }
-            starCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> favoriteOnCheckedListener.onClick(movieViewModel.id, isChecked));
+            starCheckBox.setOnCheckedChangeListener(
+                    (compoundButton, isChecked) -> favoriteOnCheckedListener.onClick(new FavoriteMovieModel(movieViewModel.id, movieViewModel.genres.getGenreList()), isChecked));
         }
     }
 
@@ -96,6 +97,6 @@ public final class MoviesListAdapter extends ListAdapter<MovieViewModel, MoviesL
 
     public interface FavoriteOnChangeListener {
 
-        void onClick(int movieId, boolean isChecked);
+        void onClick(FavoriteMovieModel favoriteMovieModel, boolean isChecked);
     }
 }

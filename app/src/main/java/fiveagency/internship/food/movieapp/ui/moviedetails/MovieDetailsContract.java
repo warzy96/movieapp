@@ -4,6 +4,7 @@ import java.util.List;
 
 import fiveagency.internship.food.domain.model.Rating;
 import fiveagency.internship.food.movieapp.ui.moviedetails.beer.BeerViewModel;
+import fiveagency.internship.food.movieapp.ui.movieslist.FavoriteMovieModel;
 import kotlin.Unit;
 
 public interface MovieDetailsContract {
@@ -18,9 +19,9 @@ public interface MovieDetailsContract {
 
         void onStop();
 
-        void insertFavorite(final int movieId);
+        void insertFavorite(final FavoriteMovieModel favoriteMovieModel);
 
-        void removeFavorite(final int movieId);
+        void removeFavorite(final FavoriteMovieModel favoriteMovieModel);
 
         void goBack();
 

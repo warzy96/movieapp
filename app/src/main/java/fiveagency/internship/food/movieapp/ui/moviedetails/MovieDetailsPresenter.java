@@ -9,8 +9,10 @@ import fiveagency.internship.food.domain.interactor.GetRandomBeerUseCase;
 import fiveagency.internship.food.domain.interactor.InsertFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.SavePersonalNoteUseCase;
+import fiveagency.internship.food.domain.model.FavoriteMovie;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
 import fiveagency.internship.food.movieapp.ui.moviedetails.beer.BeerViewModelMapper;
+import fiveagency.internship.food.movieapp.ui.movieslist.FavoriteMovieModel;
 import io.reactivex.Single;
 import kotlin.Unit;
 
@@ -75,16 +77,16 @@ public final class MovieDetailsPresenter extends BasePresenter<MovieDetailsContr
     }
 
     @Override
-    public void insertFavorite(final int movieId) {
-        compositeDisposable.add(insertFavoriteUseCase.execute(movieId)
+    public void insertFavorite(final FavoriteMovieModel favoriteMovieModel) {
+        compositeDisposable.add(insertFavoriteUseCase.execute(new FavoriteMovie(favoriteMovieModel.getMovieId(), favoriteMovieModel.getGenres()))
                                                      .subscribeOn(backgroundScheduler)
                                                      .subscribe(() -> {},
                                                                 throwable -> loggerImpl.log(throwable)));
     }
 
     @Override
-    public void removeFavorite(final int movieId) {
-        compositeDisposable.add(removeFavoriteUseCase.execute(movieId)
+    public void removeFavorite(final FavoriteMovieModel favoriteMovieModel) {
+        compositeDisposable.add(removeFavoriteUseCase.execute(new FavoriteMovie(favoriteMovieModel.getMovieId(), favoriteMovieModel.getGenres()))
                                                      .subscribeOn(backgroundScheduler)
                                                      .subscribe(() -> {},
                                                                 throwable -> loggerImpl.log(throwable)));

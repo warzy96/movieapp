@@ -12,10 +12,7 @@ import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import fiveagency.internship.food.domain.interactor.*
-import fiveagency.internship.food.domain.model.CitySearchResults
-import fiveagency.internship.food.domain.model.Location
-import fiveagency.internship.food.domain.model.Movie
-import fiveagency.internship.food.domain.model.WeatherModel
+import fiveagency.internship.food.domain.model.*
 import fiveagency.internship.food.movieapp.injection.activity.ForActivity
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter
 import java.util.*
@@ -196,9 +193,9 @@ class MoviesListPresenter : BasePresenter<MoviesListContract.View>(), MoviesList
         this.view = view
     }
 
-    override fun insertFavorite(movieId: Int) {
+    override fun insertFavorite(favoriteMovieModel: FavoriteMovieModel) {
         compositeDisposable.add(
-            insertFavoriteUseCase.execute(movieId)
+            insertFavoriteUseCase.execute(FavoriteMovie(favoriteMovieModel.movieId, favoriteMovieModel.genres))
                 .subscribeOn(backgroundScheduler)
                 .subscribe(
                     {}
@@ -206,9 +203,9 @@ class MoviesListPresenter : BasePresenter<MoviesListContract.View>(), MoviesList
         )
     }
 
-    override fun removeFavorite(movieId: Int) {
+    override fun removeFavorite(favoriteMovieModel: FavoriteMovieModel) {
         compositeDisposable.add(
-            removeFavoriteUseCase.execute(movieId)
+            removeFavoriteUseCase.execute(FavoriteMovie(favoriteMovieModel.movieId, favoriteMovieModel.genres))
                 .subscribeOn(backgroundScheduler)
                 .subscribe(
                     {}

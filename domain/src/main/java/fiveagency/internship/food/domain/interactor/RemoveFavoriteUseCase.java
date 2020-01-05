@@ -3,10 +3,11 @@ package fiveagency.internship.food.domain.interactor;
 import javax.inject.Inject;
 
 import fiveagency.internship.food.domain.interactor.type.CompletableUseCase;
+import fiveagency.internship.food.domain.model.FavoriteMovie;
 import fiveagency.internship.food.domain.repository.MovieRepository;
 import io.reactivex.Completable;
 
-public final class RemoveFavoriteUseCase implements CompletableUseCase<Integer> {
+public final class RemoveFavoriteUseCase implements CompletableUseCase<FavoriteMovie> {
 
     private final MovieRepository movieRepository;
 
@@ -16,7 +17,7 @@ public final class RemoveFavoriteUseCase implements CompletableUseCase<Integer> 
     }
 
     @Override
-    public Completable execute(final Integer movieId) {
-        return movieRepository.removeFavorite(movieId);
+    public Completable execute(final FavoriteMovie favoriteMovie) {
+        return movieRepository.removeFavorite(favoriteMovie);
     }
 }

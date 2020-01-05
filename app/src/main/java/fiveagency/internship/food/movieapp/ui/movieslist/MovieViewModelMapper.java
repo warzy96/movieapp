@@ -41,6 +41,6 @@ public final class MovieViewModelMapper {
                          Movie.EMPTY.backdropSource,
                          Movie.EMPTY.imdbId,
                          Movie.EMPTY.videos,
-                         Movie.EMPTY.genres);
+                         movieViewModel.genres);
     }
 }

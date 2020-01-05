@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Objects;
 
 import fiveagency.internship.food.domain.model.Cast;
+import fiveagency.internship.food.domain.model.Genres;
 import fiveagency.internship.food.domain.model.Video;
 
 public final class MovieDetailsViewModel {
@@ -21,10 +22,11 @@ public final class MovieDetailsViewModel {
     public final boolean isFavorite;
     public final String imdbId;
     public final List<Video> videos;
+    public final Genres genres;
 
     public MovieDetailsViewModel(final int id, final String title, final String overview, final boolean isAdult, final String releaseDate, final String imageSource,
                                  final String personalNote, final List<Cast> castList, final float tmdbRating, final String backdropPath, final boolean isFavorite,
-                                 final String imdbId, final List<Video> videos) {
+                                 final String imdbId, final List<Video> videos, final Genres genres) {
         this.id = id;
         this.title = title;
         this.overview = overview;
@@ -38,11 +40,12 @@ public final class MovieDetailsViewModel {
         this.isFavorite = isFavorite;
         this.videos = videos;
         this.imdbId = imdbId;
+        this.genres = genres;
     }
 
     public MovieDetailsViewModel withPersonalNote(final String personalNote) {
         return new MovieDetailsViewModel(this.id, this.title, this.overview, this.isAdult, this.releaseDate, this.imageSource, personalNote, this.castList, this.tmdbRating,
-                                         this.backdropPath, this.isFavorite, this.imdbId, this.videos);
+                                         this.backdropPath, this.isFavorite, this.imdbId, this.videos, this.genres);
     }
 
     @Override

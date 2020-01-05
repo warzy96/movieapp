@@ -1,5 +1,6 @@
 package fiveagency.internship.food.movieapp.ui.favoriteslist;
 
+import fiveagency.internship.food.movieapp.ui.movieslist.FavoriteMovieModel;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListViewModel;
 
 public interface MovieFavoritesContract {
@@ -10,9 +11,9 @@ public interface MovieFavoritesContract {
 
         void setView(MovieFavoritesContract.View view);
 
-        void insertFavorite(int movieId);
+        void insertFavorite(FavoriteMovieModel favoriteMovieModel);
 
-        void removeFavorite(int movieId);
+        void removeFavorite(FavoriteMovieModel favoriteMovieModel);
 
         void showMovieDetails(int movieId);
 

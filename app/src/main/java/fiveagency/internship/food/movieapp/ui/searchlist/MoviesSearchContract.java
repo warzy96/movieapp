@@ -2,6 +2,7 @@ package fiveagency.internship.food.movieapp.ui.searchlist;
 
 import android.widget.EditText;
 
+import fiveagency.internship.food.movieapp.ui.movieslist.FavoriteMovieModel;
 import fiveagency.internship.food.movieapp.ui.movieslist.MovieViewModel;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListViewModel;
 
@@ -17,7 +18,7 @@ public interface MoviesSearchContract {
 
         void insertFavorite(MovieViewModel movie);
 
-        void removeFavorite(int movieId);
+        void removeFavorite(final FavoriteMovieModel favoriteMovieModel);
 
         void refreshSearch(final String title);
     }

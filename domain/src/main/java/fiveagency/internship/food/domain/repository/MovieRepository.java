@@ -4,6 +4,7 @@ import java.util.List;
 
 import fiveagency.internship.food.domain.model.ActorDetails;
 import fiveagency.internship.food.domain.model.Cast;
+import fiveagency.internship.food.domain.model.FavoriteMovie;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.model.PersonMovieCredits;
 import fiveagency.internship.food.domain.model.Rating;
@@ -21,9 +22,9 @@ public interface MovieRepository {
 
     Completable insertMovies(List<Movie> movies);
 
-    Completable setFavorite(final int movieId);
+    Completable setFavorite(final FavoriteMovie movieId);
 
-    Completable removeFavorite(Integer movieId);
+    Completable removeFavorite(FavoriteMovie favoriteMovie);
 
     Flowable<List<Movie>> fetchFavorites();
 

@@ -16,6 +16,7 @@ import butterknife.BindDimen;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import fiveagency.internship.food.movieapp.R;
+import fiveagency.internship.food.movieapp.ui.movieslist.FavoriteMovieModel;
 import fiveagency.internship.food.movieapp.ui.movieslist.MovieViewModel;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListAdapter;
 import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
@@ -91,7 +92,8 @@ public final class MovieFavoritesAdapter extends RecyclerView.Adapter<MovieFavor
             } else {
                 starCheckBox.setChecked(false);
             }
-            starCheckBox.setOnCheckedChangeListener((compoundButton, isChecked) -> favoriteOnChangeListener.onClick(movieViewModel.id, isChecked));
+            starCheckBox.setOnCheckedChangeListener(
+                    (compoundButton, isChecked) -> favoriteOnChangeListener.onClick(new FavoriteMovieModel(movieViewModel.id, movieViewModel.genres.getGenreList()), isChecked));
         }
     }
 }

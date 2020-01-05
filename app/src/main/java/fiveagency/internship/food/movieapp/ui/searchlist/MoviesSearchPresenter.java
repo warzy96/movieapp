@@ -14,8 +14,10 @@ import fiveagency.internship.food.domain.interactor.GetSearchMoviesUseCase;
 import fiveagency.internship.food.domain.interactor.InsertFavoriteFromSearchUseCase;
 import fiveagency.internship.food.domain.interactor.RemoveFavoriteUseCase;
 import fiveagency.internship.food.domain.interactor.SaveMoviesUseCase;
+import fiveagency.internship.food.domain.model.FavoriteMovie;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter;
+import fiveagency.internship.food.movieapp.ui.movieslist.FavoriteMovieModel;
 import fiveagency.internship.food.movieapp.ui.movieslist.MovieViewModel;
 import fiveagency.internship.food.movieapp.ui.movieslist.MovieViewModelMapper;
 import io.reactivex.ObservableSource;
@@ -83,16 +85,16 @@ public final class MoviesSearchPresenter extends BasePresenter<MoviesSearchContr
     }
 
     @Override
-    public void insertFavorite(final MovieViewModel movie) {
-        compositeDisposable.add(insertFavoriteFromSearchUseCase.execute(movieViewModelMapper.mapMovie(movie))
+    public void insertFavorite(final MovieViewModel movieViewModel) {
+        compositeDisposable.add(insertFavoriteFromSearchUseCase.execute(movieViewModelMapper.mapMovie(movieViewModel))
                                                                .subscribeOn(backgroundScheduler)
                                                                .subscribe(() -> {},
                                                                           throwable -> loggerImpl.log(throwable)));
     }
 
     @Override
-    public void removeFavorite(final int movieId) {
-        compositeDisposable.add(removeFavoriteUseCase.execute(movieId)
+    public void removeFavorite(final FavoriteMovieModel favoriteMovieModel) {
+        compositeDisposable.add(removeFavoriteUseCase.execute(new FavoriteMovie(favoriteMovieModel.getMovieId(), favoriteMovieModel.getGenres()))
                                                      .subscribeOn(backgroundScheduler)
                                                      .subscribe(() -> {},
                                                                 throwable -> loggerImpl.log(throwable)));

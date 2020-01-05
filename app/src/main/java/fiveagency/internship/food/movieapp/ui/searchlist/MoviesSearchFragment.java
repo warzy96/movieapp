@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import fiveagency.internship.food.movieapp.R;
 import fiveagency.internship.food.movieapp.injection.fragment.FragmentComponent;
 import fiveagency.internship.food.movieapp.ui.base.BaseFragment;
+import fiveagency.internship.food.movieapp.ui.movieslist.FavoriteMovieModel;
 import fiveagency.internship.food.movieapp.ui.movieslist.MoviesListViewModel;
 
 public final class MoviesSearchFragment extends BaseFragment<MoviesSearchContract.Presenter> implements MoviesSearchContract.View, SwipeRefreshLayout.OnRefreshListener {
@@ -59,7 +60,7 @@ public final class MoviesSearchFragment extends BaseFragment<MoviesSearchContrac
             if (isChecked) {
                 presenter.insertFavorite(movie);
             } else {
-                presenter.removeFavorite(movie.id);
+                presenter.removeFavorite(new FavoriteMovieModel(movie.id, movie.genres.getGenreList()));
             }
         }));
     }

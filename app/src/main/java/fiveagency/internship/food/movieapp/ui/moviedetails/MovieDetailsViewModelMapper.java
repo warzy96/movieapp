@@ -16,6 +16,6 @@ public final class MovieDetailsViewModelMapper {
 
     public MovieDetailsViewModel mapMovieDetailsViewModel(final Movie movie, final List<Cast> cast) {
         return new MovieDetailsViewModel(movie.id, movie.title, movie.overview, movie.isAdult, movie.releaseDate, movie.imageSource, movie.personalNote, cast, movie.tmdbVote,
-                                         movie.backdropSource, movie.isFavorite, movie.imdbId, movie.videos);
+                                         movie.backdropSource, movie.isFavorite, movie.imdbId, movie.videos, movie.genres);
     }
 }

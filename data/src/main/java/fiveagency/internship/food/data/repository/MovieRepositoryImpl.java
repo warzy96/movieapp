@@ -9,6 +9,7 @@ import fiveagency.internship.food.data.database.crudder.MovieCrudder;
 import fiveagency.internship.food.data.network.client.MovieClient;
 import fiveagency.internship.food.domain.model.ActorDetails;
 import fiveagency.internship.food.domain.model.Cast;
+import fiveagency.internship.food.domain.model.FavoriteMovie;
 import fiveagency.internship.food.domain.model.Movie;
 import fiveagency.internship.food.domain.model.PersonMovieCredits;
 import fiveagency.internship.food.domain.model.Rating;
@@ -149,13 +150,13 @@ public final class MovieRepositoryImpl implements MovieRepository {
     }
 
     @Override
-    public Completable setFavorite(final int movieId) {
-        return movieCrudder.setFavorite(movieId);
+    public Completable setFavorite(final FavoriteMovie favoriteMovie) {
+        return movieCrudder.setFavorite(favoriteMovie);
     }
 
     @Override
-    public Completable removeFavorite(final Integer movieId) {
-        return movieCrudder.removeFavorite(movieId);
+    public Completable removeFavorite(final FavoriteMovie favoriteMovie) {
+        return movieCrudder.removeFavorite(favoriteMovie);
     }
 
     @Override

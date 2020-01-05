@@ -1,17 +1,27 @@
 package fiveagency.internship.food.data.database.model;
 
+import java.util.List;
 import java.util.Objects;
+
+import fiveagency.internship.food.domain.model.FavoriteMovie;
 
 public final class DbFavoriteMovies {
 
     private int id;
+    private List<Integer> genres;
 
     public DbFavoriteMovies() {
 
     }
 
-    public DbFavoriteMovies(final int id) {
+    public DbFavoriteMovies(final int id, final List<Integer> genres) {
         this.id = id;
+        this.genres = genres;
+    }
+
+    public DbFavoriteMovies(final FavoriteMovie favoriteMovie) {
+        this.id = favoriteMovie.getMovieId();
+        this.genres = favoriteMovie.getGenres();
     }
 
     public int getId() {
@@ -20,6 +30,14 @@ public final class DbFavoriteMovies {
 
     public void setId(final int id) {
         this.id = id;
+    }
+
+    public List<Integer> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(final List<Integer> genres) {
+        this.genres = genres;
     }
 
     @Override

@@ -37,6 +37,7 @@ import fiveagency.internship.food.movieapp.ui.base.BaseFragment;
 import fiveagency.internship.food.movieapp.ui.moviedetails.beer.BeerDetailsDialog;
 import fiveagency.internship.food.movieapp.ui.moviedetails.beer.BeerViewModel;
 import fiveagency.internship.food.movieapp.ui.movieslist.CheckableFloatingActionButton;
+import fiveagency.internship.food.movieapp.ui.movieslist.FavoriteMovieModel;
 import fiveagency.internship.food.movieapp.ui.utils.ImageLoader;
 
 public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContract.Presenter> implements MovieDetailsContract.View {
@@ -178,9 +179,9 @@ public final class MovieDetailsFragment extends BaseFragment<MovieDetailsContrac
         favoriteFloatingActionButton.setChecked(movieDetailsViewModel.isFavorite);
         favoriteFloatingActionButton.setOnCheckedChangeListener(isChecked -> {
             if (isChecked) {
-                presenter.insertFavorite(movieDetailsViewModel.id);
+                presenter.insertFavorite(new FavoriteMovieModel(movieDetailsViewModel.id, movieDetailsViewModel.genres.getGenreList()));
             } else {
-                presenter.removeFavorite(movieDetailsViewModel.id);
+                presenter.removeFavorite(new FavoriteMovieModel(movieDetailsViewModel.id, movieDetailsViewModel.genres.getGenreList()));
             }
         });
         getLifecycle().addObserver(youtubePlayer);
