@@ -64,7 +64,8 @@ public final class UtilsModule {
         return AuthUI.getInstance()
                      .createSignInIntentBuilder()
                      .setAvailableProviders(providers)
-                     .setTheme(R.style.AppTheme)
+                     .setTheme(R.style.AuthUITheme)
+                     .setLogo(R.drawable.icon)
                      .setIsSmartLockEnabled(false)
                      .build();
     }
