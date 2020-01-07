@@ -36,8 +36,10 @@ class ProfileFragment : BaseFragment<ProfileContract.Presenter>(), ProfileContra
         presenter.start()
     }
 
-    override fun render(email: String?) {
+    override fun render(displayName: String?, email: String?, movieCount: Int?) {
+        userDisplayNameTextView.text = displayName
         userEmailTextView.text = email
+        movieCountTextView.text = movieCount.toString()
         signOutTextView.setOnClickListener { presenter.logOut() }
     }
 
