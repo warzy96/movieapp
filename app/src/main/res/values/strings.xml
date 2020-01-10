@@ -20,9 +20,9 @@
     <string name="bottom_nav_profile">Profile</string>
     <string name="sign_out">Sign Out</string>
     <string name="movies_list_toolbar_title">Recommend by:</string>
-    <string name="weather_recommendation_menu_title">Weather</string>
-    <string name="favorites_recommendation_menu_title">Favorites</string>
-    <string name="popular_recommendation_menu_title">Popularity</string>
+    <string name="weather_recommendation_menu_title">By Weather</string>
+    <string name="favorites_recommendation_menu_title">Favorite</string>
+    <string name="popular_recommendation_menu_title">Popular</string>
     <string name="actor_details_date_of_birth_label_text">Date of birth</string>
     <string name="actor_details_bio_label_text">Biography</string>
     <string name="actor_details_deathday_label_text">Deathday</string>

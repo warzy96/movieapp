@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import javax.inject.Inject;
 
@@ -46,6 +47,9 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
 
     @BindView(R.id.weatherIcon)
     ImageView weatherIcon;
+
+    @BindView(R.id.filterText)
+    TextView filterText;
 
     @BindView(R.id.movies_list_recycler_view)
     RecyclerView moviesListRecyclerView;
@@ -94,6 +98,7 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
 
     private void setUpToolbar(final Toolbar toolbar) {
         toolbar.setOnMenuItemClickListener(l -> {
+            setToolbarTitle(l.getItemId());
             switch (l.getItemId()) {
                 case R.id.search: {
                     presenter.showSearchScreen();
@@ -115,6 +120,22 @@ public final class MoviesListFragment extends BaseFragment<MoviesListContract.Pr
             }
             return true;
         });
+    }
+
+    private void setToolbarTitle(final int itemId) {
+        switch (itemId) {
+            case R.id.favorites: {
+                filterText.setText(R.string.favorites_recommendation_menu_title);
+                break;
+            }
+            case R.id.weather: {
+                filterText.setText(R.string.weather_recommendation_menu_title);
+                break;
+            }
+            case R.id.popularity: {
+                filterText.setText(R.string.popular_recommendation_menu_title);
+            }
+        }
     }
 
     @Override
