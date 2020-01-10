@@ -4,7 +4,7 @@ interface ProfileContract {
 
     interface View {
 
-        fun render(email: String?)
+        fun render(displayName: String, email: String, movieCount: Int, favoritesCount: Int)
     }
 
     interface Presenter {
