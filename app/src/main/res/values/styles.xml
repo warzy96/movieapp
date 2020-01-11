@@ -11,9 +11,7 @@
         <item name="android:spinnerDropDownItemStyle">@style/spinnerDropDownItemStyle</item>
     </style>
 
-    <style name="AuthUITheme" parent="AppTheme">
-        <item name="android:background">@drawable/log_in_background</item>
-    </style>
+    <style name="AuthUITheme" parent="FirebaseUI"></style>
 
     <style name="ContentContainer" parent="AppTheme">
         <item name="android:layout_marginStart">16dp</item>
