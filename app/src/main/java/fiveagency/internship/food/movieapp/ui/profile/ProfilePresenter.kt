@@ -5,7 +5,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import fiveagency.internship.food.data.database.model.DbFavoriteMoviesList
 import fiveagency.internship.food.movieapp.ui.base.BasePresenter
 
-private const val MOVIE_COLLECTION_NAME = "movies"
+private const val MOVIE_COUNTER_COLLECTION_NAME = "numberOfMovies"
+private const val MOVIE_COUNTER_DOCUMENT_NAME = "counter"
+private const val MOVIE_COUNTER_FIELD_NAME = "current"
 private const val FAVORITE_COLLECTION_NAME = "favorites"
 
 class ProfilePresenter(private val firebaseAuth: FirebaseAuth) : BasePresenter<ProfileContract.View>(), ProfileContract.Presenter {
@@ -14,10 +16,15 @@ class ProfilePresenter(private val firebaseAuth: FirebaseAuth) : BasePresenter<P
         val db = FirebaseFirestore.getInstance()
 
         firebaseAuth.currentUser?.let { user ->
-            db.collection(MOVIE_COLLECTION_NAME).get().addOnSuccessListener { documents ->
+            db.collection(MOVIE_COUNTER_COLLECTION_NAME).document(MOVIE_COUNTER_DOCUMENT_NAME).get().addOnSuccessListener { document ->
                 db.collection(FAVORITE_COLLECTION_NAME).document(user.uid).get().addOnSuccessListener {
                     val allFavorites = it.toObject(DbFavoriteMoviesList::class.java) ?: DbFavoriteMoviesList.EMPTY
-                    view.render(user.displayName ?: "", user.email ?: "", documents.size(), allFavorites.dbMoviesList.size)
+                    view.render(
+                        user.displayName ?: "",
+                        user.email ?: "",
+                        document[MOVIE_COUNTER_FIELD_NAME] as Long? ?: 0L,
+                        allFavorites.dbMoviesList.size
+                    )
                 }
             }
         } ?: logOut()
