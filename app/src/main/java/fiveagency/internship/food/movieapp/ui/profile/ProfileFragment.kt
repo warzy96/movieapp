@@ -28,6 +28,8 @@ class ProfileFragment : BaseFragment<ProfileContract.Presenter>(), ProfileContra
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        signOutTextView?.setOnClickListener { presenter.logOut() }
+
         presenter.setView(this)
     }
 
@@ -41,7 +43,6 @@ class ProfileFragment : BaseFragment<ProfileContract.Presenter>(), ProfileContra
         userEmailTextView?.text = email
         movieCountTextView?.text = movieCount.toString()
         favoritesCountTextView?.text = favoritesCount.toString()
-        signOutTextView?.setOnClickListener { presenter.logOut() }
     }
 
     override fun inject(fragmentComponent: FragmentComponent?) {
